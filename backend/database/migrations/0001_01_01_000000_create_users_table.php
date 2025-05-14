@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('identifiant')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('password');
+            $table->enum('role', ['stagiaire', 'admin', 'formateur', 'surveillant'])->default('stagiaire');
             $table->rememberToken();
             $table->timestamps();
         });

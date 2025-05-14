@@ -20,6 +20,10 @@ class UserSeeder extends Seeder
             'identifiant' => 'admin',
             'email' => 'admin@mail.com',
             'password' => Hash::make('admin'),
+            'role' => 'admin',
+        ]);
+        User::factory(5)->create([
+            'role' => 'admin',
         ]);
     }
 }

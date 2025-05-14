@@ -19,6 +19,14 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken("token")->plainTextToken;
             $expires = now()->addDay(30)->diffInDays(now(), true);
+            $userData = [
+                "id" => $user->id,
+                "nom" => $user->nom,
+                "prenom" => $user->prenom,
+                "identifiant" => $user->identifiant,
+                "email" => $user->email,
+                "role" => $user->role
+            ];
 
             return response()->json([
                 "data" => [
@@ -29,8 +37,8 @@ class AuthController extends Controller
             ], 200);
         }
         return response()->json([
-            "message" => "Identifiant ou mot de passe incorrect"
-        ], 401);
+            "error" => "Identifiant ou mot de passe incorrect"
+        ], 400);
     }
 
     function logout(){

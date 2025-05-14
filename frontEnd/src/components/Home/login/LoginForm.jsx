@@ -47,7 +47,7 @@ export default function LoginForm({
                     />
                   </div>
                   <p className="text-red-500 font-medium text-lg break-words h-[20px]">
-                    {errors.password}
+                    {errors.identifiant}
                   </p>
                 </div>
                 {/* password */}
@@ -77,7 +77,7 @@ export default function LoginForm({
                       {!showPassword ? <LuEye /> : <LuEyeOff />}
                     </div>
                   </div>
-                  <p className="text-red-500 font-medium text-lg break-words h-[20px]">
+                  <p className="text-red-500 text-lg break-words h-[20px]">
                     {errors.password}
                   </p>
                 </div>
