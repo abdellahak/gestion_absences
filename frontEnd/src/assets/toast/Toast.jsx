@@ -56,12 +56,12 @@ export const ToastWraper = ({ children }) => {
       }}
     >
       {show && (
-        <div className="flex items-center justify-between gap-3 w-full sm:max-w-[340px] rounded-md border-b-4 border-success-500 bg-white p-3 shadow-theme-sm dark:bg-[#1E2634]">
+        <div className="flex items-center justify-between gap-3 w-full sm:max-w-[340px] rounded-md border-b-4 border-success-500 bg-white p-3 shadow-theme-sm">
           <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg text-success-600 dark:text-success-500 bg-success-50 dark:bg-success-500/[0.15]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg text-success-600 bg-success-50">
               <FaCheck />
             </div>
-            <h4 className="sm:text-base text-sm text-gray-800 dark:text-white/90">
+            <h4 className="sm:text-base text-sm text-gray-800">
               {toastMsg}
             </h4>
           </div>

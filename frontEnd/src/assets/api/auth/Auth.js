@@ -79,7 +79,7 @@ export default class Auth {
             error:""
         }
         try {
-            const res = await axios.delete("logout")
+            const res = await axios.post("logout")
             if(res) {
                 return data
             }
