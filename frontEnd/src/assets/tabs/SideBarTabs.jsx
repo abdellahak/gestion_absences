@@ -46,16 +46,6 @@ export function getSidebarNavItems(role) {
           { name: "Ajouter stagiaire", path: "/admin/stagiaires/ajouter", pro: false },
         ],
       },
-      {
-        name: "example page",
-        icon: <MdListAlt />,
-        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
-      },
-      {
-        name: "example page",
-        icon: <MdTableRows />,
-        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
-      },
     ];
   }
 

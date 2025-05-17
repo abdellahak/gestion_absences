@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPlus, FaPen } from "react-icons/fa6";
 import { getGroupes } from "../../../../../../assets/api/admin/groupe/groupe";
-
+import {getStagiaires} from "../../../../../../assets/api/admin/stagiaire/stagiaire";
 export default function StagiaireForm({
   handleSubmit,
   errors,
@@ -28,15 +28,15 @@ export default function StagiaireForm({
     fetchGroupes();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     setLoadingUsers(true);
-  //     const res = await getStagiaireUsers();
-  //     setLoadingUsers(false);
-  //     if (res && res.success) setUsers(res.data);
-  //   };
-  //   fetchUsers();
-  // }, []);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoadingUsers(true);
+      const res = await getStagiaires();
+      setLoadingUsers(false);
+      if (res && res.success) setUsers(res.data);
+    };
+    fetchUsers();
+  }, []);
 
   return (
     <>
@@ -47,41 +47,99 @@ export default function StagiaireForm({
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {/* User ID */}
+              {/* Nom */}
               <div className="mb-4">
-                <label
-                  htmlFor="user_id"
-                  className="mb-1.5 block text-sm font-medium text-gray-700"
-                >
-                  Utilisateur
+                <label htmlFor="nom" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Nom
                 </label>
-                <select
-                  name="user_id"
-                  id="user_id"
-                  value={formData.user_id}
+                <input
+                  placeholder="Nom..."
+                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
+                  type="text"
+                  name="nom"
+                  id="nom"
+                  value={formData.nom}
                   onChange={e =>
                     setFormData(prev => ({
                       ...prev,
-                      user_id: e.target.value,
+                      nom: e.target.value,
                     }))
                   }
-                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
-                >
-                  {loadingUsers ? (
-                    <option value="">Chargement...</option>
-                  ) : (
-                    <>
-                      <option value="">Sélectionner un utilisateur</option>
-                      {users.map(user => (
-                        <option key={user.id} value={user.id}>
-                          {user.nom} {user.prenom}
-                        </option>
-                      ))}
-                    </>
-                  )}
-                </select>
+                />
                 <p className="text-red-500 text-md break-words h-[20px]">
-                  {errors.user_id}
+                  {errors.nom}
+                </p>
+              </div>
+              {/* Prénom */}
+              <div className="mb-4">
+                <label htmlFor="prenom" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Prénom
+                </label>
+                <input
+                  placeholder="Prénom..."
+                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
+                  type="text"
+                  name="prenom"
+                  id="prenom"
+                  value={formData.prenom}
+                  onChange={e =>
+                    setFormData(prev => ({
+                      ...prev,
+                      prenom: e.target.value,
+                    }))
+                  }
+                />
+                <p className="text-red-500 text-md break-words h-[20px]">
+                  {errors.prenom}
+                </p>
+              </div>
+              {/* Email */}
+              <div className="mb-4">
+                <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <input
+                  placeholder="Email..."
+                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={e =>
+                    setFormData(prev => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                />
+                <p className="text-red-500 text-md break-words h-[20px]">
+                  {errors.email}
+                </p>
+              </div>
+              {/* Numéro d'inscription */}
+              <div className="mb-4">
+                <label
+                  htmlFor="numero_inscription"
+                  className="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                  Numéro d'inscription
+                </label>
+                <input
+                  placeholder="Numéro d'inscription..."
+                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
+                  type="text"
+                  name="numero_inscription"
+                  id="numero_inscription"
+                  value={formData.numero_inscription}
+                  onChange={e =>
+                    setFormData(prev => ({
+                      ...prev,
+                      numero_inscription: e.target.value,
+                    }))
+                  }
+                />
+                <p className="text-red-500 text-md break-words h-[20px]">
+                  {errors.numero_inscription}
                 </p>
               </div>
               {/* Groupe */}
@@ -119,32 +177,6 @@ export default function StagiaireForm({
                 </select>
                 <p className="text-red-500 text-md break-words h-[20px]">
                   {errors.groupe_id}
-                </p>
-              </div>
-              {/* Numéro d'inscription */}
-              <div className="mb-4">
-                <label
-                  htmlFor="numero_inscription"
-                  className="mb-1.5 block text-sm font-medium text-gray-700"
-                >
-                  Numéro d'inscription
-                </label>
-                <input
-                  placeholder="Numéro d'inscription..."
-                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
-                  type="text"
-                  name="numero_inscription"
-                  id="numero_inscription"
-                  value={formData.numero_inscription}
-                  onChange={e =>
-                    setFormData(prev => ({
-                      ...prev,
-                      numero_inscription: e.target.value,
-                    }))
-                  }
-                />
-                <p className="text-red-500 text-md break-words h-[20px]">
-                  {errors.numero_inscription}
                 </p>
               </div>
             </div>
