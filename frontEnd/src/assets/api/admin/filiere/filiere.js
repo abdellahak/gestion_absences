@@ -1,4 +1,4 @@
-import { axios } from "../axios";
+import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
 export const getFilieres = async (id, programmeId) => {

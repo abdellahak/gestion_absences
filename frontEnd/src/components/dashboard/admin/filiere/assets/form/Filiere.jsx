@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
 import FiliereForm from "./FiliereForm";
-import { ajouterFiliere, modifierFiliere } from "../../../../../../assets/api/filiere/filiere";
+import {
+  ajouterFiliere,
+  modifierFiliere,
+} from "../../../../../../assets/api/admin/filiere/filiere";
 
 export default function Filiere({
   update = false,
@@ -43,7 +46,7 @@ export default function Filiere({
         setFormData({
           code: "",
           intitule: "",
-        })
+        });
         toast("success", "la filière a été ajoutée avec succès");
       }
       setErrors({
