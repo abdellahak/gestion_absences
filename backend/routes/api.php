@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\FiliereController;
 use App\Http\Controllers\admin\GroupController;
 use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,13 @@ Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
         Route::put("stagiaires/{id}", "update");
         Route::delete("stagiaires/{id}", "destroy");
         Route::post("stagiaires", "store");
+    });
+});
+
+Route::middleware(["auth:sanctum"])->group(function(){
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get("myprofile", "getUser");
+        Route::put("myprofile", "updateProfile");
     });
 });
 

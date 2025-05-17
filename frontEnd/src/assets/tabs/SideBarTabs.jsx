@@ -14,6 +14,18 @@ function prefixPath(role, path) {
 
 
 export function getSidebarNavItems(role) {
+  // const common = [
+  //   {
+  //     icon: <RxDashboard />,
+  //     name: "Dashboard",
+  //     path: prefixPath(role, "dashboard"),
+  //   },
+  //   {
+  //     icon: <MdCalendarToday />,
+  //     name: "Calendar",
+  //     path: prefixPath(role, "calendar"),
+  //   },
+  // ];
 
   if (role === "admin") {
     return [
@@ -92,7 +104,7 @@ export function getSidebarNavItems(role) {
       {
         name: "example page",
         icon: <MdTableRows />,
-        subItems: [{ name: "example page", path: "/formateur/example_page7", pro: false }],
+        subItems: [{ name: "example page", path: "/stagiaire/example_page7", pro: false }],
       },
     ];
   }
