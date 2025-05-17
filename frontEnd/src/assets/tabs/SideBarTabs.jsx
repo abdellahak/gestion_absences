@@ -14,85 +14,72 @@ function prefixPath(role, path) {
 
 
 export function getSidebarNavItems(role) {
-  const common = [
-    {
-      icon: <RxDashboard />,
-      name: "Dashboard",
-      path: prefixPath(role, "dashboard"),
-    },
-    {
-      icon: <MdCalendarToday />,
-      name: "Calendar",
-      path: prefixPath(role, "calendar"),
-    },
-  ];
 
   if (role === "admin") {
     return [
-      ...common,
       {
         icon: <MdPerson />,
-        name: "User Profile",
-        path: "profile",
+        name: "Tableau de bord",
+        path: "/admin/dashboard",
       },
       {
-        name: "Forms",
-        icon: <MdListAlt />,
-        subItems: [{ name: "Form Elements", path: "/admin/form-elements", pro: false }],
-      },
-      {
-        name: "Tables",
-        icon: <MdTableRows />,
-        subItems: [{ name: "Basic Tables", path: "/admin/basic-tables", pro: false }],
-      },
-      {
-        name: "Pages",
+        name: "Filières",
         icon: <MdInsertDriveFile />,
         subItems: [
-          { name: "Blank Page", path: "/admin/blank", pro: false },
-          { name: "404 Error", path: "/admin/error-404", pro: false },
+          { name: "Liste des filières", path: "/admin/filieres", pro: false },
+          { name: "Ajouter filière", path: "/admin/filieres/ajouter", pro: false },
         ],
+      },
+      {
+        name: "example page",
+        icon: <MdListAlt />,
+        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
+      },
+      {
+        name: "example page",
+        icon: <MdTableRows />,
+        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
       },
     ];
   }
 
   if (role === "formateur") {
     return [
-      ...common,
       {
         icon: <MdPerson />,
-        name: "User Profile",
-        path: "/formateur/profile",
+        name: "example page",
+        path: "/formateur/example_page",
       },
       {
-        name: "Forms",
+        name: "example page",
         icon: <MdListAlt />,
-        subItems: [{ name: "Form Elements", path: "/formateur/form-elements", pro: false }],
+        subItems: [{ name: "Form Elements", path: "/formateur/example_page3", pro: false }],
       },
       {
-        name: "Tables",
+        name: "example page",
         icon: <MdTableRows />,
-        subItems: [{ name: "Basic Tables", path: "/formateur/basic-tables", pro: false }],
+        subItems: [{ name: "example page", path: "/formateur/example_page4", pro: false }],
       },
       {
-        name: "Pages",
+        name: "example page",
         icon: <MdInsertDriveFile />,
         subItems: [
-          { name: "Blank Page", path: "/formateur/blank", pro: false },
-          { name: "404 Error", path: "/formateur/error-404", pro: false },
+          { name: "page 1", path: "/formateur/example_page5", pro: false },
+          { name: "page 2", path: "/formateur/example_page6", pro: false },
         ],
       },
-      // Add more items specific to formateur
     ];
   }
 
   if (role === "stagiaire") {
     return [
-      ...common,
-      // Add items specific to stagiaire
+      {
+        name: "example page",
+        icon: <MdTableRows />,
+        subItems: [{ name: "example page", path: "/formateur/example_page7", pro: false }],
+      },
     ];
   }
 
-  // Default for unknown roles
-  return common;
+  return null;
 }

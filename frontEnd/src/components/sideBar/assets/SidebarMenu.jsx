@@ -29,7 +29,7 @@ export default function SidebarMenu({
   return (
     <ul className="flex flex-col gap-4">
       {navItems.map((nav, index) => (
-        <li key={nav.name}>
+        <li key={index}>
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
@@ -103,8 +103,8 @@ export default function SidebarMenu({
               }}
             >
               <ul className="mt-2 space-y-1 ml-9">
-                {nav.subItems.map((subItem) => (
-                  <li key={subItem.name}>
+                {nav.subItems.map((subItem, index) => (
+                  <li key={index}>
                     <Link
                       to={subItem.path}
                       className={`menu-dropdown-item ${
