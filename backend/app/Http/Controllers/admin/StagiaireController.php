@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class StagiaireController extends Controller
 {
@@ -23,23 +24,51 @@ class StagiaireController extends Controller
      */
     public function store(Request $request)
     {
-        $stagiaire = $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
             'groupe_id' => 'required|exists:groupes,id',
             'numero_inscription' => 'required|string|unique:stagiaires,numero_inscription',
-                
-        ], [
-            'user_id.required' => 'L\'utilisateur est requis',
-            'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
+            'email' => 'nullable|email|unique:users,email',
+        ],[
+            'nom.required' => 'Le nom est requis',
+            'prenom.required' => 'Le prénom est requis',
             'groupe_id.required' => 'Le groupe est requis',
             'groupe_id.exists' => 'Le groupe sélectionné est invalide',
             'numero_inscription.required' => 'Le numéro d\'inscription est requis',
             'numero_inscription.unique' => 'Le numéro d\'inscription doit être unique',
+            'email.email' => 'Veuillez entrer un email valide',
+            'email.unique' => 'L\'email existe déjà',
+        ]
+    );
+
+        $user = User::create([
+            'nom' => $validated['nom'],
+            'prenom' => $validated['prenom'],
+            'identifiant' => $validated['numero_inscription'],
+            'email' => $validated['email'] ?? null,
+            'password' => Hash::make($validated['numero_inscription']),
+            'role' => 'stagiaire',
         ]);
 
-        Stagiaire::create($stagiaire);
+        $stagiaire = Stagiaire::create([
+            'user_id' => $user->id,
+            'groupe_id' => $validated['groupe_id'],
+            'numero_inscription' => $validated['numero_inscription'],
+        ]);
 
-        return response()->json(['message' => 'Stagiaire créé avec succès'], 201);
+        return response()->json([
+            'message' => 'Stagiaire créé avec succès',
+            'stagiaire' => [
+                'id' => $stagiaire->id,
+                'user_id' => $user->id,
+                'groupe_id' => $stagiaire->groupe_id,
+                'numero_inscription' => $stagiaire->numero_inscription,
+                'nom' => $user->nom,
+                'prenom' => $user->prenom,
+                'email' => $user->email,
+            ]
+        ], 201);
     }
 
     /**
@@ -47,11 +76,19 @@ class StagiaireController extends Controller
      */
     public function show(string $id)
     {
-        $stagiaire = Stagiaire::find($id);
+        $stagiaire = Stagiaire::with('user')->findOrFail($id);
         if (!$stagiaire) {
             return response()->json(['message' => 'Stagiaire non trouvé'], 404);
         }
-        return response()->json($stagiaire, 200);
+        return response()->json([
+            'id' => $stagiaire->id,
+            'user_id' => $stagiaire->user_id,
+            'groupe_id' => $stagiaire->groupe_id,
+            'numero_inscription' => $stagiaire->numero_inscription,
+            'nom' => $stagiaire->user->nom,
+            'prenom' => $stagiaire->user->prenom,
+            'email' => $stagiaire->user->email,
+        ], 200);
     }
 
     /**
@@ -59,29 +96,53 @@ class StagiaireController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $stagiaire = Stagiaire::find($id);
+        $stagiaire = Stagiaire::with('user')->find($id);
         if (!$stagiaire) {
             return response()->json(['message' => 'Stagiaire non trouvé'], 404);
         }
 
         $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'groupe_id' => 'required|exists:groupes,id',
             'numero_inscription' => "required|string|unique:stagiaires,numero_inscription,$id",
-        ]
-        , [
-                'user_id.required' => 'L\'utilisateur est requis',
-                'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
-                'groupe_id.required' => 'Le groupe est requis',
-                'groupe_id.exists' => 'Le groupe sélectionné est invalide',
-                'numero_inscription.required' => 'Le numéro d\'inscription est requis',
-                'numero_inscription.unique' => 'Le numéro d\'inscription doit être unique',
-            ]);
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $stagiaire->user_id,
+        ], [
+            'groupe_id.required' => 'Le groupe est requis',
+            'groupe_id.exists' => 'Le groupe sélectionné est invalide',
+            'numero_inscription.required' => 'Le numéro d\'inscription est requis',
+            'numero_inscription.unique' => 'Le numéro d\'inscription doit être unique',
+            'nom.required' => 'Le nom est requis',
+            'prenom.required' => 'Le prénom est requis',
+            'email.email' => 'Veuillez entrer un email valide',
+            'email.unique' => 'L\'email existe déjà',
+        ]);
 
+        // Mettre à jour le stagiaire
+        $stagiaire->update([
+            'groupe_id' => $data['groupe_id'],
+            'numero_inscription' => $data['numero_inscription'],
+        ]);
 
-        $stagiaire->update($data);
+        // Mettre à jour le user lié
+        $stagiaire->user->update([
+            'nom' => $data['nom'],
+            'prenom' => $data['prenom'],
+            'email' => $data['email'] ?? $stagiaire->user->email,
+        ]);
 
-        return response()->json(['message' => 'Stagiaire mis à jour avec succès'], 200);
+        return response()->json([
+            'message' => 'Stagiaire mis à jour avec succès',
+            'stagiaire' => [
+                'id' => $stagiaire->id,
+                'user_id' => $stagiaire->user_id,
+                'groupe_id' => $stagiaire->groupe_id,
+                'numero_inscription' => $stagiaire->numero_inscription,
+                'nom' => $stagiaire->user->nom,
+                'prenom' => $stagiaire->user->prenom,
+                'email' => $stagiaire->user->email,
+            ]
+        ], 200);
     }
 
     /**
@@ -96,5 +157,4 @@ class StagiaireController extends Controller
         $stagiaire->delete();
         return response()->json(['message' => 'Stagiaire supprimé avec succès'], 200);
     }
-   
 }

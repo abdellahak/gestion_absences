@@ -46,12 +46,8 @@ export const ajouterStagiaire = async (formData) => {
   let data = {
     success: true,
     errors: {
-      nom: "",
-      prenom: "",
-      cin: "",
-      cne: "",
-      date_naissance: "",
       groupe_id: "",
+      numero_inscription: "",
     },
     error: "",
   };
@@ -101,12 +97,8 @@ export const modifierStagiaire = async (formData, id) => {
   let data = {
     success: true,
     errors: {
-      nom: "",
-      prenom: "",
-      cin: "",
-      cne: "",
-      date_naissance: "",
       groupe_id: "",
+      numero_inscription: "",
     },
     server: "",
   };

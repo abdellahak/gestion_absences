@@ -16,11 +16,17 @@ export default function Stagiaire({
     user_id: data?.user_id ?? "",
     groupe_id: data?.groupe_id ?? "",
     numero_inscription: data?.numero_inscription ?? "",
+    nom: data?.user?.nom ?? data?.nom ?? "",
+    prenom: data?.user?.prenom ?? data?.prenom ?? "",
+    email: data?.user?.email ?? data?.email ?? "",
   });
   const [errors, setErrors] = useState({
     user_id: "",
     groupe_id: "",
     numero_inscription: "",
+    nom: "",
+    prenom: "",
+    email: "",
   });
   const { toast } = useToast();
 
@@ -29,6 +35,9 @@ export default function Stagiaire({
       user_id: data?.user_id ?? "",
       groupe_id: data?.groupe_id ?? "",
       numero_inscription: data?.numero_inscription ?? "",
+      nom: data?.user?.nom ?? data?.nom ?? "",
+      prenom: data?.user?.prenom ?? data?.prenom ?? "",
+      email: data?.user?.email ?? data?.email ?? "",
     });
   }, [data]);
 
@@ -50,6 +59,9 @@ export default function Stagiaire({
           user_id: "",
           groupe_id: "",
           numero_inscription: "",
+          nom: "",
+          prenom: "",
+          email: "",
         });
         toast("success", "Le stagiaire a été ajouté avec succès");
       }
@@ -57,6 +69,9 @@ export default function Stagiaire({
         user_id: "",
         groupe_id: "",
         numero_inscription: "",
+        nom: "",
+        prenom: "",
+        email: "",
       });
     } else {
       if (res.server) {
