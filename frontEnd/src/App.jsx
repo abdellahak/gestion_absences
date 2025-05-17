@@ -7,6 +7,7 @@ import Not_found from "./assets/errors/404";
 import FilieresList from "./components/dashboard/admin/filiere/liste/FilieresList";
 import AjouterFiliere from "./components/dashboard/admin/filiere/ajouter/AjouterFiliere";
 import ModifierFiliere from "./components/dashboard/admin/filiere/modifier/ModifierFiliere";
+import Profile from "./components/dashboard/common/profile/Profile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="ajouter" element={<AjouterFiliere/>} />
                 <Route path=":id/modifier" element={<ModifierFiliere/>} />
               </Route>
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -33,6 +35,7 @@ function App() {
               element={<DashboardLayout role="stagiaire" />}
             >
               <Route index element={<h1>Tableau de Bord Stagiaire</h1>} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>

@@ -88,7 +88,7 @@ export function getSidebarNavItems(role) {
       {
         name: "example page",
         icon: <MdTableRows />,
-        subItems: [{ name: "example page", path: "/formateur/example_page7", pro: false }],
+        subItems: [{ name: "example page", path: "/stagiaire/example_page7", pro: false }],
       },
     ];
   }

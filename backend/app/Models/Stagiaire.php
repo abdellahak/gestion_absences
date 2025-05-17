@@ -10,6 +10,12 @@ class Stagiaire extends Model
     use HasFactory;
 
     protected $fillable = [
+        'adresse',
+        'telephone',
+        'CNI',
+        'sexe',
+        'date_naissance',
+        'lieu_naissance',
         'user_id',
         'groupe_id',
         'numero_inscription',

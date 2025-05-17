@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\FiliereController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,13 @@ Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
         Route::put("filieres/{id}", "update");
         Route::delete("filieres/{id}", "destroy");
         Route::post("filieres", "store");
+    });
+});
+
+Route::middleware(["auth:sanctum"])->group(function(){
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get("myprofile", "getUser");
+        Route::put("myprofile", "updateProfile");
     });
 });
 

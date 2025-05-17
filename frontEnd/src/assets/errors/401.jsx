@@ -14,7 +14,7 @@ export default function Unauthorised({className}) {
                     <h4 className="text-5xl font-medium">401</h4>
                     <p className="text-xl">Vous n'avez pas l'autorisation</p>
                     <div className="flex items-center gap-2">
-                        <Link to={"/"} className="bg-blue-10 rounded-md p-2 px-8 text-white active:scale-95 hover:bg-blue-10/50 transition-all duration-300">
+                        <Link to={"/"} className="bg-brand-500 rounded-md p-2 px-8 text-white active:scale-95 hover:bg-brand-600 transition-all duration-300">
                             Accueil
                         </Link>
                     </div>
