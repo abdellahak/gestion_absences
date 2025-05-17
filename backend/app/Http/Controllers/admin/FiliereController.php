@@ -31,6 +31,11 @@ class FiliereController extends Controller
 
     public function destroy($id)
     {
-        // Code to delete a filiere
+        $filiere = Filiere::find($id);
+        if (!$filiere) {
+            return response()->json(['message' => 'Filiere non trouvée'], 404);
+        }
+        $filiere->delete();
+        return response()->json(['message' => 'Filiere supprimée avec succès'], 200);
     }
 }

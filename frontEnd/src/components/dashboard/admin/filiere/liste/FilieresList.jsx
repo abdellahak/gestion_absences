@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import FiliereTable from "../assets/table/FiliereTable";
-import { getFilieres } from "../../../../../assets/api/filiere/filiere";
+import { getFilieres, supprimerFiliere } from "../../../../../assets/api/filiere/filiere";
+import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
 
 export default function FilieresList() {
   const { toast } = useToast();
@@ -27,6 +28,20 @@ export default function FilieresList() {
     fetchData();
   }, []);
 
+  const handleDelete = async () => {
+    if (deleting) return;
+    setDeleting(true);
+    const res = await supprimerFiliere(show);
+    if (res) setDeleting(false);
+    if (res.success) {
+      toast("success", "la filière a été supprimée avec succès");
+      setData((prev) => prev.filter((item) => item.id !== show));
+      setShow(null);
+    } else {
+      toast("error", res.error);
+    }
+  };
+
   return (
     <>
       <title>Liste des filières</title>
@@ -47,15 +62,15 @@ export default function FilieresList() {
             <FiliereTable data={data} setShow={setShow} />
           )}
             </div>
-            {/* {show !== null && (
+            {show && (
               <DeleteConfirmation
                 show={show}
                 setShow={setShow}
-                text={"filiere"}
+                text={"cette filière"}
                 action={null}
                 handleDelete={handleDelete}
               />
-            )} */}
+            )}
           </div>
         </div>
       </div>
