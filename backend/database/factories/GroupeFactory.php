@@ -15,6 +15,7 @@ class GroupeFactory extends Factory
   {
     return [
       'intitule' => $this->faker->word(),
+      'code' => $this->faker->unique()->word(),
       'filiere_id' => Filiere::inRandomOrder()->first()->id,
     ];
   }

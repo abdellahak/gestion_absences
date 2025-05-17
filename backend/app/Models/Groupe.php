@@ -12,10 +12,16 @@ class Groupe extends Model
     protected $fillable = [
         'intitule',
         'filiere_id',
+        'code'
     ];
 
     public function formateurs()
     {
         return $this->belongsToMany(Formateur::class);
+    }
+    
+    public function filiere()
+    {
+        return $this->belongsTo(Filiere::class);
     }
 }

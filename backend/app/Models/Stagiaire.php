@@ -24,4 +24,5 @@ class Stagiaire extends Model
     {
         return $this->belongsTo(Groupe::class);
     }
+    
 }

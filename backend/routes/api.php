@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\admin\FiliereController;
+use App\Http\Controllers\admin\GroupController;
+use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use Illuminate\Http\Request;
@@ -19,6 +21,20 @@ Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
         Route::put("filieres/{id}", "update");
         Route::delete("filieres/{id}", "destroy");
         Route::post("filieres", "store");
+    });
+    Route::controller(GroupController::class)->group(function(){
+        Route::get("groupes", "index");
+        Route::get("groupes/{id}", "show");
+        Route::put("groupes/{id}", "update");
+        Route::delete("groupes/{id}", "destroy");
+        Route::post("groupes", "store");
+    });
+    Route::controller(StagiaireController::class)->group(function(){
+        Route::get("stagiaires", "index");
+        Route::get("stagiaires/{id}", "show");
+        Route::put("stagiaires/{id}", "update");
+        Route::delete("stagiaires/{id}", "destroy");
+        Route::post("stagiaires", "store");
     });
 });
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('groupes', function (Blueprint $table) {
             $table->id();
             $table->string('intitule');
+            $table->string('code')->unique();
             $table->unsignedBigInteger('filiere_id');
             $table->foreign('filiere_id')->references('id')->on('filieres')->onDelete('cascade');
             $table->timestamps();

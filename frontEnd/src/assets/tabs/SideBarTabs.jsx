@@ -30,6 +30,22 @@ export function getSidebarNavItems(role) {
           { name: "Ajouter filière", path: "/admin/filieres/ajouter", pro: false },
         ],
       },
+       {
+        name: "Groupes",
+        icon: <MdListAlt />,
+        subItems: [
+          { name: "Liste des groupes", path: "/admin/groupes", pro: false },
+          { name: "Ajouter groupe", path: "/admin/groupes/ajouter", pro: false },
+        ],
+      },
+      {
+        name: "Stagiaires",
+        icon: <MdPerson />,
+        subItems: [
+          { name: "Liste des stagiaires", path: "/admin/stagiaires", pro: false },
+          { name: "Ajouter stagiaire", path: "/admin/stagiaires/ajouter", pro: false },
+        ],
+      },
       {
         name: "example page",
         icon: <MdListAlt />,

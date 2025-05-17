@@ -7,7 +7,12 @@ import Not_found from "./assets/errors/404";
 import FilieresList from "./components/dashboard/admin/filiere/liste/FilieresList";
 import AjouterFiliere from "./components/dashboard/admin/filiere/ajouter/AjouterFiliere";
 import ModifierFiliere from "./components/dashboard/admin/filiere/modifier/ModifierFiliere";
-
+import GroupesList from "./components/dashboard/admin/groupe/liste/GroupesList";
+import AjouterGroupe from "./components/dashboard/admin/groupe/ajouter/AjouterGroupe";
+import ModifierGroupe from "./components/dashboard/admin/groupe/modifier/ModifierGroupe";
+import StagiairesList from "./components/dashboard/admin/stagiaire/liste/StagiairesList";
+import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
+import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +27,16 @@ function App() {
                 <Route index element={<FilieresList/>} />
                 <Route path="ajouter" element={<AjouterFiliere/>} />
                 <Route path=":id/modifier" element={<ModifierFiliere/>} />
+              </Route>
+              <Route path="groupes" >
+                <Route index element={<GroupesList/>} />
+                <Route path="ajouter" element={<AjouterGroupe/>} />
+                <Route path=":id/modifier" element={<ModifierGroupe/>} />
+              </Route>
+              <Route path="stagiaires" >
+                <Route index element={<StagiairesList/>} />
+                <Route path="ajouter" element={<AjouterStagiaire/>} />
+                <Route path=":id/modifier" element={<ModifierStagiaire/>} />
               </Route>
               <Route path="*" element={<Not_found />} />
             </Route>

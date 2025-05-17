@@ -1,0 +1,135 @@
+import { axios } from "../../axios";
+import { isAxiosError } from "axios";
+
+export const getStagiaires = async () => {
+  let data = {
+    success: true,
+    data: null,
+    error: "",
+  };
+  try {
+    const res = await axios.get("stagiaires");
+    if (res) {
+      data.data = res.data;
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      const errorV = error.response?.data?.error;
+      data.error = errorV || "Erreur lors de la récupération des stagiaires";
+      return data;
+    }
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const supprimerStagiaire = async (id) => {
+  let data = {
+    success: true,
+    error: "",
+  };
+  try {
+    const res = await axios.delete(`stagiaires/${id}`);
+    if (res) {
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const ajouterStagiaire = async (formData) => {
+  let data = {
+    success: true,
+    errors: {
+      nom: "",
+      prenom: "",
+      cin: "",
+      cne: "",
+      date_naissance: "",
+      groupe_id: "",
+    },
+    error: "",
+  };
+  try {
+    const res = await axios.post("stagiaires", formData);
+    if (res) {
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      if (error.response?.status === 422) {
+        data.errors = error.response.data.errors;
+        return data;
+      }
+    }
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const getStagiaire = async (id) => {
+  let data = {
+    success: true,
+    error: "",
+  };
+
+  try {
+    const res = await axios.get(`stagiaires/${id}`);
+    if (res) {
+      data.data = res.data;
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      const errorV = error.response?.data?.error;
+      data.error = errorV || "Erreur lors de la récupération du stagiaire";
+      return data;
+    }
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const modifierStagiaire = async (formData, id) => {
+  let data = {
+    success: true,
+    errors: {
+      nom: "",
+      prenom: "",
+      cin: "",
+      cne: "",
+      date_naissance: "",
+      groupe_id: "",
+    },
+    server: "",
+  };
+
+  try {
+    const res = await axios.put(`stagiaires/${id}`, formData);
+    if (res) {
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      if (error.response?.status === 422) {
+        data.errors = error.response.data.errors;
+        return data;
+      }
+      if (error.response?.status === 400) {
+        data.server = error.response.data.error;
+        return data;
+      }
+      return data;
+    }
+    data.server = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
