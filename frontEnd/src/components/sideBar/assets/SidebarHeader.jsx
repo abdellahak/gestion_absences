@@ -28,7 +28,7 @@ export function SidebarTitle({ isExpanded, isHovered, isMobileOpen }) {
       }`}
     >
       {isExpanded || isHovered || isMobileOpen ? (
-        `${auth?.role.toUpperCase()} Dashboard`
+        `Tableau de Bord ${auth?.role.toUpperCase()}`
       ) : (
         <MdMoreHoriz className="size-6" />
       )}

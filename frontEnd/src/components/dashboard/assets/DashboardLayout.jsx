@@ -6,7 +6,6 @@ import { Outlet } from "react-router";
 import Header from "../../header/Header";
 import Backdrop from "../../sideBar/assets/Backdrop";
 import Sidebar from "../../sideBar/SideBar";
-import RoleWrapper from "../../../assets/wrapper/RoleWrapper";
 
 function LayoutContent() {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();

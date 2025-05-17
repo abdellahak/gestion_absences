@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSidebar } from "../../assets/sideBarContext/SideBarContext";
 import Logo from "../../assets/logo/Logo";
+import UserDropdown from "./UserDropDown";
 
 export default function Header() {
   const { auth, logout } = useAuth();
@@ -108,15 +109,7 @@ export default function Header() {
               {/* <!-- Notification Menu Area --> */}
             </div>
             {/* <!-- User Area --> */}
-            {/* <UserDropdown /> */}
-            {auth && (
-              <button
-                onClick={handleLogout}
-                className="ml-4 px-4 py-2 border border-brand-600 text-brand-600 rounded hover:bg-brand-200 transition"
-              >
-                Logout
-              </button>
-            )}
+            <UserDropdown />
           </div>
         </div>
       </header>

@@ -13,6 +13,8 @@ import ModifierGroupe from "./components/dashboard/admin/groupe/modifier/Modifie
 import StagiairesList from "./components/dashboard/admin/stagiaire/liste/StagiairesList";
 import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
+import Profile from "./components/dashboard/common/profile/Profile";
+
 function App() {
   return (
     <BrowserRouter>
@@ -22,7 +24,7 @@ function App() {
 
           <Route path="" element={<RoleWrapper role="admin" />}>
             <Route path="/admin" element={<DashboardLayout role="admin" />}>
-              <Route index element={<h1>Admin Dashboard</h1>} />
+              <Route index element={<h1>Tableau de Bord Admin</h1>} />
               <Route path="filieres" >
                 <Route index element={<FilieresList/>} />
                 <Route path="ajouter" element={<AjouterFiliere/>} />
@@ -38,6 +40,7 @@ function App() {
                 <Route path="ajouter" element={<AjouterStagiaire/>} />
                 <Route path=":id/modifier" element={<ModifierStagiaire/>} />
               </Route>
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -47,7 +50,8 @@ function App() {
               path="/stagiaire"
               element={<DashboardLayout role="stagiaire" />}
             >
-              <Route index element={<h1>Stagiaire Dashboard</h1>} />
+              <Route index element={<h1>Tableau de Bord Stagiaire</h1>} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -57,7 +61,7 @@ function App() {
               path="/formateur"
               element={<DashboardLayout role="formateur" />}
             >
-              <Route index element={<h1>Formateur Dashboard</h1>} />
+              <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -67,11 +71,11 @@ function App() {
               path="/surveillant"
               element={<DashboardLayout role="surveillant" />}
             >
-              <Route index element={<h1>Surveillant Dashboard</h1>} />
+              <Route index element={<h1>Tableau de Bord Surveillant</h1>} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
-          <Route path="*" element={<h1>404 Not Found</h1>} />
+          <Route path="*" element={<Not_found className={"w-full h-full"} />} />
         </Routes>
       </AuthWrapper>
     </BrowserRouter>
