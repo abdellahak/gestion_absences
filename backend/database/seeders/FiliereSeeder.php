@@ -10,30 +10,32 @@ class FiliereSeeder extends Seeder
   public function run(): void
   {
     $filieres = [
-      'Développement Informatique',
-      'Réseaux Informatiques',
-      'Gestion des Entreprises',
-      'Techniques de Vente',
-      'Comptabilité',
-      'Maintenance Automobile',
-      'Électromécanique',
-      'Gestion Hôtelière',
-      'Cuisine',
-      'Boulangerie-Pâtisserie',
-      'Infographie',
-      'Secrétariat de Direction',
-      'Gestion des Ressources Humaines',
-      'Marketing Digital',
-      'Froid et Climatisation',
-      'Électricité de Bâtiment',
-      'Mécanique Industrielle',
-      'Logistique',
-      'Topographie',
-      'Gestion de Production',
+      'TDD' => 'Développement Digital',
+      'TRIN' => 'Réseaux Informatiques',
+      'TGE ' => 'Gestion des Entreprises',
+      'TTV' => 'Techniques de Vente',
+      'TCP' => 'Comptabilité',
+      'TMA' => 'Maintenance Automobile',
+      'TEM' => 'Électromécanique',
+      'TGH' => 'Gestion Hôtelière',
+      'TCU' => 'Cuisine',
+      'TBP' => 'Boulangerie-Pâtisserie',
+      'TIN' => 'Infographie',
+      'TSD' => 'Secrétariat de Direction',
+      'TGRH' => 'Gestion des Ressources Humaines',
+      'TMD' => 'Marketing Digital',
+      'TFC' => 'Froid et Climatisation',
+      'TEB' => 'Électricité de Bâtiment',
+      'TMI' => 'Mécanique Industrielle',
+      'TLG' => 'Logistique',
+      'TTP' => 'Topographie',
+      'TGP' => 'Gestion de Production',
     ];
-    foreach ($filieres as $filiere) {
+
+    foreach ($filieres as $code => $intitule) {
       Filiere::create([
-        'intitule' => $filiere,
+        'code' => $code,
+        'intitule' => $intitule,
       ]);
     }
   }

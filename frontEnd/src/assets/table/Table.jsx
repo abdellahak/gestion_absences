@@ -22,7 +22,7 @@ export const TableCell = ({ children, isHeader = false, className,etat,colSpan }
   const CellTag = isHeader ? "th" : "td";
   return (
     <>
-      <CellTag colSpan={colSpan} className={`border-r text-start border-gray-200 px-4 py-3 text-gray-800 ${className} ${etat?(etat =="منجزة"?"bg-green-500 text-white":" bg-red-500 text-white"):""}`}>
+      <CellTag colSpan={colSpan} className={`border-r text-start border-gray-200 px-4 py-3 text-gray-800 ${className}`}>
         {children}
       </CellTag>
     </>

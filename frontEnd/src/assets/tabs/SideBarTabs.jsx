@@ -20,7 +20,7 @@ export function getSidebarNavItems(role) {
       {
         icon: <MdPerson />,
         name: "Tableau de bord",
-        path: "/admin/dashboard",
+        path: "/admin",
       },
       {
         name: "Filières",

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('filieres', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
             $table->string('intitule');
             $table->timestamps();
         });

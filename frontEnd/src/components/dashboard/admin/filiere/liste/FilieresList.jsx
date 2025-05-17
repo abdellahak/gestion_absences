@@ -10,14 +10,11 @@ export default function FilieresList() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getFilieres();
-      console.log(res);
       if (res) setLoading(false);
       if (res.success) {
         setData(res.data);

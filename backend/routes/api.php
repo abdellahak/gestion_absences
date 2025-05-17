@@ -15,7 +15,10 @@ Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::
 Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
     Route::controller(FiliereController::class)->group(function(){
         Route::get("filieres", "index");
+        Route::get("filieres/{id}", "show");
+        Route::put("filieres/{id}", "update");
         Route::delete("filieres/{id}", "destroy");
+        Route::post("filieres", "store");
     });
 });
 

@@ -5,6 +5,8 @@ import DashboardLayout from "./components/dashboard/assets/DashboardLayout";
 import RoleWrapper from "./assets/wrapper/RoleWrapper";
 import Not_found from "./assets/errors/404";
 import FilieresList from "./components/dashboard/admin/filiere/liste/FilieresList";
+import AjouterFiliere from "./components/dashboard/admin/filiere/ajouter/AjouterFiliere";
+import ModifierFiliere from "./components/dashboard/admin/filiere/modifier/ModifierFiliere";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
               <Route index element={<h1>Admin Dashboard</h1>} />
               <Route path="filieres" >
                 <Route index element={<FilieresList/>} />
+                <Route path="ajouter" element={<AjouterFiliere/>} />
+                <Route path=":id/modifier" element={<ModifierFiliere/>} />
               </Route>
               <Route path="*" element={<Not_found />} />
             </Route>

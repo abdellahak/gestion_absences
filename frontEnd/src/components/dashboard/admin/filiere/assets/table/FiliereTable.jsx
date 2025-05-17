@@ -21,6 +21,13 @@ export default function FiliereTable({ data, setShow }) {
                 <div
                   className="flex w-full items-center justify-between"
                 >
+                  Code
+                </div>
+              </TableCell>
+              <TableCell isHeader={true}>
+                <div
+                  className="flex w-full items-center justify-between"
+                >
                   Intitule
                 </div>
               </TableCell>
@@ -33,6 +40,7 @@ export default function FiliereTable({ data, setShow }) {
                 return (
                   <tr key={index} className="border border-gray-200">
                     <TableCell>{item.id}</TableCell>
+                    <TableCell>{item.code}</TableCell>
                     <TableCell>{item.intitule}</TableCell>
 
                     {/* new actions column */}
@@ -43,16 +51,14 @@ export default function FiliereTable({ data, setShow }) {
                           onClick={
                             setShow
                               ? () =>
-                                  setShow({
-                                    id: item.id,
-                                  })
+                                  setShow(item.id)
                               : null
                           }
                         >
                           <FaRegTrashCan className="h-4 w-4" />
                         </button>
                         <Link
-                          to={`/admin/filieres/${item.id}/edit`}
+                          to={`/admin/filieres/${item.id}/modifier`}
                           className="text-green-500 hover:text-green-800"
                         >
                           <GrEdit className="h-4 w-4" />

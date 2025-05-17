@@ -12,7 +12,7 @@ function LayoutContent() {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
   return (
-    <div className="min-h-screen xl:flex">
+    <div className="min-h-screen xl:flex bg-gray-100">
       <div>
         <Sidebar />
         <Backdrop />

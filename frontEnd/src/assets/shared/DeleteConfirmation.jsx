@@ -11,7 +11,7 @@ export default function DeleteConfirmation({
   return (
     <>
       {ReactDOM.createPortal(
-        <div className="fixed inset-0 z-99 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm transition-all duration-300">
+        <div className="fixed inset-0 z-99999 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm transition-all duration-300">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
