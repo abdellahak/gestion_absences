@@ -85,14 +85,14 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-gray-200 rounded-full;
   }
-  /* For Remove Date Icon */
+  /* For Remove Date Icon
   input[type="date"]::-webkit-inner-spin-button,
   input[type="time"]::-webkit-inner-spin-button,
   input[type="date"]::-webkit-calendar-picker-indicator,
   input[type="time"]::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
-  }
+  } */
 }
 
 .tableCheckbox:checked ~ span span {

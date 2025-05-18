@@ -17,7 +17,7 @@ class DemandeAutorisationFactory extends Factory
       'stagiaire_id' => Stagiaire::inRandomOrder()->first()?->id,
       'surveillant_general_id' => SurveillantGeneral::inRandomOrder()->first()?->id,
       'intitule' => $this->faker->sentence(3),
-      'description' => $this->faker->paragraph(),
+      'description' => $this->faker->sentence(),
       'document' => $this->faker->optional()->word() . '.pdf',
       'date' => $this->faker->date(),
       'heure_debut' => $this->faker->time(),

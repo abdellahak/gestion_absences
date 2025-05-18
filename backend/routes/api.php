@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,13 @@ Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
         Route::put("stagiaires/{id}", "update");
         Route::delete("stagiaires/{id}", "destroy");
         Route::post("stagiaires", "store");
+    });
+});
+
+Route::middleware(["auth:sanctum"])->group(function(){
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get("myprofile", "getUser");
+        Route::put("myprofile", "updateProfile");
     });
 });
 
