@@ -1,14 +1,13 @@
 import { axios } from "../../axios";
-import { isAxiosError } from "axios";
-
-export const getFilieres = async (id, programmeId) => {
+import { isAxiosError } from "axios"; 
+export const getFormateurs = async () => {
   let data = {
     success: true,
     data: null,
     error: "",
   };
   try {
-    const res = await axios.get(`admin/filieres`);
+    const res = await axios.get("formateurs");
     if (res) {
       data.data = res.data;
       return data;
@@ -16,8 +15,8 @@ export const getFilieres = async (id, programmeId) => {
   } catch (error) {
     data.success = false;
     if (isAxiosError(error)) {
-      const errorV = error.response.data.error;
-      data.error = errorV;
+      const errorV = error.response?.data?.error;
+      data.error = errorV || "Erreur lors de la récupération des formateurs";
       return data;
     }
     data.error = "Une erreur s'est produite sur le serveur";
@@ -25,34 +24,35 @@ export const getFilieres = async (id, programmeId) => {
   }
 };
 
-export const supprimerFiliere = async (id) => {
+export const supprimerFormateur = async (id) => {
   let data = {
     success: true,
     error: "",
   };
   try {
-    const res = await axios.delete(`admin/filieres/${id}`);
+    const res = await axios.delete(`formateurs/${id}`);
     if (res) {
       return data;
     }
   } catch (error) {
-    data.succes = false;
+    data.success = false;
     data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }
 };
 
-export const ajouterFiliere = async (formData) => {
+export const ajouterFormateur = async (formData) => {
   let data = {
     success: true,
     errors: {
-      code: "",
-      intitule: "",
+      user_id : "",
+      date_recrutement: "",
+      
     },
     error: "",
   };
   try {
-    const res = await axios.post("admin/filieres", formData);
+    const res = await axios.post("formateurs", formData);
     if (res) {
       return data;
     }
@@ -69,14 +69,14 @@ export const ajouterFiliere = async (formData) => {
   }
 };
 
-export const getFiliere = async (id) => {
+export const getFormateur = async (id) => {
   let data = {
     success: true,
     error: "",
   };
 
   try {
-    const res = await axios.get(`admin/filieres/${id}`);
+    const res = await axios.get(`formateurs/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -84,38 +84,38 @@ export const getFiliere = async (id) => {
   } catch (error) {
     data.success = false;
     if (isAxiosError(error)) {
-      const errorV = error.response.data.error;
-      data.error = errorV;
+      const errorV = error.response?.data?.error;
+      data.error = errorV || "Erreur lors de la récupération du formateur";
       return data;
     }
-    data.error = "حدت خطا في الخادم";
+    data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }
 };
 
-export const modifierFiliere = async (formData, id) => {
+export const modifierFromateur = async (formData, id) => {
   let data = {
     success: true,
     errors: {
-      code: "",
-      intitule: "",
+     user_id : "",
+      date_recrutement: "",
     },
     server: "",
   };
 
   try {
-    const res = await axios.put(`admin/filieres/${id}`, formData);
+    const res = await axios.put(`formateurs/${id}`, formData);
     if (res) {
       return data;
     }
   } catch (error) {
     data.success = false;
     if (isAxiosError(error)) {
-      if (error.status == 422) {
+      if (error.response?.status === 422) {
         data.errors = error.response.data.errors;
         return data;
       }
-      if (error.status == 400) {
+      if (error.response?.status === 400) {
         data.server = error.response.data.error;
         return data;
       }

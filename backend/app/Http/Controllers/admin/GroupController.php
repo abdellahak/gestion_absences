@@ -81,6 +81,10 @@ class GroupController extends Controller
             'filiere_id.exists' => 'La filière sélectionnée est invalide',
         ]);
 
+        if($data['code'] == $groupe->code && $data['intitule'] == $groupe->intitule && $data['filiere_id'] == $groupe->filiere_id){
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
+
         $groupe->update($data);
 
         return response()->json(['message' => 'Groupe mis à jour avec succès'], 200);

@@ -67,17 +67,33 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
+        $modified = false;
+
+        if ($request->has('email') && $request->email !== $user->email) {
+            $modified = true;
+        }
+
         $userData = $request->validate([
             'email' => 'nullable|email|unique:users,email,' . $user->id,
         ], [
             'email.unique' => 'L\'email est déjà utilisé par un autre utilisateur.',
             'email.email' => 'L\'email doit être une adresse email valide.',
         ]);
-        $targetUser = User::find($user->id);
-        if (!empty($userData)) {
-            $targetUser->update($userData);
-        }
+
         if ($user->role === "stagiaire") {
+            $stagiaire = Stagiaire::where('user_id', $user->id)->first();
+
+            if ($stagiaire) {
+                if (($request->has('telephone') && $request->telephone !== $stagiaire->telephone) ||
+                    ($request->has('adresse') && $request->adresse !== $stagiaire->adresse) ||
+                    ($request->has('sexe') && $request->sexe !== $stagiaire->sexe) ||
+                    ($request->has('date_naissance') && $request->date_naissance !== $stagiaire->date_naissance) ||
+                    ($request->has('lieu_naissance') && $request->lieu_naissance !== $stagiaire->lieu_naissance)
+                ) {
+                    $modified = true;
+                }
+            }
+
             $stagiaireData = $request->validate([
                 'telephone' => 'nullable|string|unique:stagiaires,telephone,' . $user->id . ',user_id',
                 'adresse' => 'nullable|string',
@@ -94,14 +110,24 @@ class ProfileController extends Controller
                 'CNI.unique' => 'La carte d\'identité nationale est déjà utilisée par un autre stagiaire.',
                 'CNI.string' => 'La carte d\'identité nationale doit être une chaîne de caractères.',
             ]);
+        }
 
-            if (!empty($stagiaireData)) {
-                $stagiaire = Stagiaire::where('user_id', $user->id)->first();
-                if ($stagiaire) {
-                    $stagiaire->update($stagiaireData);
-                }
+        if (!$modified) {
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
+
+        $targetUser = User::find($user->id);
+        if (!empty($userData)) {
+            $targetUser->update($userData);
+        }
+
+        if ($user->role === "stagiaire" && !empty($stagiaireData)) {
+            $stagiaire = Stagiaire::where('user_id', $user->id)->first();
+            if ($stagiaire) {
+                $stagiaire->update($stagiaireData);
             }
         }
+
         return response()->json([
             'message' => 'Profile mis à jour avec succès.',
         ], 200);

@@ -118,6 +118,10 @@ class StagiaireController extends Controller
             'email.unique' => 'L\'email existe déjà',
         ]);
 
+        if($data['groupe_id'] == $stagiaire->groupe_id && $data['numero_inscription'] == $stagiaire->numero_inscription){
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
+
         // Mettre à jour le stagiaire
         $stagiaire->update([
             'groupe_id' => $data['groupe_id'],
