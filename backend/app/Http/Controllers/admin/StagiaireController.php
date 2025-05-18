@@ -59,15 +59,7 @@ class StagiaireController extends Controller
 
         return response()->json([
             'message' => 'Stagiaire créé avec succès',
-            'stagiaire' => [
-                'id' => $stagiaire->id,
-                'user_id' => $user->id,
-                'groupe_id' => $stagiaire->groupe_id,
-                'numero_inscription' => $stagiaire->numero_inscription,
-                'nom' => $user->nom,
-                'prenom' => $user->prenom,
-                'email' => $user->email,
-            ]
+           
         ], 201);
     }
 

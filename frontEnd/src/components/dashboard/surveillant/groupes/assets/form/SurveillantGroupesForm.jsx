@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { FaPlus, FaPen } from "react-icons/fa6";
 import Loading from "../../../../../../assets/loading/Loading";
 import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
-import { getFilieres } from "../../../../../../assets/api/admin/filiere/filiere";
+import { getSurveillantFilieres } from "../../../../../../assets/api/surveillant/surveillant filieres/SurveillantFilieres";
 
-export default function GroupeForm({
+export default function SurveillantGroupForm({
   handleSubmit,
   errors,
   formData,
@@ -19,7 +19,7 @@ export default function GroupeForm({
   useEffect(() => {
     const fetchFilieres = async () => {
       setLoadingFilieres(true);
-      const res = await getFilieres();
+      const res = await getSurveillantFilieres();
       setLoadingFilieres(false);
       if (res && res.success) {
         setFilieres(res.data);
@@ -53,7 +53,7 @@ export default function GroupeForm({
                       type="text"
                       name="intitule"
                       id="intitule"
-                      value={formData.intitule || ""}
+                      value={formData.intitule}
                       onChange={(e) => {
                         setFormData((prev) => ({
                           ...prev,

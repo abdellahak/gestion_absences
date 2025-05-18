@@ -1,5 +1,6 @@
-import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdListAlt, MdTableRows } from "react-icons/md";
+import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
+import { MdListAlt, MdTableRows,MdCalendarToday } from "react-icons/md";
+
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);
@@ -107,6 +108,31 @@ export function getSidebarNavItems(role) {
         path: "/surveillant",
       },
       {
+        name: "Groupes",
+        icon: <FaUsers />,
+        subItems: [
+          { name: "Liste des groupes", path: "/surveillant/groupes" },
+          { name: "Ajouter groupe", path: "/surveillant/groupes/ajouter" },
+        ],
+      },
+      {
+        name: "Filières",
+        icon: <FaSchool />,
+        subItems: [
+          { name: "Liste des filieres", path: "/surveillant/filieres" },
+          
+        ],
+      },
+      {
+        name: "Stagiaires",
+        icon: <FaUserGraduate />,
+        subItems: [
+          { name: "Liste des stagiaires", path: "/surveillant/stagiaires" },
+          { name: "Ajouter stagiaire", path: "/surveillant/stagiaires/ajouter" },
+          
+        ],
+      },
+      {
         name: "Gestion des absences",
         icon: <FaCalendarCheck />,
         subItems: [
@@ -143,6 +169,13 @@ export function getSidebarNavItems(role) {
         icon: <FaCalendarCheck />,
         subItems: [
           { name: "Liste des absences", path: "/stagiaire/absences" },
+        ],
+      },
+      {
+        name: "Avertissements",
+        icon: <FaBell />,
+        subItems: [
+          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
         ],
       },
       {

@@ -1,17 +1,24 @@
 <?php
 
-use App\Http\Controllers\admin\FiliereController;
-use App\Http\Controllers\admin\FormateurController;
-use App\Http\Controllers\admin\GroupController;
-use App\Http\Controllers\admin\StagiaireController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\formateur\FormateurGroupeController;
+use App\Http\Controllers\surveillant\SurveillantStagiaireController;
+
 use App\Http\Controllers\formateur\FormateurStagiaireController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\admin\GroupController;
+use App\Http\Controllers\admin\FiliereController;
+use App\Http\Middleware\AlreadyLoggedInMiddleware;
+use App\Http\Controllers\admin\FormateurController;
+use App\Http\Controllers\admin\StagiaireController;
+use App\Http\Controllers\surveillant\SurveillantGroupController;
+use App\Http\Controllers\surveillant\SurveillantFiliereController;
+use App\Http\Controllers\Stagiaire\AvertissementController;
+use App\Http\Controllers\formateur\FormateurGroupeController;
+use App\Http\Controllers\Stagiaire\StagiaireAbsenceController;
+use App\Http\Controllers\Stagiaire\DemandeAuthorisationController;
 
 Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::class)->group(function () {
     Route::post("login", "login");
@@ -58,6 +65,29 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
         Route::get("groupes/{groupeId}/stagiaires", "stagiaires");
     });
 });
+Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {
+    Route::controller(SurveillantGroupController::class)->group(function(){
+        Route::get("groupes", "index");
+        Route::post("groupes", "store");
+        Route::get("groupes/{id}", "show");
+        Route::put("groupes/{id}", "update");
+    });
+     Route::controller(SurveillantFiliereController::class)->group(function(){
+        Route::get("filieres", "index");
+        Route::get("filieres/{id}", "show");
+        Route::put("filieres/{id}", "update");
+      
+    });
+    Route::controller(SurveillantStagiaireController::class)->group(function(){
+        Route::get("stagiaires", "index");
+        Route::post("stagiaires", "store");
+        Route::get("stagiaires/{id}", "show");
+        Route::put("stagiaires/{id}", "update");
+        Route::delete("stagiaires/{id}", "destroy");
+      
+    });
+
+});
 
 Route::middleware(["auth:sanctum"])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
@@ -69,4 +99,22 @@ Route::middleware(["auth:sanctum"])->group(function () {
 Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function () {
     Route::get("user", "getUser");
     Route::post("logout", "logout");
+});
+
+
+Route::middleware(['auth:sanctum', 'role:stagiaire'])->group(function () {
+   
+    Route::controller(StagiaireAbsenceController::class)->group(function () {
+        Route::get('stagiaire/absences', 'index');
+    });
+     Route::controller(DemandeAuthorisationController::class)->group(function () {
+        Route::get('stagiaire/demandes', 'index');
+        Route::post('stagiaire/demandes', 'store');
+        Route::put('stagiaire/demandes/{id}', 'update');
+        Route::delete('stagiaire/demandes/{id}', 'destroy');
+        Route::get('stagiaire/download/{id}', 'download');
+    });
+    Route::controller(AvertissementController::class)->group(function () {
+        Route::get('stagiaire/avertissements', 'index');
+    });
 });

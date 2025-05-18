@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
 import { FaPlus, FaPen } from "react-icons/fa6";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { LuEye, LuEyeOff } from "react-icons/lu";
-import Loading from "../../../../../../assets/loading/Loading";
 import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
 export default function FiliereForm({
   handleSubmit,
@@ -39,7 +35,7 @@ export default function FiliereForm({
                       type="text"
                       name="intitule"
                       id="intitule"
-                      value={formData.intitule}
+                      value={formData.intitule || ""}
                       onChange={(e) => {
                         setFormData((prev) => ({
                           ...prev,
