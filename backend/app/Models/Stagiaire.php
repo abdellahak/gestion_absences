@@ -35,4 +35,10 @@ class Stagiaire extends Model
     {
         return $this->hasMany(Absence::class);
     }
+
+    public function avertissements()
+    {
+        return $this->hasMany(Avertissement::class);
+    }
+
 }

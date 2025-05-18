@@ -22,22 +22,9 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => 'admin',
         ]);
-        User::create([
-            'nom' => 'mohamed',
-            'prenom' => 'stagiaire',
-            'identifiant' => 'stagiaire',
-            'email' => 'stagiaire@mail.com',
-            'password' => Hash::make('stagiaire'),
-            'role' => 'stagiaire',
-        ]);
         User::factory(5)->create([
             'role' => 'admin',
         ]);
-        User::factory(5)->create([
-            'role' => 'stagiaire',
-        ]);
-        User::factory(5)->create([
-            'role' => 'admin',
-        ]);
+        
     }
 }

@@ -1,5 +1,5 @@
-import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdTableRows } from "react-icons/md";
+import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
+import { MdTableRows, MdListAlt, MdCalendarToday } from "react-icons/md";
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);
@@ -146,6 +146,13 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
+        name: "Avertissements",
+        icon: <FaBell />,
+        subItems: [
+          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
+        ],
+      },
+      {
         name: "Demandes d'autorisation",
         icon: <FaFileAlt />,
         subItems: [
@@ -157,11 +164,6 @@ export function getSidebarNavItems(role) {
         name: "Profile",
         icon: <FaUserCircle />,
         path: "/stagiaire/profile",
-      },
-      {
-      name: "Mes absences",
-      path: "/stagiaire/absences",
-      icon: <MdCalendarToday />,
       },
     ];
   }
