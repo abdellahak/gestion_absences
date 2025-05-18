@@ -13,6 +13,7 @@ import ModifierGroupe from "./components/dashboard/admin/groupe/modifier/Modifie
 import StagiairesList from "./components/dashboard/admin/stagiaire/liste/StagiairesList";
 import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
+import AbsencesList from "./components/dashboard/stagiaire/absences/liste/AbsencesList";
 function App() {
   return (
     <BrowserRouter>
@@ -49,6 +50,7 @@ function App() {
             >
               <Route index element={<h1>Stagiaire Dashboard</h1>} />
               <Route path="*" element={<Not_found />} />
+              <Route path="absences" element={<AbsencesList />} />
             </Route>
           </Route>
 

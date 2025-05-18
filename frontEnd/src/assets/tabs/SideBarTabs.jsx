@@ -84,6 +84,11 @@ export function getSidebarNavItems(role) {
         icon: <MdTableRows />,
         subItems: [{ name: "example page", path: "/formateur/example_page7", pro: false }],
       },
+      {
+      name: "Mes absences",
+      path: "/stagiaire/absences",
+      icon: <MdCalendarToday />,
+      },
     ];
   }
 
