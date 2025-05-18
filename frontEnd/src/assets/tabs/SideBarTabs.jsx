@@ -15,6 +15,14 @@ export function getSidebarNavItems(role) {
         path: "/admin",
       },
       {
+        name: "Formateurs",
+        icon: <MdListAlt />,
+        subItems: [
+          { name: "Liste des Formateurs", path: "/admin/formateurs", pro: false },
+          { name: "Ajouter formateur", path: "/admin/formateurs/ajouter", pro: false },
+        ],
+      },
+      {
         name: "Filières",
         icon: <FaSchool />,
         subItems: [

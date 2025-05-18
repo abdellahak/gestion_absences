@@ -15,6 +15,9 @@ import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/Ajo
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
 import Profile from "./components/dashboard/common/profile/Profile";
 import FormateurGroupesList from "./components/dashboard/formateur/groupe/liste/FormateurGroupesList";
+import FormateurList from "./components/dashboard/admin/formateur/liste/FormateurList";
+import AjouterFormateur from "./components/dashboard/admin/formateur/ajouter/AjouterFormateur";
+import ModifierFormateur from "./components/dashboard/admin/formateur/modifer/modiferFormateur";
 
 function App() {
   return (
@@ -40,6 +43,11 @@ function App() {
                 <Route index element={<StagiairesList/>} />
                 <Route path="ajouter" element={<AjouterStagiaire/>} />
                 <Route path=":id/modifier" element={<ModifierStagiaire/>} />
+              </Route>
+              <Route path="formateurs" >
+                <Route index element={<FormateurList/>} />
+                <Route path="ajouter" element={<AjouterFormateur/>} />
+                <Route path=":id/modifier" element={<ModifierFormateur/>} />
               </Route>
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
