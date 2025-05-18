@@ -46,24 +46,24 @@ export function getSidebarNavItems(role) {
         name: "Filières",
         icon: <MdInsertDriveFile />,
         subItems: [
-          { name: "Liste des filières", path: "/admin/filieres", pro: false },
-          { name: "Ajouter filière", path: "/admin/filieres/ajouter", pro: false },
+          { name: "Liste des filières", path: "/admin/filieres"},
+          { name: "Ajouter filière", path: "/admin/filieres/ajouter"},
         ],
       },
        {
         name: "Groupes",
         icon: <MdListAlt />,
         subItems: [
-          { name: "Liste des groupes", path: "/admin/groupes", pro: false },
-          { name: "Ajouter groupe", path: "/admin/groupes/ajouter", pro: false },
+          { name: "Liste des groupes", path: "/admin/groupes"},
+          { name: "Ajouter groupe", path: "/admin/groupes/ajouter"},
         ],
       },
       {
         name: "Stagiaires",
         icon: <MdPerson />,
         subItems: [
-          { name: "Liste des stagiaires", path: "/admin/stagiaires", pro: false },
-          { name: "Ajouter stagiaire", path: "/admin/stagiaires/ajouter", pro: false },
+          { name: "Liste des stagiaires", path: "/admin/stagiaires"},
+          { name: "Ajouter stagiaire", path: "/admin/stagiaires/ajouter"},
         ],
       },
       {
@@ -89,19 +89,19 @@ export function getSidebarNavItems(role) {
       {
         name: "example page",
         icon: <MdListAlt />,
-        subItems: [{ name: "Form Elements", path: "/formateur/example_page3", pro: false }],
+        subItems: [{ name: "Form Elements", path: "/formateur/example_page3"}],
       },
       {
         name: "example page",
         icon: <MdTableRows />,
-        subItems: [{ name: "example page", path: "/formateur/example_page4", pro: false }],
+        subItems: [{ name: "example page", path: "/formateur/example_page4"}],
       },
       {
         name: "example page",
         icon: <MdInsertDriveFile />,
         subItems: [
-          { name: "page 1", path: "/formateur/example_page5", pro: false },
-          { name: "page 2", path: "/formateur/example_page6", pro: false },
+          { name: "page 1", path: "/formateur/example_page5"},
+          { name: "page 2", path: "/formateur/example_page6"},
         ],
       },
     ];
@@ -112,7 +112,7 @@ export function getSidebarNavItems(role) {
       {
         name: "example page",
         icon: <MdTableRows />,
-        subItems: [{ name: "example page", path: "/stagiaire/example_page7", pro: false }],
+        subItems: [{ name: "example page", path: "/stagiaire/example_page7"}],
       },
     ];
   }
