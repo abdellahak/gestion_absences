@@ -14,6 +14,7 @@ class SurveillantGeneralFactory extends Factory
   {
     $user = User::factory()->create([
       'role' => 'surveillant',
+      'identifiant' => $this->faker->unique()->numerify('SG#####'),
     ]);
     return [
       'user_id' => $user->id,

@@ -14,10 +14,12 @@ import StagiairesList from "./components/dashboard/admin/stagiaire/liste/Stagiai
 import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
 import Profile from "./components/dashboard/common/profile/Profile";
+import AbsencesList from "./components/dashboard/stagiaire/absences/liste/AbsencesList";
 import FormateurGroupesList from "./components/dashboard/formateur/groupe/liste/FormateurGroupesList";
 import FormateurList from "./components/dashboard/admin/formateur/liste/FormateurList";
 import AjouterFormateur from "./components/dashboard/admin/formateur/ajouter/AjouterFormateur";
 import ModifierFormateur from "./components/dashboard/admin/formateur/modifer/modiferFormateur";
+<<<<<<< HEAD
 import SurveillantGroupList from "./components/dashboard/surveillant/groupes/liste/SurveillantGroupeList";
 import ModifierSurveillantGroupe from "./components/dashboard/surveillant/groupes/modifer/ModiferSurveillantGroupe";
 import AjouterSurveillantGroupe from "./components/dashboard/surveillant/groupes/ajouter/AjouterSurveillantGroupe";
@@ -26,6 +28,13 @@ import ModifierSurveillantFiliere from "./components/dashboard/surveillant/filie
 import SurveillantStagiairesList from "./components/dashboard/surveillant/stagiaires/liste/SurveillantStagiairesList";
 import ModifierSurveillantStagiaire from "./components/dashboard/surveillant/stagiaires/modifier/ModifierSurveillantStagiaire";
 import AjouterSurveillantStagiaire from "./components/dashboard/surveillant/stagiaires/ajouter/AjouterSurveillantStagiaire";
+=======
+import DemandeAuthList from "./components/dashboard/stagiaire/demande_autorisation/liste/DemandeAuthList";
+import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autorisation/ajouter/AjouterDemandeAuth";
+import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
+import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
+import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
+>>>>>>> ee41a5b1342bafa8edf4c0d3a088b169f832639a
 
 function App() {
   return (
@@ -68,6 +77,11 @@ function App() {
               element={<DashboardLayout role="stagiaire" />}
             >
               <Route index element={<h1>Tableau de Bord Stagiaire</h1>} />
+              <Route path="absences" element={<AbsencesList />} />
+              <Route path="demandes" element={<DemandeAuthList />} />
+              <Route path="avertissements" element={<AvertissementsList />} />
+              <Route path="demandes/ajouter" element={<AjouterDemandeAuth />} />
+              <Route path="demandes/:id/modifier" element={<ModifierDemande />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
@@ -80,6 +94,7 @@ function App() {
             >
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
+              <Route path="stagiaires" element={<FormateurStagiairesList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>

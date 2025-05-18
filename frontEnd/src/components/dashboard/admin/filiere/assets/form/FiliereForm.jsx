@@ -35,7 +35,7 @@ export default function FiliereForm({
                       type="text"
                       name="intitule"
                       id="intitule"
-                      value={formData.intitule}
+                      value={formData.intitule || ""}
                       onChange={(e) => {
                         setFormData((prev) => ({
                           ...prev,

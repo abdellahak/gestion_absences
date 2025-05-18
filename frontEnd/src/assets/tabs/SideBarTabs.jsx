@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import { FaChartPie,FaUserGraduate, FaUsers, FaUserTie, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
 import { MdTableRows,MdListAlt } from "react-icons/md";
+=======
+import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
+import { MdListAlt, MdTableRows,MdCalendarToday } from "react-icons/md";
+
+>>>>>>> ee41a5b1342bafa8edf4c0d3a088b169f832639a
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);
@@ -168,6 +174,13 @@ export function getSidebarNavItems(role) {
         icon: <FaCalendarCheck />,
         subItems: [
           { name: "Liste des absences", path: "/stagiaire/absences" },
+        ],
+      },
+      {
+        name: "Avertissements",
+        icon: <FaBell />,
+        subItems: [
+          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
         ],
       },
       {
