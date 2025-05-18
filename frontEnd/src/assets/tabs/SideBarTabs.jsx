@@ -47,6 +47,14 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
+        name: "Surveillants généraux",
+        icon: <MdPerson />,
+        subItems: [
+          { name: "Liste des surveillants", path: "/admin/surveillants", pro: false },
+          { name: "Ajouter surveillant", path: "/admin/surveillants/ajouter", pro: false },
+        ],
+      },
+      {
         name: "example page",
         icon: <MdListAlt />,
         subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],

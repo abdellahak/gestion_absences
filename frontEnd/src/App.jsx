@@ -13,6 +13,11 @@ import ModifierGroupe from "./components/dashboard/admin/groupe/modifier/Modifie
 import StagiairesList from "./components/dashboard/admin/stagiaire/liste/StagiairesList";
 import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
+import SurveillantgeneralleList from "./components/dashboard/admin/serveillant_generalle/liste/SurveillantgeneralleList";
+import AjouterSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/ajouter/AjouterSurveillantgeneralle";
+import ModifierSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/modifier/ModifierSurveillantgeneralle";    
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +42,11 @@ function App() {
                 <Route index element={<StagiairesList/>} />
                 <Route path="ajouter" element={<AjouterStagiaire/>} />
                 <Route path=":id/modifier" element={<ModifierStagiaire/>} />
+              </Route>
+              <Route path="surveillants" >
+                <Route index element={<SurveillantgeneralleList/>} />
+                <Route path="ajouter" element={<AjouterSurveillantgeneralle/>} />
+                <Route path=":id/modifier" element={<ModifierSurveillantgeneralle/>} />
               </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
