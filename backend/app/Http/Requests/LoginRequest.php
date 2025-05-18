@@ -36,6 +36,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'identifiant.required' => 'Veuillez entrer l\'identifiant',
+            'identifiant.exists' => 'L\'identifiant n\'existe pas',
             'password.required' => 'Veuillez entrer le mot de passe',
         ];
     }

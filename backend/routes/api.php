@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\formateur\FormateurStagiaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +56,10 @@ Route::middleware(["auth:sanctum", "role:admin"])->prefix("admin")->group(functi
 Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->group(function () {
     Route::controller(FormateurGroupeController::class)->group(function(){
         Route::get("groupes", "index");
+    });
+    Route::controller(FormateurStagiaireController::class)->group(function(){
+        Route::get("groupes/stagiaires", "stagiaires");
+        Route::get("groupes/{groupeId}/stagiaires", "stagiaires");
     });
 });
 

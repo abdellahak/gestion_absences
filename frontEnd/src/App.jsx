@@ -23,6 +23,7 @@ import DemandeAuthList from "./components/dashboard/stagiaire/demande_autorisati
 import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autorisation/ajouter/AjouterDemandeAuth";
 import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
 import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
+import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
             >
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
+              <Route path="stagiaires" element={<FormateurStagiairesList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
