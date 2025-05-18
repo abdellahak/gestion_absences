@@ -18,6 +18,14 @@ import FormateurGroupesList from "./components/dashboard/formateur/groupe/liste/
 import FormateurList from "./components/dashboard/admin/formateur/liste/FormateurList";
 import AjouterFormateur from "./components/dashboard/admin/formateur/ajouter/AjouterFormateur";
 import ModifierFormateur from "./components/dashboard/admin/formateur/modifer/modiferFormateur";
+import SurveillantGroupList from "./components/dashboard/surveillant/groupes/liste/SurveillantGroupeList";
+import ModifierSurveillantGroupe from "./components/dashboard/surveillant/groupes/modifer/ModiferSurveillantGroupe";
+import AjouterSurveillantGroupe from "./components/dashboard/surveillant/groupes/ajouter/AjouterSurveillantGroupe";
+import SurveillantFilieresList from "./components/dashboard/surveillant/filieres/liste/SurveillantFiliereLsit";
+import ModifierSurveillantFiliere from "./components/dashboard/surveillant/filieres/modifer/ModiferSurveillantFiliere";
+import SurveillantStagiairesList from "./components/dashboard/surveillant/stagiaires/liste/SurveillantStagiairesList";
+import ModifierSurveillantStagiaire from "./components/dashboard/surveillant/stagiaires/modifier/ModifierSurveillantStagiaire";
+import AjouterSurveillantStagiaire from "./components/dashboard/surveillant/stagiaires/ajouter/AjouterSurveillantStagiaire";
 
 function App() {
   return (
@@ -83,6 +91,16 @@ function App() {
               element={<DashboardLayout role="surveillant" />}
             >
               <Route index element={<h1>Tableau de Bord Surveillant</h1>} />
+              <Route path="groupes" element={<SurveillantGroupList />} />
+              <Route path="filieres" element={<SurveillantFilieresList />} />
+              <Route path="stagiaires" element={<SurveillantStagiairesList />} />
+              <Route path="groupes/ajouter" element={<AjouterSurveillantGroupe />} />
+              <Route path="groupes/:id/modifier" element={<ModifierSurveillantGroupe />} />
+              <Route path="filieres/:id/modifier" element={<ModifierSurveillantFiliere />} />
+              <Route path="stagiaires/ajouter" element={<AjouterSurveillantStagiaire />} />
+              <Route path="stagiaires/:id/modifier" element={<ModifierSurveillantStagiaire />} />
+
+
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
