@@ -31,4 +31,14 @@ class Stagiaire extends Model
         return $this->belongsTo(Groupe::class);
     }
     
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    public function avertissements()
+    {
+        return $this->hasMany(Avertissement::class);
+    }
+
 }
