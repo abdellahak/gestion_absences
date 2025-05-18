@@ -8,7 +8,7 @@ export const getGroupes = async () => {
     error: "",
   };
   try {
-    const res = await axios.get("groupes");
+    const res = await axios.get("admin/groupes");
     if (res) {
       data.data = res.data;
       return data;
@@ -31,7 +31,7 @@ export const supprimerGroupe = async (id) => {
     error: "",
   };
   try {
-    const res = await axios.delete(`groupes/${id}`);
+    const res = await axios.delete(`admin/groupes/${id}`);
     if (res) {
       return data;
     }
@@ -53,7 +53,7 @@ export const ajouterGroupe = async (formData) => {
     error: "",
   };
   try {
-    const res = await axios.post("groupes", formData);
+    const res = await axios.post("admin/groupes", formData);
     if (res) {
       return data;
     }
@@ -77,7 +77,7 @@ export const getGroupe = async (id) => {
   };
 
   try {
-    const res = await axios.get(`groupes/${id}`);
+    const res = await axios.get(`admin/groupes/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -106,7 +106,7 @@ export const modifierGroupe = async (formData, id) => {
   };
 
   try {
-    const res = await axios.put(`groupes/${id}`, formData);
+    const res = await axios.put(`admin/groupes/${id}`, formData);
     if (res) {
       return data;
     }

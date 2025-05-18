@@ -8,7 +8,7 @@ export const getFilieres = async (id, programmeId) => {
     error: "",
   };
   try {
-    const res = await axios.get(`filieres`);
+    const res = await axios.get(`admin/filieres`);
     if (res) {
       data.data = res.data;
       return data;
@@ -31,7 +31,7 @@ export const supprimerFiliere = async (id) => {
     error: "",
   };
   try {
-    const res = await axios.delete(`filieres/${id}`);
+    const res = await axios.delete(`admin/filieres/${id}`);
     if (res) {
       return data;
     }
@@ -52,7 +52,7 @@ export const ajouterFiliere = async (formData) => {
     error: "",
   };
   try {
-    const res = await axios.post("filieres", formData);
+    const res = await axios.post("admin/filieres", formData);
     if (res) {
       return data;
     }
@@ -76,7 +76,7 @@ export const getFiliere = async (id) => {
   };
 
   try {
-    const res = await axios.get(`filieres/${id}`);
+    const res = await axios.get(`admin/filieres/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -104,7 +104,7 @@ export const modifierFiliere = async (formData, id) => {
   };
 
   try {
-    const res = await axios.put(`filieres/${id}`, formData);
+    const res = await axios.put(`admin/filieres/${id}`, formData);
     if (res) {
       return data;
     }

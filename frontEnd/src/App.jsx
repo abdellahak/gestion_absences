@@ -14,6 +14,7 @@ import StagiairesList from "./components/dashboard/admin/stagiaire/liste/Stagiai
 import AjouterStagiaire from "./components/dashboard/admin/stagiaire/ajouter/AjouterStagiaire";
 import ModifierStagiaire from "./components/dashboard/admin/stagiaire/modifier/ModifierStagiaire";
 import Profile from "./components/dashboard/common/profile/Profile";
+import FormateurGroupesList from "./components/dashboard/formateur/groupe/liste/FormateurGroupesList";
 
 function App() {
   return (
@@ -62,6 +63,8 @@ function App() {
               element={<DashboardLayout role="formateur" />}
             >
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
+              <Route path="groupes" element={<FormateurGroupesList />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -72,6 +75,7 @@ function App() {
               element={<DashboardLayout role="surveillant" />}
             >
               <Route index element={<h1>Tableau de Bord Surveillant</h1>} />
+              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>

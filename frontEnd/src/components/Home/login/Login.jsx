@@ -33,11 +33,40 @@ export default function Login() {
   const handleSubmit = async () => {
     const res = await Auth.Login(info);
     if (res.success) {
-      const redirect = searchParams.get("redirect");
-      if (redirect) {
-        navigate(decodeURIComponent(redirect));
+      // After successful login, we need to fetch the user data to determine their role
+      const userRes = await Auth.user();
+
+      if (userRes.success) {
+        const userRole = userRes.data.role;
+        const redirect = searchParams.get("redirect");
+
+        if (redirect) {
+          const decodedRedirect = decodeURIComponent(redirect);
+
+          if (decodedRedirect.startsWith(`/${userRole}`)) {
+            return navigate(decodedRedirect);
+          }
+        }
+
+        switch (userRole) {
+          case "admin":
+            navigate("/admin");
+            break;
+          case "stagiaire":
+            navigate("/stagiaire");
+            break;
+          case "formateur":
+            navigate("/formateur");
+            break;
+          case "surveillant":
+            navigate("/surveillant");
+            break;
+          default:
+            navigate("/");
+        }
+      } else {
+        navigate(0);
       }
-      navigate(0);
     } else {
       setErrors(res.errors);
     }

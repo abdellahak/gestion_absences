@@ -62,13 +62,17 @@ class FiliereController extends Controller
         [
             'code.required' => 'Le code est requis',
             'code.string' => 'Le code doit être une chaîne de caractères',
-            'code.unique' => 'Le code doit être unique',
+            'code.unique' => 'Cet code est déjà utilisé',
             'code.max' => 'Le code ne doit pas dépasser 10 caractères',
             'intitule.required' => 'L\'intitulé est requis',
-            'intitule.unique' => 'L\'intitulé doit être unique',
+            'intitule.unique' => 'Cet intitulé est déjà enregistré',
             'intitule.string' => 'L\'intitulé doit être une chaîne de caractères',
             'intitule.max' => 'L\'intitulé ne doit pas dépasser 255 caractères',
         ]);
+
+        if($data['code'] == $filiere->code && $data['intitule'] == $filiere->intitule) {
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
 
         $filiere->update([
             'code' => $data['code'],

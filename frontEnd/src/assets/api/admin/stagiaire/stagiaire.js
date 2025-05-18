@@ -8,7 +8,7 @@ export const getStagiaires = async () => {
     error: "",
   };
   try {
-    const res = await axios.get("stagiaires");
+    const res = await axios.get("admin/stagiaires");
     if (res) {
       data.data = res.data;
       return data;
@@ -31,7 +31,7 @@ export const supprimerStagiaire = async (id) => {
     error: "",
   };
   try {
-    const res = await axios.delete(`stagiaires/${id}`);
+    const res = await axios.delete(`admin/stagiaires/${id}`);
     if (res) {
       return data;
     }
@@ -52,7 +52,7 @@ export const ajouterStagiaire = async (formData) => {
     error: "",
   };
   try {
-    const res = await axios.post("stagiaires", formData);
+    const res = await axios.post("admin/stagiaires", formData);
     if (res) {
       return data;
     }
@@ -76,7 +76,7 @@ export const getStagiaire = async (id) => {
   };
 
   try {
-    const res = await axios.get(`stagiaires/${id}`);
+    const res = await axios.get(`admin/stagiaires/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -104,7 +104,7 @@ export const modifierStagiaire = async (formData, id) => {
   };
 
   try {
-    const res = await axios.put(`stagiaires/${id}`, formData);
+    const res = await axios.put(`admin/stagiaires/${id}`, formData);
     if (res) {
       return data;
     }
