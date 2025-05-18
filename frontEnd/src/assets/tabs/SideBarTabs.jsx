@@ -1,4 +1,5 @@
 import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
+import { MdTableRows } from "react-icons/md";
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);
@@ -125,6 +126,37 @@ export function getSidebarNavItems(role) {
         name: "Profile",
         icon: <FaUserCircle />,
         path: "/surveillant/profile",
+      },
+    ];
+  }
+
+  
+  if (role === "stagiaire") {
+    return [
+      {
+        icon: <FaChartPie />,
+        name: "Tableau de bord",
+        path: "/stagiaire",
+      },
+      {
+        name: "Mes absences",
+        icon: <FaCalendarCheck />,
+        subItems: [
+          { name: "Liste des absences", path: "/stagiaire/absences" },
+        ],
+      },
+      {
+        name: "Demandes d'autorisation",
+        icon: <FaFileAlt />,
+        subItems: [
+          { name: "Mes demandes", path: "/stagiaire/demandes" },
+          { name: "Nouvelle demande", path: "/stagiaire/demandes/ajouter" },
+        ],
+      },
+      {
+        name: "Profile",
+        icon: <FaUserCircle />,
+        path: "/stagiaire/profile",
       },
     ];
   }
