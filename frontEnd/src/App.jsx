@@ -18,6 +18,7 @@ import FormateurGroupesList from "./components/dashboard/formateur/groupe/liste/
 import FormateurList from "./components/dashboard/admin/formateur/liste/FormateurList";
 import AjouterFormateur from "./components/dashboard/admin/formateur/ajouter/AjouterFormateur";
 import ModifierFormateur from "./components/dashboard/admin/formateur/modifer/modiferFormateur";
+import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
             >
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
+              <Route path="stagiaires" element={<FormateurStagiairesList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>

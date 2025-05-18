@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Stagiaire::class, 'user_id');
     }
+
+    public function formateur()
+    {
+        return $this->hasOne(Formateur::class, 'user_id');
+    }
+
+    public function surveillant()
+    {
+        return $this->hasOne(SurveillantGeneral::class, 'user_id');
+    }
 }

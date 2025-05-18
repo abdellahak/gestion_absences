@@ -25,9 +25,7 @@ class FormateurFactory extends Factory
   public function configure()
   {
     return $this->afterCreating(function (Formateur $formateur) {
-      // Attach to a random existing groupe, or create one if none exists
       $groupe = Groupe::inRandomOrder()->first() ?? Groupe::factory()->create();
-      // Assuming many-to-many relationship
       $formateur->groupes()->attach($groupe->id);
     });
   }

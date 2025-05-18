@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\GroupController;
 use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\formateur\FormateurGroupeController;
+use App\Http\Controllers\formateur\FormateurStagiaireController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use Illuminate\Http\Request;
@@ -51,6 +52,10 @@ Route::middleware(["auth:sanctum", "role:admin"])->prefix("admin")->group(functi
 Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->group(function () {
     Route::controller(FormateurGroupeController::class)->group(function(){
         Route::get("groupes", "index");
+    });
+    Route::controller(FormateurStagiaireController::class)->group(function(){
+        Route::get("groupes/stagiaires", "stagiaires");
+        Route::get("groupes/{groupeId}/stagiaires", "stagiaires");
     });
 });
 

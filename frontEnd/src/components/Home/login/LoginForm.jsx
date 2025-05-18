@@ -46,7 +46,7 @@ export default function LoginForm({
                       className="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-blue-300 focus:outline-hidden focus:ring-3 focus:ring-blue-500/10"
                     />
                   </div>
-                  <p className="text-red-500 font-medium text-lg break-words h-[20px]">
+                  <p className="text-red-500 text-lg break-words h-[20px]">
                     {errors.identifiant}
                   </p>
                 </div>

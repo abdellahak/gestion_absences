@@ -1,5 +1,5 @@
 import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdTableRows } from "react-icons/md";
+import { MdListAlt, MdTableRows } from "react-icons/md";
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);

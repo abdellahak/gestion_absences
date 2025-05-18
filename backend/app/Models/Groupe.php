@@ -15,6 +15,11 @@ class Groupe extends Model
         'code'
     ];
 
+    public function stagiaires()
+    {
+        return $this->hasMany(Stagiaire::class);
+    }
+
     public function formateurs()
     {
         return $this->belongsToMany(Formateur::class);
