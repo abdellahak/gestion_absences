@@ -35,6 +35,14 @@ export function getSidebarNavItems(role) {
         path: "/admin",
       },
       {
+        name: "Formateurs",
+        icon: <MdListAlt />,
+        subItems: [
+          { name: "Liste des Formateurs", path: "/admin/formateurs", pro: false },
+          { name: "Ajouter formateur", path: "/admin/formateurs/ajouter", pro: false },
+        ],
+      },
+      {
         name: "Filières",
         icon: <MdInsertDriveFile />,
         subItems: [
@@ -57,6 +65,16 @@ export function getSidebarNavItems(role) {
           { name: "Liste des stagiaires", path: "/admin/stagiaires", pro: false },
           { name: "Ajouter stagiaire", path: "/admin/stagiaires/ajouter", pro: false },
         ],
+      },
+      {
+        name: "example page",
+        icon: <MdListAlt />,
+        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
+      },
+      {
+        name: "example page",
+        icon: <MdTableRows />,
+        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
       },
     ];
   }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\FiliereController;
+use App\Http\Controllers\admin\FormateurController;
 use App\Http\Controllers\admin\GroupController;
 use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\AuthController;
@@ -36,6 +37,13 @@ Route::middleware(["auth:sanctum", "role:admin"])->group(function(){
         Route::put("stagiaires/{id}", "update");
         Route::delete("stagiaires/{id}", "destroy");
         Route::post("stagiaires", "store");
+    });
+    Route::controller(FormateurController::class)->group(function(){
+        Route::get("formateurs", "index");
+        Route::get("formateurs/{id}", "show");
+        Route::put("formateurs/{id}", "update");
+        Route::delete("formateurs/{id}", "destroy");
+        Route::post("formateurs", "store");
     });
 });
 
