@@ -10,11 +10,10 @@ export default function StagiaireTable({ data, setShow }) {
         <Table>
           <thead>
             <ThRow>
-              <TableCell isHeader={true}>N°</TableCell>
+              <TableCell isHeader={true}>Numéro d'inscription</TableCell>
               <TableCell isHeader={true}>Nom</TableCell>
               <TableCell isHeader={true}>Prenom</TableCell>
               <TableCell isHeader={true}>Email</TableCell>
-              <TableCell isHeader={true}>Numéro d'inscription</TableCell>
               <TableCell isHeader={true}>Groupe</TableCell>
               <TableCell isHeader={true}>Actions</TableCell>
             </ThRow>
@@ -23,11 +22,10 @@ export default function StagiaireTable({ data, setShow }) {
             {data.length > 0 ? (
               data.map((item, index) => (
                 <tr key={index} className="border border-gray-200">
-                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.numero_inscription}</TableCell>
                   <TableCell>{item?.user?.nom}</TableCell>
                   <TableCell>{item.user?.prenom}</TableCell>
                   <TableCell>{item.user?.email}</TableCell>
-                  <TableCell>{item.numero_inscription}</TableCell>
                   <TableCell>
                     {item.groupe?.intitule || item.groupe_id || ""}
                   </TableCell>

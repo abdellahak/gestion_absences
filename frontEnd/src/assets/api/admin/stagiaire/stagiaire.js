@@ -46,6 +46,9 @@ export const ajouterStagiaire = async (formData) => {
   let data = {
     success: true,
     errors: {
+      nom: "",
+      prenom: "",
+      email: "",
       groupe_id: "",
       numero_inscription: "",
     },

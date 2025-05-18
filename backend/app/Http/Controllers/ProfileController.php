@@ -29,7 +29,7 @@ class ProfileController extends Controller
                 $userData['sexe'] = $stagiaire->sexe;
                 $userData['date_naissance'] = $stagiaire->date_naissance;
                 $userData['lieu_naissance'] = $stagiaire->lieu_naissance;
-                $userData['CNI'] = $stagiaire->CNI;
+                $userData['CIN'] = $stagiaire->CNI;
                 $userData['groupe_id'] = $stagiaire->groupe_id;
                 $userData['numero_inscription'] = $stagiaire->numero_inscription;
             }
@@ -107,8 +107,8 @@ class ProfileController extends Controller
                 'sexe.in' => 'Le sexe doit être soit "Homme" soit "Femme".',
                 'date_naissance.date' => 'La date de naissance doit être une date valide.',
                 'lieu_naissance.string' => 'Le lieu de naissance doit être une chaîne de caractères.',
-                'CNI.unique' => 'La carte d\'identité nationale est déjà utilisée par un autre stagiaire.',
-                'CNI.string' => 'La carte d\'identité nationale doit être une chaîne de caractères.',
+                'CIN.unique' => 'La carte d\'identité nationale est déjà utilisée par un autre stagiaire.',
+                'CIN.string' => 'La carte d\'identité nationale doit être une chaîne de caractères.',
             ]);
         }
 

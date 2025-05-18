@@ -48,7 +48,7 @@ export default function Not_found({ className }) {
           </Link>
           <button
             onClick={() => navigate(-1)}
-            className="mt-4 px-8 py-3 rounded-lg border border-brand-600 text-brand-600 font-medium text-lg shadow-theme-md hover:bg-brand-600 hover:text-white active:scale-95 transition-all duration-200"
+            className="mt-4 px-8 py-3 rounded-lg border border-brand-600 text-brand-600 font-medium text-lg shadow-theme-md hover:bg-brand-400 hover:text-white active:scale-95 transition-all duration-200"
           >
             Retour
           </button>

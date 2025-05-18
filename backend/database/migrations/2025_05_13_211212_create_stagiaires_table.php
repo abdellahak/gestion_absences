@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('telephone')->nullable()->unique();
             $table->string('adresse')->nullable();
-            $table->string('CNI')->nullable()->unique();
+            $table->string('CIN')->nullable()->unique();
             $table->enum('sexe', ['Homme', 'Femme'])->nullable();
             $table->date('date_naissance')->nullable();
             $table->string('lieu_naissance')->nullable();

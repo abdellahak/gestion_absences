@@ -21,24 +21,26 @@ class FormateurController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'identifiant' => 'required|string|unique:users,identifiant',
-            'email' => 'required|email|unique:users,email',
-            'date_recrutement' => 'required|date',
+        $validated = $request->validate(
+            [
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'identifiant' => 'required|string|unique:users,identifiant',
+                'email' => 'required|email|unique:users,email',
+                'date_recrutement' => 'required|date',
 
-        ],[
-            'nom.required' => 'Le nom est requis',
-            'prenom.required' => 'Le prénom est requis',
-            'identifiant.required' => 'L\'identifiant est requis',
-            'identifiant.unique' => 'L\'identifiant doit être unique',
-            'email.email' => 'Veuillez entrer un email valide',
-            'email.unique' => 'L\'email existe déjà',
-            'date_recrutement.required' => 'La date de recrutement est requise',
-            'date_recrutement.date' => 'La date de recrutement doit être une date valide',
-        ]
-    );
+            ],
+            [
+                'nom.required' => 'Le nom est requis',
+                'prenom.required' => 'Le prénom est requis',
+                'identifiant.required' => 'L\'identifiant est requis',
+                'identifiant.unique' => 'L\'identifiant doit être unique',
+                'email.email' => 'Veuillez entrer un email valide',
+                'email.unique' => 'L\'email existe déjà',
+                'date_recrutement.required' => 'La date de recrutement est requise',
+                'date_recrutement.date' => 'La date de recrutement doit être une date valide',
+            ]
+        );
 
         $user = User::create([
             'nom' => $validated['nom'],
@@ -53,12 +55,12 @@ class FormateurController extends Controller
         $formateur = Formateur::create([
             'user_id' => $user->id,
             'date_recrutement' => $validated['date_recrutement'],
-            
+
         ]);
 
         return response()->json([
             'message' => 'Stagiaire créé avec succès',
-            
+
         ], 201);
     }
 
@@ -93,6 +95,11 @@ class FormateurController extends Controller
         ]);
 
         $user = User::find($formateur->user_id);
+
+        if ($validated['nom'] === $user->nom && $validated['prenom'] == $user->prenom && $validated['identifiant'] == $user->identifiant && $validated['email'] == $user->email && $validated['date_recrutement'] == $formateur->date_recrutement) {
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
+
         $user->update([
             'nom' => $validated['nom'],
             'prenom' => $validated['prenom'],
@@ -119,5 +126,5 @@ class FormateurController extends Controller
         $formateur->delete();
 
         return response()->json(['message' => 'Formateur supprimé avec succès'], 200);
-    } 
+    }
 }

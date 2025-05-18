@@ -7,7 +7,7 @@ export const getFormateurs = async () => {
     error: "",
   };
   try {
-    const res = await axios.get("formateurs");
+    const res = await axios.get("admin/formateurs");
     if (res) {
       data.data = res.data;
       return data;
@@ -30,7 +30,7 @@ export const supprimerFormateur = async (id) => {
     error: "",
   };
   try {
-    const res = await axios.delete(`formateurs/${id}`);
+    const res = await axios.delete(`admin/formateurs/${id}`);
     if (res) {
       return data;
     }
@@ -52,7 +52,7 @@ export const ajouterFormateur = async (formData) => {
     error: "",
   };
   try {
-    const res = await axios.post("formateurs", formData);
+    const res = await axios.post("admin/formateurs", formData);
     if (res) {
       return data;
     }
@@ -76,7 +76,7 @@ export const getFormateur = async (id) => {
   };
 
   try {
-    const res = await axios.get(`formateurs/${id}`);
+    const res = await axios.get(`admin/formateurs/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -104,7 +104,7 @@ export const modifierFromateur = async (formData, id) => {
   };
 
   try {
-    const res = await axios.put(`formateurs/${id}`, formData);
+    const res = await axios.put(`admin/formateurs/${id}`, formData);
     if (res) {
       return data;
     }
