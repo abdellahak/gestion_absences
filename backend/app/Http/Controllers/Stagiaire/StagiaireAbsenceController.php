@@ -12,14 +12,16 @@ class StagiaireAbsenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-     public function index()
+   public function index()
     {
         $user = Auth::user();
         $stagiaire = $user->stagiaire;
         if (!$stagiaire) {
             return response()->json(['message' => 'Stagiaire non trouvé'], 404);
         }
-        $absences = Absence::where('stagiaire_id', $stagiaire->id)->get();
+        $absences = Absence::with(['formateur.user', 'justifications'])
+            ->where('stagiaire_id', $stagiaire->id)
+            ->get();
         return response()->json($absences, 200);
     }
 

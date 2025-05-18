@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Stagiaire\JustificationController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,5 +29,8 @@ class Absence extends Model
     public function formateur()
     {
         return $this->belongsTo(Formateur::class);
+    }
+    public function justifications() {
+        return $this->hasMany(Justification::class);
     }
 }
