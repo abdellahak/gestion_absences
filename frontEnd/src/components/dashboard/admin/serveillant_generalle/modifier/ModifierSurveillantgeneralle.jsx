@@ -3,7 +3,7 @@ import { useToast } from "../../../../../assets/toast/Toast";
 import Surveillantgeneralle from "../assets/form/Surveillantgeneralle";
 import { useParams } from "react-router-dom";
 import Loading from "../../../../../assets/loading/Loading";
-import { getSurveillantGenerale } from "../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
+import { getSurveillantGeneral } from "../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
 
 export default function ModifierSurveillantgeneralle() {
   const { toast } = useToast();
@@ -13,7 +13,7 @@ export default function ModifierSurveillantgeneralle() {
 
   useEffect(() => {
     const fetchSurveillantgeneralle = async () => {
-      const res = await getSurveillantGenerale(id);
+      const res = await getSurveillantGeneral(id);
       if (res) setLoading(false);
       if (res.success) {
         setData(res.data);
@@ -25,6 +25,7 @@ export default function ModifierSurveillantgeneralle() {
   }, [id]);
 
   return (
+
     <>
       <title>Modifier Surveillant Général</title>
       {!loading ? (

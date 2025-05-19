@@ -15,10 +15,10 @@ export default function SurveillantGeneralle({
   const [formData, setFormData] = useState({
     user_id: data?.user_id ?? "",
     date_recrutement: data?.date_recrutement ?? "",
-    nom: data?.nom ?? "",
-    prenom: data?.prenom ?? "", 
-    email: data?.email ?? "",
-    identifiant: data?.identifiant ?? "",
+    nom: data?.user?.nom ?? "",
+    prenom: data?.user?.prenom ?? "",
+    email: data?.user?.email ?? "",
+    identifiant: data?.user?.identifiant ?? "",
   });
   const [errors, setErrors] = useState({
     user_id: "",
@@ -26,7 +26,6 @@ export default function SurveillantGeneralle({
     nom: "",
     prenom: "",
     email: "",
-
     identifiant: "",
   });
   const { toast } = useToast();
@@ -35,10 +34,10 @@ export default function SurveillantGeneralle({
     setFormData({
       user_id: data?.user_id ?? "",
       date_recrutement: data?.date_recrutement ?? "",
-      nom: data?.nom ?? "",
-      prenom: data?.prenom ?? "",
-      email: data?.email ?? "",
-      identifiant: data?.identifiant ?? "",
+      nom: data?.user?.nom ?? "",
+      prenom: data?.user?.prenom ?? "",
+      email: data?.user?.email ?? "",
+      identifiant: data?.user?.identifiant ?? "",
     });
   }, [data]);
 
@@ -56,6 +55,14 @@ export default function SurveillantGeneralle({
       if (update) {
         toast("success", "Le surveillant général a été modifié avec succès");
       } else {
+        setFormData({
+          user_id: "",
+          date_recrutement: "",
+          nom: "",
+          prenom: "",
+          email: "",
+          identifiant: "",
+        });
        
         toast("success", "Le surveillant général a été ajouté avec succès");
       }

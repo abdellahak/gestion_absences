@@ -38,7 +38,7 @@ export default function SurveillantgeneralleTable({ data, setShow }) {
                         <FaRegTrashCan className="h-4 w-4" />
                       </button>
                       <Link
-                        to={`/admin/stagiaires/${item.id}/modifier`}
+                        to={`/admin/surveillants/${item.id}/modifier`}
                         className="text-green-500 hover:text-green-800"
                       >
                         <GrEdit className="h-4 w-4" />

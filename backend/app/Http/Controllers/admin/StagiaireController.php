@@ -83,6 +83,7 @@ class StagiaireController extends Controller
 
         return response()->json(['message' => 'Stagiaire mis à jour avec succès'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.

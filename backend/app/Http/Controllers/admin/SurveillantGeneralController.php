@@ -96,16 +96,41 @@ class SurveillantGeneralController extends Controller
 
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
+            'identifiant' => 'required|string|unique:users,identifiant,' . $surveillant->user_id,
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $surveillant->user_id,
             'date_recrutement' => 'required|date',
         ],[
+
             'user_id.required' => 'L\'utilisateur est requis',
             'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
             'date_recrutement.required' => 'La date de recrutement est requise',
             'date_recrutement.date' => 'La date de recrutement doit être une date valide',
+            'identifiant.required' => 'L\'identifiant est requis',
+            'identifiant.string' => 'L\'identifiant doit être une chaîne de caractères',
+            'identifiant.unique' => 'L\'identifiant doit être unique',
+            'nom.required' => 'Le nom est requis',
+            'nom.string' => 'Le nom doit être une chaîne de caractères',
+            'prenom.required' => 'Le prénom est requis',
+            'prenom.string' => 'Le prénom doit être une chaîne de caractères',
+            'email.email' => 'Veuillez entrer un email valide',
+            'email.unique' => 'L\'email existe déjà',
+            'email.string' => 'L\'email doit être une chaîne de caractères',
+            'email.max' => 'L\'email ne doit pas dépasser 255 caractères',
         ]
     );
-
-        $surveillant->update($data);
+          $surveillant->update([
+            'user_id' => $data['user_id'],
+            'date_recrutement' => $data['date_recrutement'],
+          ]);
+           $surveillant->user->update([
+            'identifiant' => $data['identifiant'],
+            'nom' => $data['nom'],
+            'prenom' => $data['prenom'],
+            'email' => $data['email'] ?? null,
+           ]);
+        
         return response()->json(['message' => 'Surveillant mis à jour avec succès'], 200);
     }
 

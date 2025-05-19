@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaPlus, FaPen } from "react-icons/fa6";
-import { getGroupes } from "../../../../../../assets/api/admin/groupe/groupe";
+import { getSurveillantGenerale } from "../../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
 
 export default function SurveillantgeneralleForm({
   handleSubmit,
@@ -11,21 +11,19 @@ export default function SurveillantgeneralleForm({
   update,
   loading,
 }) {
-  const [groupes, setGroupes] = useState([]);
-  const [loadingGroupes, setLoadingGroupes] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [surveillantgeneralle, setSurveillantGeneralle] = useState([]);
+  const [loadingSurveillantGeneralle, setLoadingSurveillantGeneralle] = useState(false);
 
   useEffect(() => {
-    const fetchGroupes = async () => {
-      setLoadingGroupes(true);
-      const res = await getGroupes();
-      setLoadingGroupes(false);
+    const fetchSurveillantgeneralle = async () => {
+      setLoadingSurveillantGeneralle(true);
+      const res = await getSurveillantGenerale();
+      setLoadingSurveillantGeneralle(false);
       if (res && res.success) {
-        setGroupes(res.data);
+        setSurveillantGeneralle(res.data);
       }
     };
-    fetchGroupes();
+    fetchSurveillantgeneralle();
   }, []);
 
   // useEffect(() => {
@@ -42,7 +40,7 @@ export default function SurveillantgeneralleForm({
     <>
       <div className="p-4 md:p-6 max-w-[1200px] xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          {update ? "Modifier stagiaire" : "Ajouter un stagiaire"}
+          {update ? "Modifier surveillant" : "Ajouter un surveillant"}
         </h2>
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
@@ -53,7 +51,7 @@ export default function SurveillantgeneralleForm({
                   htmlFor="intitule"
                   className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
-                    nom de l'utilisateur
+                    nom 
                 </label>
                 <div className="relative">
                   <div className="flex flex-col gap-1 w-full">
@@ -108,43 +106,7 @@ export default function SurveillantgeneralleForm({
                   </div>
                 </div>
               </div>
-              {/* Groupe
-              <div className="mb-4">
-                <label
-                  htmlFor="groupe_id"
-                  className="mb-1.5 block text-sm font-medium text-gray-700"
-                >
-                  Groupe
-                </label>
-                <select
-                  name="groupe_id"
-                  id="groupe_id"
-                  value={formData.groupe_id}
-                  onChange={e =>
-                    setFormData(prev => ({
-                      ...prev,
-                      groupe_id: e.target.value,
-                    }))
-                  }
-                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
-                >
-                  {loadingGroupes ? (
-                    <option value="">Chargement...</option>
-                  ) : (
-                    <>
-                      <option value="">Sélectionner un groupe</option>
-                      {groupes.map(groupe => (
-                        <option key={groupe.id} value={groupe.id}>
-                          {groupe.intitule}
-                        </option>
-                      ))}
-                    </>
-                  )}
-                </select>
-                <p className="text-red-500 text-md break-words h-[20px]">
-                  {errors.groupe_id}
-                </p>
-              </div> */}
+             
               {/* Numéro Identifiant */}
               <div className="mb-4">
                 <label

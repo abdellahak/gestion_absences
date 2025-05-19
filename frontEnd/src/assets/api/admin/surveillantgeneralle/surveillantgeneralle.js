@@ -48,6 +48,7 @@ export const ajouterSurveillantGeneral = async (formData) => {
   let data = {
     success: true,
     errors: {
+      
       nom: "",
       prenom: "",
       date_recrutement: "",
@@ -118,6 +119,8 @@ export const modifierSurveillantGeneral = async (formData, id) => {
     }
   } catch (error) {
     data.success = false;
+    console.error(error)
+    console.log(formData)
     if (isAxiosError(error)) {
       if (error.response?.status === 422) {
         data.errors = error.response.data.errors;
