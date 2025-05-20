@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('justifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('absence_id');
             $table->unsignedBigInteger('surveillant_general_id')->nullable();
             $table->string('intitule');
             $table->string('document')->nullable();
+            $table->unsignedBigInteger('stagiaire_id')->nullable();
+            $table->foreign('stagiaire_id')->references('id')->on('stagiaires')->onDelete('cascade');
             $table->enum('status', ['en_attente', 'valide', 'refuse'])->default('en_attente');
-            $table->foreign('absence_id')->references('id')->on('absences')->onDelete('cascade');
             $table->foreign('surveillant_general_id')->references('id')->on('surveillant_generals')->onDelete('cascade');
             $table->timestamps();
         });

@@ -32,6 +32,9 @@ import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autoris
 import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
 import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
 import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
+import JustificationList from "./components/dashboard/stagiaire/justification/liste/JustificationList";
+import AjouterJustification from "./components/dashboard/stagiaire/justification/ajouter/AjouterJustification";
+import ModifierJustification from "./components/dashboard/stagiaire/justification/modifier/ModifierJustification";
 
 function App() {
   return (
@@ -79,6 +82,9 @@ function App() {
               <Route path="avertissements" element={<AvertissementsList />} />
               <Route path="demandes/ajouter" element={<AjouterDemandeAuth />} />
               <Route path="demandes/:id/modifier" element={<ModifierDemande />} />
+              <Route path="justifications" element={<JustificationList />} />
+              <Route path="justifications/ajouter" element={<AjouterJustification />} />
+              <Route path="justifications/:id/modifier" element={<ModifierJustification />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>

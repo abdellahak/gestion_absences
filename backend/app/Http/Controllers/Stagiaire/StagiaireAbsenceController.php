@@ -19,7 +19,7 @@ class StagiaireAbsenceController extends Controller
         if (!$stagiaire) {
             return response()->json(['message' => 'Stagiaire non trouvé'], 404);
         }
-        $absences = Absence::with(['formateur.user', 'justifications'])
+        $absences = Absence::with(['formateur.user', 'justification'])
             ->where('stagiaire_id', $stagiaire->id)
             ->get();
         return response()->json($absences, 200);

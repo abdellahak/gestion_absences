@@ -20,7 +20,11 @@ return new class extends Migration
             $table->time('heure_fin');
             $table->foreign('stagiaire_id')->references('id')->on('stagiaires')->onDelete('cascade');
             $table->foreign('formateur_id')->references('id')->on('formateurs')->onDelete('cascade');
+            $table->unsignedBigInteger('justification_id')->nullable();
+            $table->foreign('justification_id')->references('id')->on('justifications')->onDelete('set null');
             $table->timestamps();
+
+
         });
     }
 

@@ -37,7 +37,6 @@ export default function Groupe({
     setLoading(true);
     let res;
     if (update) {
-      console.log(formData)
       res = await modifierGroupe(formData, GroupId);
     } else {
       res = await ajouterGroupe(formData);

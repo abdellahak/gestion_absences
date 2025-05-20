@@ -172,6 +172,14 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
+        name: "Justifications",
+        icon: <FaFileAlt />,
+        subItems: [
+          { name: "Mes justifications", path: "/stagiaire/justifications" },
+          { name: "Nouvelle justification", path: "/stagiaire/justifications/ajouter" },
+        ],
+      },
+      {
         name: "Avertissements",
         icon: <FaBell />,
         subItems: [
