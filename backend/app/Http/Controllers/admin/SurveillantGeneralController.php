@@ -26,14 +26,15 @@ class SurveillantGeneralController extends Controller
     {
         
         $data = $request->validate([
-          
+            'user_id' => 'required|exists:users,id',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'nullable|email|unique:users,email',
             'date_recrutement' => 'required|date',
             
         ],[
-           
+             'user_id.required' => 'L\'utilisateur est requis',
+            'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
             'date_recrutement.required' => 'La date de recrutement est requise',
             'date_recrutement.date' => 'La date de recrutement doit être une date valide',
         ]
@@ -49,26 +50,13 @@ class SurveillantGeneralController extends Controller
             'role' => 'surveillant',
         ]);
 
-           $surveillant = Surveillantgeneral::create([
-            'user_id' => $user->id,
-            'date_recrutement' => $data['date_recrutement'],
-        
-        ]);
+            SurveillantGeneral::create($data);
 
        
       
 
   return response()->json([
-            'message' => 'Surveillant créé avec succès',
-            'surveillant' => [
-                'id' => $surveillant->id,
-                'user_id' => $user->id,
-                'date_recrutement' => $surveillant->date_recrutement,
-                'nom' => $user->nom,
-                'prenom' => $user->prenom,
-                'email' => $user->email,
-            ]
-        ], 201);
+            'message' => 'Surveillant créé avec succès'], 201);
         }
 
     /**

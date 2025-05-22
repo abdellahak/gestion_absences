@@ -45,7 +45,7 @@ export default function SurveillantgeneralleForm({
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {/* User ID */}
+             
              <div className="mb-4">
                 <label
                   htmlFor="intitule"
