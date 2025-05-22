@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function SurveillantStagiaireTable({ data, setShow }) {
   return (
     <>
-      <div className="overflow-x-auto shadow-sm">
+      <div className="shadow-sm min-w-[1102px]">
         <Table>
           <thead>
             <ThRow>
@@ -14,12 +14,6 @@ export default function SurveillantStagiaireTable({ data, setShow }) {
               <TableCell isHeader={true}>Nom</TableCell>
               <TableCell isHeader={true}>Prenom</TableCell>
               <TableCell isHeader={true}>Email</TableCell>
-              <TableCell isHeader={true}>Telephone</TableCell>
-              <TableCell isHeader={true}>Adresse</TableCell>
-              <TableCell isHeader={true}>CNI</TableCell>
-              <TableCell isHeader={true}>Sexe</TableCell>
-              <TableCell isHeader={true}>Date Naissance</TableCell>
-              <TableCell isHeader={true}>Lieu Naissance</TableCell>
               <TableCell isHeader={true}>Numéro d'inscription</TableCell>
               <TableCell isHeader={true}>Groupe</TableCell>
               <TableCell isHeader={true}>Actions</TableCell>
@@ -33,12 +27,6 @@ export default function SurveillantStagiaireTable({ data, setShow }) {
                   <TableCell>{item?.user?.nom}</TableCell>
                   <TableCell>{item.user?.prenom}</TableCell>
                   <TableCell>{item.user?.email}</TableCell>
-                  <TableCell>{item.telephone}</TableCell>
-                  <TableCell>{item.	adresse}</TableCell>
-                  <TableCell>{item.CNI}</TableCell>
-                  <TableCell>{item.sexe}</TableCell>
-                  <TableCell>{item.date_naissance}</TableCell>
-                  <TableCell>{item.lieu_naissance}</TableCell>
                   <TableCell>
                     {item.numero_inscription || item.user?.id || ""}
                   </TableCell>

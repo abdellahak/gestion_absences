@@ -7,6 +7,7 @@ import { useAuth } from "../../../assets/wrapper/AuthWrapper";
 
 export default function Login() {
   const { auth } = useAuth();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (auth) {
@@ -31,7 +32,10 @@ export default function Login() {
   };
 
   const handleSubmit = async () => {
+    if (loading) return;
+    setLoading(true);
     const res = await Auth.Login(info);
+    if (res) setLoading(false);
     if (res.success) {
       // After successful login, we need to fetch the user data to determine their role
       const userRes = await Auth.user();
@@ -83,6 +87,7 @@ export default function Login() {
             handleChange={handleChange}
             info={info}
             handleSubmit={handleSubmit}
+            loading={loading}
           />
           <LoginBanner />
         </div>

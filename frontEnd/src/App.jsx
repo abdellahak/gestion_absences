@@ -32,6 +32,7 @@ import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autoris
 import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
 import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
 import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
+import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
               <Route path="stagiaires" element={<FormateurStagiairesList />} />
+              <Route path="absences/ajouter" element={<AjouterAbsence />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>

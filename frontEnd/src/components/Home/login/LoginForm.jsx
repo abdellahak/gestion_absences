@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { LuEye, LuEyeOff } from "react-icons/lu";
+import { LuEye, LuEyeOff, LuLoaderCircle } from "react-icons/lu";
 
 export default function LoginForm({
   errors,
   handleChange,
   info,
   handleSubmit,
+  loading,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -84,7 +85,13 @@ export default function LoginForm({
                 {/* submit */}
                 <div>
                   <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-blue-500 shadow-theme-xs hover:bg-blue-600">
-                    Connexion
+                    {
+                      loading ? (
+                        <LuLoaderCircle  className="text-xl animate-spin text-white"/>
+                      ): (
+                        "Connexion"
+                      )
+                    }
                   </button>
                 </div>
               </div>
