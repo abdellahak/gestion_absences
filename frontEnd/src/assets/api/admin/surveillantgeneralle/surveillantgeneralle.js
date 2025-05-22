@@ -45,6 +45,7 @@ export const supprimerSurveillantGeneral = async (id) => {
 };
 
 export const ajouterSurveillantGeneral = async (formData) => {
+  console.log("FormData envoyé :", formData);
   let data = {
     success: true,
     errors: {
@@ -100,6 +101,7 @@ export const getSurveillantGeneral = async (id) => {
 };
 
 export const modifierSurveillantGeneral = async (formData, id) => {
+  console.log("ID du surveillant :", id)
   let data = {
     success: true,
     errors: {

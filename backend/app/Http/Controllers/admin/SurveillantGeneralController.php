@@ -51,13 +51,12 @@ class SurveillantGeneralController extends Controller
 
            $surveillant = Surveillantgeneral::create([
             'user_id' => $user->id,
-          
             'date_recrutement' => $data['date_recrutement'],
         
         ]);
 
        
-        $surveillant = SurveillantGeneral::create($data);
+      
 
   return response()->json([
             'message' => 'Surveillant créé avec succès',

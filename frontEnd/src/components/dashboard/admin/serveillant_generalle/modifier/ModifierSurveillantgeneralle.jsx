@@ -29,7 +29,7 @@ export default function ModifierSurveillantgeneralle() {
     <>
       <title>Modifier Surveillant Général</title>
       {!loading ? (
-        <Surveillantgeneralle update surveillantgeneralleId={id} data={data} />
+        <Surveillantgeneralle update surveillantGeneralleId={id} data={data} />
       ) : (
         <div className="flex justify-center items-center size-full">
           <div className="">
