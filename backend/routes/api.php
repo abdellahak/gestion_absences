@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\FormateurController;
+use App\Http\Controllers\admin\StagiaireController;
+use App\Http\Controllers\formateur\FormateurAbsenceController;
 use App\Http\Controllers\surveillant\SurveillantGroupController;
 use App\Http\Controllers\surveillant\SurveillantFiliereController;
 use App\Http\Controllers\Stagiaire\AvertissementController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\Stagiaire\DemandeAuthorisationController;
 use App\Http\Controllers\admin\GroupController;
 use App\Http\Controllers\admin\FiliereController;
 use App\Http\Middleware\AlreadyLoggedInMiddleware;
-use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\admin\SurveillantGeneralController;
 
 Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::class)->group(function () {
@@ -63,6 +64,9 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
     Route::controller(FormateurStagiaireController::class)->group(function(){
         Route::get("groupes/stagiaires", "stagiaires");
         Route::get("groupes/{groupeId}/stagiaires", "stagiaires");
+    });
+    Route::controller(FormateurAbsenceController::class)->group(function(){
+        Route::post('absences', 'store');
     });
 });
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {

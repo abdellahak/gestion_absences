@@ -12,7 +12,7 @@ class Stagiaire extends Model
     protected $fillable = [
         'adresse',
         'telephone',
-        'CNI',
+        'CIN',
         'sexe',
         'date_naissance',
         'lieu_naissance',
@@ -30,7 +30,7 @@ class Stagiaire extends Model
     {
         return $this->belongsTo(Groupe::class);
     }
-    
+
     public function absences()
     {
         return $this->hasMany(Absence::class);
@@ -40,5 +40,4 @@ class Stagiaire extends Model
     {
         return $this->hasMany(Avertissement::class);
     }
-
 }

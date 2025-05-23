@@ -1,7 +1,7 @@
 export const Table = ({ children, className }) => {
   return (
     <>
-      <table className={`w-full table-auto border-t border-gray-200 min-w-[600px] ${className}`}>
+      <table className={` border-t border-gray-200 min-w-full ${className}`}>
         {children}
       </table>
     </>

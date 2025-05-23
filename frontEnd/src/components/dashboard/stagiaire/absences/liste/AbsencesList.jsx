@@ -26,7 +26,7 @@ export default function AbsencesList() {
   return (
     <>
       <title>Mes absences</title>
-      <div className="p-4 md:p-6 max-w-[1500px] xl:mx-auto">
+      <div className="p-4 md:p-6  xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Mes absences
         </h2>

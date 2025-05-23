@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
-import { ajouterSurveillantStagiaire, modifierSurveillantStagiaire } from "../../../../../../assets/api/surveillant/surveillant stagiaires/SurveillantStagiaires";
+import {
+  ajouterSurveillantStagiaire,
+  modifierSurveillantStagiaire,
+} from "../../../../../../assets/api/surveillant/surveillant stagiaires/SurveillantStagiaires";
 import SurveillantStagiaireForm from "./SurveillantStagiaireForm";
 
 export default function SurveillantStagiaire({
@@ -13,17 +16,15 @@ export default function SurveillantStagiaire({
     user_id: data?.user_id ?? "",
     groupe_id: data?.groupe_id ?? "",
     numero_inscription: data?.numero_inscription ?? "",
-    nom: data?.user?.nom ?? data?.nom ?? "",
-    prenom: data?.user?.prenom ?? data?.prenom ?? "",
-    email: data?.user?.email ?? data?.email ?? "",
-    telephone: data?.user?.telephone ?? data?.telephone ?? "",
-    adresse : data?.user?.adresse ?? data?.adresse ?? "",
-    sexe :  data?.sexe ?? data?.sexe ?? "",
-    CNI: data?.user?.CNI ?? data?.CNI ?? "",
-    date_naissance: data?.user?.date_naissance ?? data?.date_naissance ?? "",
-   
-
-
+    nom: data?.user?.nom ?? "",
+    prenom: data?.user?.prenom ?? "",
+    email: data?.user?.email ?? "",
+    telephone: data?.telephone ?? "",
+    adresse: data?.adresse ?? "",
+    sexe: data?.sexe ?? "",
+    CIN: data?.CIN ?? "",
+    date_naissance: data?.date_naissance ?? "",
+    lieu_naissance: data?.date_naissance ?? "",
   });
   const [errors, setErrors] = useState({
     user_id: "",
@@ -35,7 +36,7 @@ export default function SurveillantStagiaire({
     telephone: "",
     adresse: "",
     sexe: "",
-    CNI: "",
+    CIN: "",
     date_naissance: "",
     lieu_naissance: "",
   });
@@ -50,12 +51,11 @@ export default function SurveillantStagiaire({
       prenom: data?.user?.prenom ?? data?.prenom ?? "",
       email: data?.user?.email ?? data?.email ?? "",
       telephone: data?.user?.telephone ?? data?.telephone ?? "",
-      adresse : data?.user?.adresse ?? data?.adresse ?? "",
-      sexe :  data?.sexe ?? data?.sexe ?? "",
-      CNI: data?.user?.CNI ?? data?.CNI ?? "",
+      adresse: data?.user?.adresse ?? data?.adresse ?? "",
+      sexe: data?.sexe ?? data?.sexe ?? "",
+      CIN: data?.user?.CIN ?? data?.CIN ?? "",
       date_naissance: data?.user?.date_naissance ?? data?.date_naissance ?? "",
-      lieu_naissance : data?.user?.lieu_naissance ?? data?.lieu_naissance ?? "",
-   
+      lieu_naissance: data?.user?.lieu_naissance ?? data?.lieu_naissance ?? "",
     });
   }, [data]);
 
@@ -83,7 +83,7 @@ export default function SurveillantStagiaire({
           telephone: "",
           adresse: "",
           sexe: "",
-          CNI: "",
+          CIN: "",
           date_naissance: "",
           lieu_naissance: "",
         });
@@ -99,7 +99,7 @@ export default function SurveillantStagiaire({
         telephone: "",
         adresse: "",
         sexe: "",
-        CNI: "",
+        CIN: "",
         date_naissance: "",
         lieu_naissance: "",
       });
