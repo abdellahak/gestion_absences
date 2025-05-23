@@ -1,24 +1,24 @@
 <?php
 
 use App\Http\Controllers\surveillant\SurveillantStagiaireController;
-
 use App\Http\Controllers\formateur\FormateurStagiaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\admin\GroupController;
-use App\Http\Controllers\admin\FiliereController;
-use App\Http\Middleware\AlreadyLoggedInMiddleware;
 use App\Http\Controllers\admin\FormateurController;
-use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\surveillant\SurveillantGroupController;
 use App\Http\Controllers\surveillant\SurveillantFiliereController;
 use App\Http\Controllers\Stagiaire\AvertissementController;
 use App\Http\Controllers\formateur\FormateurGroupeController;
 use App\Http\Controllers\Stagiaire\StagiaireAbsenceController;
 use App\Http\Controllers\Stagiaire\DemandeAuthorisationController;
+use App\Http\Controllers\admin\GroupController;
+use App\Http\Controllers\admin\FiliereController;
+use App\Http\Middleware\AlreadyLoggedInMiddleware;
+use App\Http\Controllers\admin\StagiaireController;
+use App\Http\Controllers\admin\SurveillantGeneralController;
 
 Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::class)->group(function () {
     Route::post("login", "login");
@@ -97,6 +97,17 @@ Route::middleware(["auth:sanctum"])->group(function () {
 });
 
 Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function () {
+    Route::controller(SurveillantGeneralController::class)->group(function(){
+        Route::get("surveillants", "index");
+        Route::get("surveillants/{id}", "show");
+        Route::put("surveillants/{id}", "update");
+        Route::delete("surveillants/{id}", "destroy");
+        Route::post("surveillants", "store");
+    });
+});
+
+
+Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function(){
     Route::get("user", "getUser");
     Route::post("logout", "logout");
 });

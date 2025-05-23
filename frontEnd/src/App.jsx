@@ -32,6 +32,10 @@ import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autoris
 import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
 import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
 import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
+import SurveillantgeneralleList from "./components/dashboard/admin/serveillant_generalle/liste/SurveillantgeneralleList";
+import AjouterSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/ajouter/AjouterSurveillantgeneralle";
+import ModifierSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/modifier/ModifierSurveillantgeneralle";    
+
 
 function App() {
   return (
@@ -64,6 +68,11 @@ function App() {
                 <Route path=":id/modifier" element={<ModifierFormateur/>} />
               </Route>
               <Route path="profile" element={<Profile />} />
+              <Route path="surveillants" >
+                <Route index element={<SurveillantgeneralleList/>} />
+                <Route path="ajouter" element={<AjouterSurveillantgeneralle/>} />
+                <Route path=":id/modifier" element={<ModifierSurveillantgeneralle/>} />
+              </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
