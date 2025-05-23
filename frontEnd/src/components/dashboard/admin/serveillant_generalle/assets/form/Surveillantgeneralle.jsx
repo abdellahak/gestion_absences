@@ -13,12 +13,12 @@ export default function SurveillantGeneralle({
 }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    user_id: data?.user_id ?? "",
     date_recrutement: data?.date_recrutement ?? "",
     nom: data?.user?.nom ?? "",
     prenom: data?.user?.prenom ?? "",
     email: data?.user?.email ?? "",
     identifiant: data?.user?.identifiant ?? "",
+     ...(update && { user_id: data?.user_id ?? "" }),
   });
   const [errors, setErrors] = useState({
     user_id: "",
@@ -32,18 +32,26 @@ export default function SurveillantGeneralle({
 
   useEffect(() => {
     setFormData({
-      user_id: data?.user_id ?? "",
       date_recrutement: data?.date_recrutement ?? "",
       nom: data?.user?.nom ?? "",
       prenom: data?.user?.prenom ?? "",
       email: data?.user?.email ?? "",
       identifiant: data?.user?.identifiant ?? "",
+       ...(update && { user_id: data?.user_id ?? "" }),
     });
   }, [data]);
 
   const handleSubmit = async () => {
     if (loading) return;
     setLoading(true);
+
+
+    let dataToSend = { ...formData }
+    if (!update) {
+      delete dataToSend.user_id
+    }
+
+
     let res;
     if (update) {
       res = await modifierSurveillantGeneral(formData, surveillantGeneralleId);
@@ -56,7 +64,6 @@ export default function SurveillantGeneralle({
         toast("success", "Le surveillant général a été modifié avec succès");
       } else {
         setFormData({
-          user_id: "",
           date_recrutement: "",
           nom: "",
           prenom: "",

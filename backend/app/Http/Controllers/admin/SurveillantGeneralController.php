@@ -26,10 +26,10 @@ class SurveillantGeneralController extends Controller
     {
         
         $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'nullable|email|unique:users,email',
+            'identifiant' => 'required|string|unique:users,identifiant',
             'date_recrutement' => 'required|date',
             
         ],[
@@ -50,7 +50,10 @@ class SurveillantGeneralController extends Controller
             'role' => 'surveillant',
         ]);
 
-            SurveillantGeneral::create($data);
+            SurveillantGeneral::create([
+            'user_id' => $user->id,
+            'date_recrutement' => $data['date_recrutement'],
+            ]);
 
        
       
