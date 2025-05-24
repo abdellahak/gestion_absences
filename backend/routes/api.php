@@ -26,7 +26,7 @@ Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::
     Route::post("register", "register");
 });
 
-Route::middleware(["auth:sanctum", "role:admin"])->prefix("admin")->group(function () {
+Route::middleware(["auth:sanctum", "role:admin|surveillant"])->prefix("admin")->group(function () {
     Route::controller(FiliereController::class)->group(function () {
         Route::get("filieres", "index");
         Route::get("filieres/{id}", "show");
@@ -70,26 +70,6 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
     });
 });
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {
-    Route::controller(SurveillantGroupController::class)->group(function(){
-        Route::get("groupes", "index");
-        Route::post("groupes", "store");
-        Route::get("groupes/{id}", "show");
-        Route::put("groupes/{id}", "update");
-    });
-     Route::controller(SurveillantFiliereController::class)->group(function(){
-        Route::get("filieres", "index");
-        Route::get("filieres/{id}", "show");
-        Route::put("filieres/{id}", "update");
-      
-    });
-    Route::controller(SurveillantStagiaireController::class)->group(function(){
-        Route::get("stagiaires", "index");
-        Route::post("stagiaires", "store");
-        Route::get("stagiaires/{id}", "show");
-        Route::put("stagiaires/{id}", "update");
-        Route::delete("stagiaires/{id}", "destroy");
-      
-    });
 
 });
 

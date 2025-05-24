@@ -32,16 +32,16 @@ class FiliereController extends Controller
         [
             'code.required' => 'Le code est requis',
             'code.string' => 'Le code doit être une chaîne de caractères',
-            'code.unique' => 'Le code doit être unique',
+            'code.unique' => 'Cet code est déjà utilisé',
             'code.max' => 'Le code ne doit pas dépasser 10 caractères',
             'intitule.required' => 'L\'intitulé est requis',
-            'intitule.unique' => 'L\'intitulé doit être unique',
+            'intitule.unique' => 'Cet intitulé est déjà enregistré',
             'intitule.string' => 'L\'intitulé doit être une chaîne de caractères',
             'intitule.max' => 'L\'intitulé ne doit pas dépasser 255 caractères',
         ]);
 
         Filiere::create([
-            'code' => $data['code'],
+            'code' => strtoupper($data['code']),
             'intitule' => $data['intitule'],
         ]);
 
