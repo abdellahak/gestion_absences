@@ -14,7 +14,6 @@ class JustificationFactory extends Factory
   public function definition(): array
   {
     return [
-      'absence_id' => Absence::inRandomOrder()->first()->id,
       'surveillant_general_id' => SurveillantGeneral::inRandomOrder()->first()->id,
       'intitule' => $this->faker->sentence(3),
       'document' => $this->faker->optional()->word() . '.pdf',

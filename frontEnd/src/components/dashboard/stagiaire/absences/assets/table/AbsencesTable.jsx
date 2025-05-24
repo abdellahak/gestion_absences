@@ -28,11 +28,7 @@ export default function AbsencesTable({ data }) {
                     : "-"}
                 </TableCell>
                 <TableCell>
-                  {item.justifications?.length
-                    ? item.justifications
-                        .map(j => j.intitule)
-                        .join(", ")
-                    : "-"}
+                  {item.justification?.intitule}
                 </TableCell>
               </tr>
             ))

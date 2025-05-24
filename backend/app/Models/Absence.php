@@ -15,6 +15,7 @@ class Absence extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'justification_id',
         'stagiaire_id',
         'formateur_id',
         'date_absence',
@@ -30,7 +31,8 @@ class Absence extends Model
     {
         return $this->belongsTo(Formateur::class);
     }
-    public function justifications() {
-        return $this->hasMany(Justification::class);
+    public function justification() 
+    {
+        return $this->belongsTo(Justification::class);
     }
 }

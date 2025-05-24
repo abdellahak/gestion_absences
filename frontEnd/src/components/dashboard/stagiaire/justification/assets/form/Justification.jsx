@@ -1,34 +1,35 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
-import GroupeForm from "./GroupeForm";
+import JustificationForm from "./JustificationForm";
 import {
-  ajouterGroupe,
-  modifierGroupe,
-} from "../../../../../../assets/api/admin/groupe/groupe";
+  ajouterJustification,
+  modifierJustification,
+} from "../../../../../../assets/api/stagiaires/justification/justification";
 
-export default function Groupe({
+export default function Justification({
   update = false,
-  GroupId = null,
+  justificationId = null,
   data = null,
+  absences = [],
 }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    code: data?.code ?? "",
     intitule: data?.intitule ?? "",
-    filiere_id: data?.filiere_id ?? "",
+    absence_ids: data?.absence_ids ?? [],
+    document: data?.document ?? null,
   });
   const [errors, setErrors] = useState({
-    code: "",
     intitule: "",
-    filiere_id: "",
+    absence_ids: "",
+    document: "",
   });
   const { toast } = useToast();
 
   useEffect(() => {
     setFormData({
-      code: data?.code ?? "",
       intitule: data?.intitule ?? "",
-      filiere_id: data?.filiere_id ?? "",
+      absence_ids: data?.absence_ids ?? [],
+      document: data?.document ?? null,
     });
   }, [data]);
 
@@ -37,26 +38,26 @@ export default function Groupe({
     setLoading(true);
     let res;
     if (update) {
-      res = await modifierGroupe(formData, GroupId);
+      res = await modifierJustification(formData, justificationId);
     } else {
-      res = await ajouterGroupe(formData);
+      res = await ajouterJustification(formData);
     }
     if (res) setLoading(false);
     if (res.success) {
       if (update) {
-        toast("success", "Le groupe a été modifié avec succès");
+        toast("success", "La justification a été modifiée avec succès");
       } else {
         setFormData({
-          code: "",
           intitule: "",
-          filiere_id: "",
+          absence_ids: [],
+          document: null,
         });
-        toast("success", "Le groupe a été ajouté avec succès");
+        toast("success", "La justification a été ajoutée avec succès");
       }
       setErrors({
-        code: "",
         intitule: "",
-        filiere_id: "",
+        absence_ids: "",
+        document: "",
       });
     } else {
       if (res.server) {
@@ -66,15 +67,19 @@ export default function Groupe({
       setErrors(res.errors);
     }
   };
+  
   return (
     <>
-      <GroupeForm
+      <JustificationForm
         update={update}
         handleSubmit={handleSubmit}
-        errors={errors}
+        absences={absences}
         formData={formData}
         setFormData={setFormData}
+        errors={errors}
         setErrors={setErrors}
+        loading={loading}
+        
       />
     </>
   );

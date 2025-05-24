@@ -24,6 +24,13 @@ import AjouterDemandeAuth from "./components/dashboard/stagiaire/demande_autoris
 import ModifierDemande from "./components/dashboard/stagiaire/demande_autorisation/modifier/ModifierDemande";
 import AvertissementsList from "./components/dashboard/stagiaire/avertissement/liste/AvertissementsList";
 import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires/liste/FormateurStagiairesList";
+import JustificationList from "./components/dashboard/stagiaire/justification/liste/JustificationList";
+import AjouterJustification from "./components/dashboard/stagiaire/justification/ajouter/AjouterJustification";
+import ModifierJustification from "./components/dashboard/stagiaire/justification/modifier/ModifierJustification";
+import SurveillantgeneralleList from "./components/dashboard/admin/serveillant_generalle/liste/SurveillantgeneralleList";
+import AjouterSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/ajouter/AjouterSurveillantgeneralle";
+import ModifierSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/modifier/ModifierSurveillantgeneralle";    
+
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 
 function App() {
@@ -57,6 +64,11 @@ function App() {
                 <Route path=":id/modifier" element={<ModifierFormateur />} />
               </Route>
               <Route path="profile" element={<Profile />} />
+              <Route path="surveillants" >
+                <Route index element={<SurveillantgeneralleList/>} />
+                <Route path="ajouter" element={<AjouterSurveillantgeneralle/>} />
+                <Route path=":id/modifier" element={<ModifierSurveillantgeneralle/>} />
+              </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -71,10 +83,10 @@ function App() {
               <Route path="demandes" element={<DemandeAuthList />} />
               <Route path="avertissements" element={<AvertissementsList />} />
               <Route path="demandes/ajouter" element={<AjouterDemandeAuth />} />
-              <Route
-                path="demandes/:id/modifier"
-                element={<ModifierDemande />}
-              />
+              <Route path="demandes/:id/modifier" element={<ModifierDemande />} />
+              <Route path="justifications" element={<JustificationList />} />
+              <Route path="justifications/ajouter" element={<AjouterJustification />} />
+              <Route path="justifications/:id/modifier" element={<ModifierJustification />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
