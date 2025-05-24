@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -13,7 +13,9 @@ use App\Http\Controllers\admin\FormateurController;
 use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\Stagiaire\AvertissementController;
 use App\Http\Controllers\Stagiaire\JustificationController;
+use App\Http\Controllers\admin\SurveillantGeneralController;
 use App\Http\Controllers\formateur\FormateurGroupeController;
+use App\Http\Controllers\formateur\FormateurAbsenceController;
 use App\Http\Controllers\Stagiaire\StagiaireAbsenceController;
 use App\Http\Controllers\formateur\FormateurStagiaireController;
 use App\Http\Controllers\surveillant\SurveillantGroupController;
@@ -65,6 +67,9 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
         Route::get("groupes/stagiaires", "stagiaires");
         Route::get("groupes/{groupeId}/stagiaires", "stagiaires");
     });
+    Route::controller(FormateurAbsenceController::class)->group(function(){
+        Route::post('absences', 'store');
+    });
 });
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {
     Route::controller(SurveillantGroupController::class)->group(function(){
@@ -98,6 +103,17 @@ Route::middleware(["auth:sanctum"])->group(function () {
 });
 
 Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function () {
+    Route::controller(SurveillantGeneralController::class)->group(function(){
+        Route::get("surveillants", "index");
+        Route::get("surveillants/{id}", "show");
+        Route::put("surveillants/{id}", "update");
+        Route::delete("surveillants/{id}", "destroy");
+        Route::post("surveillants", "store");
+    });
+});
+
+
+Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function(){
     Route::get("user", "getUser");
     Route::post("logout", "logout");
 });

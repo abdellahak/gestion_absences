@@ -29,7 +29,7 @@ class ProfileController extends Controller
                 $userData['sexe'] = $stagiaire->sexe;
                 $userData['date_naissance'] = $stagiaire->date_naissance;
                 $userData['lieu_naissance'] = $stagiaire->lieu_naissance;
-                $userData['CIN'] = $stagiaire->CNI;
+                $userData['CIN'] = $stagiaire->CIN;
                 $userData['groupe_id'] = $stagiaire->groupe_id;
                 $userData['numero_inscription'] = $stagiaire->numero_inscription;
             }

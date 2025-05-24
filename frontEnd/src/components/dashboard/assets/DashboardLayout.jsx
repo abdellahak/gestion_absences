@@ -22,7 +22,13 @@ function LayoutContent() {
         } ${isMobileOpen ? "ml-0" : ""}`}
       >
         <Header />
-        <div className="p-4 mx-auto max-w-screen-2xl md:p-6">
+        <div
+          className={`p-4 md:p-6 overflow-hidden mx-auto max-w-screen-2xl ${
+            isExpanded || isHovered
+              ? "lg:max-w-[calc(100vw-350px)]"
+              : "lg:max-w-[calc(100vw-150px)]"
+          }`}
+        >
           <Outlet />
         </div>
       </div>
@@ -33,9 +39,7 @@ function LayoutContent() {
 function DashboardLayout({ role }) {
   return (
       <SidebarProvider>
-        <LayoutContent>
-          <Outlet />
-        </LayoutContent>
+        <LayoutContent />
       </SidebarProvider>
   );
 }

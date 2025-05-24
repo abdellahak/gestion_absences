@@ -35,6 +35,11 @@ import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires
 import JustificationList from "./components/dashboard/stagiaire/justification/liste/JustificationList";
 import AjouterJustification from "./components/dashboard/stagiaire/justification/ajouter/AjouterJustification";
 import ModifierJustification from "./components/dashboard/stagiaire/justification/modifier/ModifierJustification";
+import SurveillantgeneralleList from "./components/dashboard/admin/serveillant_generalle/liste/SurveillantgeneralleList";
+import AjouterSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/ajouter/AjouterSurveillantgeneralle";
+import ModifierSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/modifier/ModifierSurveillantgeneralle";    
+
+import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 
 function App() {
   return (
@@ -67,6 +72,11 @@ function App() {
                 <Route path=":id/modifier" element={<ModifierFormateur/>} />
               </Route>
               <Route path="profile" element={<Profile />} />
+              <Route path="surveillants" >
+                <Route index element={<SurveillantgeneralleList/>} />
+                <Route path="ajouter" element={<AjouterSurveillantgeneralle/>} />
+                <Route path=":id/modifier" element={<ModifierSurveillantgeneralle/>} />
+              </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
           </Route>
@@ -98,6 +108,7 @@ function App() {
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
               <Route path="stagiaires" element={<FormateurStagiairesList />} />
+              <Route path="absences/ajouter" element={<AjouterAbsence />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>

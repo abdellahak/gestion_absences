@@ -1,67 +1,65 @@
 import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
-export const getSurveillantStagiaires = async () => {
+export const getSurveillantGenerale = async () => {
+    let data = {
+        success: true,
+        data: null,
+        error: "",
+    };
+    try {
+        const res = await axios.get("surveillants");
+        if (res) {
+            data.data = res.data;
+            return data;
+        }
+    }
+    catch (error) {
+        data.success = false;
+           if (isAxiosError(error)) {
+             const errorV = error.response?.data?.error;
+             data.error = errorV || "Erreur lors de la récupération des surveillants généraux";
+             return data;
+           }
+           data.error = "Une erreur s'est produite sur le serveur";
+           return data;
+    }
+    };
+
+
+export const supprimerSurveillantGeneral = async (id) => {
   let data = {
     success: true,
-    data: null,
     error: "",
   };
   try {
-    const res = await axios.get("surveillant/stagiaires");
+    const res = await axios.delete(`surveillants/${id}`);
     if (res) {
-      data.data = res.data;
       return data;
     }
   } catch (error) {
     data.success = false;
-    if (isAxiosError(error)) {
-      const errorV = error.response?.data?.error;
-      data.error = errorV || "Erreur lors de la récupération des stagiaires";
-      return data;
-    }
     data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }
 };
 
-export const supprimerSurveillantStagiaire = async (id) => {
-  let data = {
-    success: true,
-    error: "",
-  };
-  try {
-    const res = await axios.delete(`surveillant/stagiaires/${id}`);
-    if (res) {
-      return data;
-    }
-  } catch (error) {
-    data.success = false;
-    data.error = "Une erreur s'est produite sur le serveur";
-    return data;
-  }
-};
-
-export const ajouterSurveillantStagiaire = async (formData) => {
+export const ajouterSurveillantGeneral = async (formData) => {
+  console.log("FormData envoyé :", formData);
   let data = {
     success: true,
     errors: {
-      groupe_id: "",
-      numero_inscription: "",
+      
       nom: "",
       prenom: "",
+      date_recrutement: "",
       email: "",
-      telephone: "",
-      adresse: "",
-      sexe: "",
-      CIN: "",
-      date_naissance: "",
-      lieu_naissance: "",
+      identifiant: "",
     },
     error: "",
   };
   try {
-    const res = await axios.post("surveillant/stagiaires", formData);
+    const res = await axios.post("surveillants", formData);
     if (res) {
       return data;
     }
@@ -78,14 +76,14 @@ export const ajouterSurveillantStagiaire = async (formData) => {
   }
 };
 
-export const getSurveillantStagiaire = async (id) => {
+export const getSurveillantGeneral = async (id) => {
   let data = {
     success: true,
     error: "",
   };
 
   try {
-    const res = await axios.get(`surveillant/stagiaires/${id}`);
+    const res = await axios.get(`surveillants/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -94,7 +92,7 @@ export const getSurveillantStagiaire = async (id) => {
     data.success = false;
     if (isAxiosError(error)) {
       const errorV = error.response?.data?.error;
-      data.error = errorV || "Erreur lors de la récupération du stagiaire";
+      data.error = errorV || "Erreur lors de la récupération du surveillant général";
       return data;
     }
     data.error = "Une erreur s'est produite sur le serveur";
@@ -102,32 +100,29 @@ export const getSurveillantStagiaire = async (id) => {
   }
 };
 
-export const modifierSurveillantStagiaire = async (formData, id) => {
+export const modifierSurveillantGeneral = async (formData, id) => {
+  console.log("ID du surveillant :", id)
   let data = {
     success: true,
     errors: {
-      groupe_id: "",
-      numero_inscription: "",
       nom: "",
       prenom: "",
+      date_recrutement: "",
       email: "",
-      telephone: "",
-      adresse: "",
-      sexe: "",
-      CIN: "",
-      date_naissance: "",
-      lieu_naissance: "",
+      identifiant: "",
     },
     server: "",
   };
 
   try {
-    const res = await axios.put(`surveillant/stagiaires/${id}`, formData);
+    const res = await axios.put(`surveillants/${id}`, formData);
     if (res) {
       return data;
     }
   } catch (error) {
     data.success = false;
+    console.error(error)
+    console.log(formData)
     if (isAxiosError(error)) {
       if (error.response?.status === 422) {
         data.errors = error.response.data.errors;
@@ -143,3 +138,4 @@ export const modifierSurveillantStagiaire = async (formData, id) => {
     return data;
   }
 };
+

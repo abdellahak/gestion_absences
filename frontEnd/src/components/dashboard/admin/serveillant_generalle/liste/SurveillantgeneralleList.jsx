@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
-import FiliereTable from "../assets/table/FiliereTable";
-import {
-  getFilieres,
-  supprimerFiliere,
-} from "../../../../../assets/api/admin/filiere/filiere";
 import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
+import SurveillantgeneralleTable from "../assets/table/SurveillantgeneralleTable";
+import {
+  getSurveillantGenerale,
+  supprimerSurveillantGeneral,
+} from "../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
 
-export default function FilieresList() {
+export default function SurveillantgeneralleList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -17,8 +17,9 @@ export default function FilieresList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getFilieres();
-      if (res) setLoading(false);
+      setLoading(true);
+      const res = await getSurveillantGenerale();
+      setLoading(false);
       if (res.success) {
         setData(res.data);
       } else {
@@ -31,10 +32,10 @@ export default function FilieresList() {
   const handleDelete = async () => {
     if (deleting) return;
     setDeleting(true);
-    const res = await supprimerFiliere(show);
-    if (res) setDeleting(false);
+    const res = await supprimerSurveillantGeneral(show);
+    setDeleting(false);
     if (res.success) {
-      toast("success", "la filière a été supprimée avec succès");
+      toast("success", "Le surveillant général a été supprimé avec succès");
       setData((prev) => prev.filter((item) => item.id !== show));
       setShow(null);
     } else {
@@ -44,29 +45,29 @@ export default function FilieresList() {
 
   return (
     <>
-      <title>Liste des filières</title>
-      <div className="p-4 md:p-6 xl:mx-auto">
+      <title>Liste des surveillants généraux</title>
+      <div className="p-4 md:p-6 max-w-[1500px] xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Liste des filières
+          Liste des surveillants généraux
         </h2>
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
               {loading ? (
-                <div className=" size-full flex justify-center items-center py-12">
+                <div className="size-full flex justify-center items-center py-12">
                   <div className="w-fit">
                     <Loading className="!p-5" />
                   </div>
                 </div>
               ) : (
-                <FiliereTable data={data} setShow={setShow} />
+                <SurveillantgeneralleTable data={data} setShow={setShow} />
               )}
             </div>
             {show && (
               <DeleteConfirmation
                 show={show}
                 setShow={setShow}
-                text={"cette filière"}
+                text={"ce surveillant général"}
                 action={null}
                 handleDelete={handleDelete}
               />

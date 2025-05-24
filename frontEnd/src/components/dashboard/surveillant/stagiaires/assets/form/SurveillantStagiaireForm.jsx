@@ -169,27 +169,27 @@ export default function SurveillantStagiaireForm({
                   {errors.adresse}
                 </p>
               </div>
-              {/* CNI */}
+              {/* CIN */}
               <div className="mb-4">
-                <label htmlFor="CNI" className="mb-1.5 block text-sm font-medium text-gray-700">
-                  CNI
+                <label htmlFor="CIN" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  CIN
                 </label>
                 <input
-                  placeholder="CNI..."
+                  placeholder="CIN..."
                   className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
                   type="text"
-                  name="CNI"
-                  id="CNI"
-                  value={formData.CNI}
+                  name="CIN"
+                  id="CIN"
+                  value={formData.CIN}
                   onChange={e =>
                     setFormData(prev => ({
                       ...prev,
-                      CNI: e.target.value,
+                      CIN: e.target.value,
                     }))
                   }
                 />
                 <p className="text-red-500 text-md break-words h-[20px]">
-                  {errors.CNI}
+                  {errors.CIN}
                 </p>
               </div>
               {/* Sexe */}

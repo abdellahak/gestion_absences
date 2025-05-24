@@ -26,10 +26,8 @@ export default function SurveillantGroupList() {
   return (
     <>
       <title>Groupes</title>
-      <div className="p-4 md:p-6 max-w-[1500px] xl:mx-auto">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Groupes
-        </h2>
+      <div className="p-4 md:p-6  xl:mx-auto">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Groupes</h2>
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
@@ -40,7 +38,7 @@ export default function SurveillantGroupList() {
                   </div>
                 </div>
               ) : (
-                <SurveillantGroupeTable data={data}/>
+                <SurveillantGroupeTable data={data} />
               )}
             </div>
           </div>
