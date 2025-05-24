@@ -76,6 +76,7 @@ class JustificationController extends Controller
 
         $result = $justification->toArray();
         $result['absence_ids'] = $absenceIds;
+        $result['document'] = $justification->document ? basename($justification->document) : null;
 
         return response()->json($result, 200);
     }
@@ -117,7 +118,8 @@ class JustificationController extends Controller
         }
 
         $justification->save();
-
+        $result = $justification->toArray();
+        $result['document'] = $justification->document ? basename($justification->document) : null;
         return response()->json($justification, 200);
     }
 
