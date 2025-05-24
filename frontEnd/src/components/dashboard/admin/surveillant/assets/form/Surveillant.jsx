@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
-import SurveillantgeneralleForm from "./SurveillantgeneralleForm";
+import SurveillantForm from "./SurveillantForm";
 import {
-  ajouterSurveillantGeneral,
-  modifierSurveillantGeneral,
-} from "../../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
+  ajouterSurveillant,
+  modifierSurveillant,
+} from "../../../../../../assets/api/admin/surveillant/surveillant";
 
-export default function SurveillantGeneralle({
+export default function Surveillant({
   update = false,
-  surveillantGeneralleId = null,
+  surveillantId = null,
   data = null,
 }) {
   const [loading, setLoading] = useState(false);
@@ -54,9 +54,9 @@ export default function SurveillantGeneralle({
 
     let res;
     if (update) {
-      res = await modifierSurveillantGeneral(formData, surveillantGeneralleId);
+      res = await modifierSurveillant(formData, surveillantId);
     } else {
-      res = await ajouterSurveillantGeneral(formData);
+      res = await ajouterSurveillant(formData);
     }
     if (res) setLoading(false);
     if (res.success) {
@@ -92,7 +92,7 @@ export default function SurveillantGeneralle({
 
   return (
     <>
-      <SurveillantgeneralleForm
+      <SurveillantForm
         update={update}
         handleSubmit={handleSubmit}
         errors={errors}

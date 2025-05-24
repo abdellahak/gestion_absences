@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
-import SurveillantgeneralleTable from "../assets/table/SurveillantgeneralleTable";
-import {
-  getSurveillantGenerale,
-  supprimerSurveillantGeneral,
-} from "../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
+import SurveillantsTable from "../assets/table/SurveillantsTable";
+import {getSurveillants, supprimerSurveillant} from "../../../../../assets/api/admin/surveillant/surveillant";
 
-export default function SurveillantgeneralleList() {
+export default function SurveillantsList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -18,7 +15,7 @@ export default function SurveillantgeneralleList() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await getSurveillantGenerale();
+      const res = await getSurveillants();
       setLoading(false);
       if (res.success) {
         setData(res.data);
@@ -28,14 +25,14 @@ export default function SurveillantgeneralleList() {
     };
     fetchData();
   }, []);
-
+  
   const handleDelete = async () => {
     if (deleting) return;
     setDeleting(true);
-    const res = await supprimerSurveillantGeneral(show);
+    const res = await supprimerSurveillant(show);
     setDeleting(false);
     if (res.success) {
-      toast("success", "Le surveillant général a été supprimé avec succès");
+      toast("success", "Le surveillant a été supprimé avec succès");
       setData((prev) => prev.filter((item) => item.id !== show));
       setShow(null);
     } else {
@@ -60,7 +57,7 @@ export default function SurveillantgeneralleList() {
                   </div>
                 </div>
               ) : (
-                <SurveillantgeneralleTable data={data} setShow={setShow} />
+                <SurveillantsTable data={data} setShow={setShow} />
               )}
             </div>
             {show && (

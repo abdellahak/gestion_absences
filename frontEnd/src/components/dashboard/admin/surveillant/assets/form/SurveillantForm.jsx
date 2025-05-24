@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPlus, FaPen } from "react-icons/fa6";
-import { getSurveillantGenerale } from "../../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
 
-export default function SurveillantgeneralleForm({
+export default function SurveillantForm({
   handleSubmit,
   errors,
   formData,
@@ -11,30 +10,6 @@ export default function SurveillantgeneralleForm({
   update,
   loading,
 }) {
-  const [surveillantgeneralle, setSurveillantGeneralle] = useState([]);
-  const [loadingSurveillantGeneralle, setLoadingSurveillantGeneralle] = useState(false);
-
-  useEffect(() => {
-    const fetchSurveillantgeneralle = async () => {
-      setLoadingSurveillantGeneralle(true);
-      const res = await getSurveillantGenerale();
-      setLoadingSurveillantGeneralle(false);
-      if (res && res.success) {
-        setSurveillantGeneralle(res.data);
-      }
-    };
-    fetchSurveillantgeneralle();
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     setLoadingUsers(true);
-  //     const res = await getStagiaireUsers();
-  //     setLoadingUsers(false);
-  //     if (res && res.success) setUsers(res.data);
-  //   };
-  //   fetchUsers();
-  // }, []);
 
   return (
     <>
@@ -82,12 +57,12 @@ export default function SurveillantgeneralleForm({
                   htmlFor="prenom"
                   className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
-                    prénom de l'utilisateur
+                    prénom
                 </label>
                 <div className="relative">
                   <div className="flex flex-col gap-1 w-full">
                     <input
-                      placeholder="Prénom de l'utilisateur..."
+                      placeholder="Prénom..."
                       className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
                       type="text"
                       name="prenom"
@@ -206,7 +181,7 @@ export default function SurveillantgeneralleForm({
             className="flex items-center justify-center w-full gap-2 p-3 text-sm font-medium transition-colors rounded-lg bg-brand-500 text-white hover:bg-brand-600 disabled:opacity-60"
           >
             {update ? <FaPen /> : <FaPlus />}
-            {update ? "modifier le stagiaire" : "ajouter le stagiaire"}
+            {update ? "modifier le surveillant général" : "ajouter le surveillant général"}
           </button>
         </div>
       </div>

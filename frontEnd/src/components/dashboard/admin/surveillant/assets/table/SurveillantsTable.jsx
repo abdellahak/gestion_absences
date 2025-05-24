@@ -3,7 +3,7 @@ import { GrEdit } from "react-icons/gr";
 import { Table, TableCell, ThRow } from "../../../../../../assets/table/Table";
 import { Link } from "react-router-dom";
 
-export default function SurveillantgeneralleTable({ data, setShow }) {
+export default function SurveillantsTable({ data, setShow }) {
   return (
     <>
       <div className="overflow-x-auto shadow-sm">

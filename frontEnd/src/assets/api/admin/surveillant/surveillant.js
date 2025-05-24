@@ -1,7 +1,7 @@
 import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
-export const getSurveillantGenerale = async () => {
+export const getSurveillants = async () => {
     let data = {
         success: true,
         data: null,
@@ -27,7 +27,7 @@ export const getSurveillantGenerale = async () => {
     };
 
 
-export const supprimerSurveillantGeneral = async (id) => {
+export const supprimerSurveillant= async (id) => {
   let data = {
     success: true,
     error: "",
@@ -44,8 +44,7 @@ export const supprimerSurveillantGeneral = async (id) => {
   }
 };
 
-export const ajouterSurveillantGeneral = async (formData) => {
-  console.log("FormData envoyé :", formData);
+export const ajouterSurveillant = async (formData) => {
   let data = {
     success: true,
     errors: {
@@ -76,7 +75,7 @@ export const ajouterSurveillantGeneral = async (formData) => {
   }
 };
 
-export const getSurveillantGeneral = async (id) => {
+export const getSurveillant = async (id) => {
   let data = {
     success: true,
     error: "",
@@ -100,8 +99,7 @@ export const getSurveillantGeneral = async (id) => {
   }
 };
 
-export const modifierSurveillantGeneral = async (formData, id) => {
-  console.log("ID du surveillant :", id)
+export const modifierSurveillant = async (formData, id) => {
   let data = {
     success: true,
     errors: {
@@ -122,7 +120,6 @@ export const modifierSurveillantGeneral = async (formData, id) => {
   } catch (error) {
     data.success = false;
     console.error(error)
-    console.log(formData)
     if (isAxiosError(error)) {
       if (error.response?.status === 422) {
         data.errors = error.response.data.errors;

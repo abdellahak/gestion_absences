@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
-import Surveillantgeneralle from "../assets/form/Surveillantgeneralle";
+import Surveillant from "../assets/form/Surveillant";
 import { useParams } from "react-router-dom";
 import Loading from "../../../../../assets/loading/Loading";
-import { getSurveillantGeneral } from "../../../../../assets/api/admin/surveillantgeneralle/surveillantgeneralle";
+import { getSurveillant } from "../../../../../assets/api/admin/surveillant/surveillant";
 
-export default function ModifierSurveillantgeneralle() {
+export default function ModifierSurveillant() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const fetchSurveillantgeneralle = async () => {
-      const res = await getSurveillantGeneral(id);
+    const fetchSurveillant = async () => {
+      const res = await getSurveillant(id);
       if (res) setLoading(false);
       if (res.success) {
         setData(res.data);
@@ -21,7 +21,7 @@ export default function ModifierSurveillantgeneralle() {
         toast("error", res.error);
       }
     };
-    fetchSurveillantgeneralle();
+    fetchSurveillant();
   }, [id]);
 
   return (
@@ -29,7 +29,7 @@ export default function ModifierSurveillantgeneralle() {
     <>
       <title>Modifier Surveillant Général</title>
       {!loading ? (
-        <Surveillantgeneralle update surveillantGeneralleId={id} data={data} />
+        <Surveillant update surveillantId={id} data={data} />
       ) : (
         <div className="flex justify-center items-center size-full">
           <div className="">

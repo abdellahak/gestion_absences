@@ -27,9 +27,9 @@ import FormateurStagiairesList from "./components/dashboard/formateur/stagiaires
 import JustificationList from "./components/dashboard/stagiaire/justification/liste/JustificationList";
 import AjouterJustification from "./components/dashboard/stagiaire/justification/ajouter/AjouterJustification";
 import ModifierJustification from "./components/dashboard/stagiaire/justification/modifier/ModifierJustification";
-import SurveillantgeneralleList from "./components/dashboard/admin/serveillant_generalle/liste/SurveillantgeneralleList";
-import AjouterSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/ajouter/AjouterSurveillantgeneralle";
-import ModifierSurveillantgeneralle from "./components/dashboard/admin/serveillant_generalle/modifier/ModifierSurveillantgeneralle";    
+import SurveillantsList from "./components/dashboard/admin/surveillant/liste/SurveillantsList";
+import AjouterSurveillant from "./components/dashboard/admin/surveillant/ajouter/AjouterSurveillant";
+import ModifierSurveillant from "./components/dashboard/admin/surveillant/modifier/ModifierSurveillant";
 
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 
@@ -65,9 +65,9 @@ function App() {
               </Route>
               <Route path="profile" element={<Profile />} />
               <Route path="surveillants" >
-                <Route index element={<SurveillantgeneralleList/>} />
-                <Route path="ajouter" element={<AjouterSurveillantgeneralle/>} />
-                <Route path=":id/modifier" element={<ModifierSurveillantgeneralle/>} />
+                <Route index element={<SurveillantsList/>} />
+                <Route path="ajouter" element={<AjouterSurveillant/>} />
+                <Route path=":id/modifier" element={<ModifierSurveillant/>} />
               </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
