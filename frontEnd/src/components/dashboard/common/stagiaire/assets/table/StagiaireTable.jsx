@@ -2,8 +2,11 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { GrEdit } from "react-icons/gr";
 import { Table, TableCell, ThRow } from "../../../../../../assets/table/Table";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
 
 export default function StagiaireTable({ data, setShow }) {
+  const {auth} = useAuth()
+  console.log(auth);
   return (
     <>
       <div className="overflow-x-auto shadow-sm">
@@ -38,7 +41,7 @@ export default function StagiaireTable({ data, setShow }) {
                         <FaRegTrashCan className="h-4 w-4" />
                       </button>
                       <Link
-                        to={`/admin/stagiaires/${item.id}/modifier`}
+                        to={`/${auth.role}/stagiaires/${item.id}/modifier`}
                         className="text-green-500 hover:text-green-800"
                       >
                         <GrEdit className="h-4 w-4" />
