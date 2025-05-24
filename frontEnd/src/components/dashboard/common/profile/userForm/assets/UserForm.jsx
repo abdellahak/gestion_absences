@@ -38,6 +38,8 @@ export default function UserForm({
                     }));
                   }}
                 />
+
+                <p className="text-red-500 text-xs mt-1 h-4">{errors.email}</p>
               </div>
               {auth.role === "stagiaire" && (
                 <>
@@ -59,6 +61,9 @@ export default function UserForm({
                         }));
                       }}
                     />
+                    <p className="text-red-500 text-xs mt-1 h-4">
+                      {errors.telephone}
+                    </p>
                   </div>
                   <div>
                     <p className="mb-2 text-xs leading-normal text-gray-500">
@@ -82,6 +87,9 @@ export default function UserForm({
                       <option value="Homme">Homme</option>
                       <option value="Femme">Femme</option>
                     </select>
+                    <p className="text-red-500 text-xs mt-1 h-4">
+                      {errors.sexe}
+                    </p>
                   </div>
                   <div>
                     <p className="mb-2 text-xs leading-normal text-gray-500">
@@ -100,6 +108,9 @@ export default function UserForm({
                         }));
                       }}
                     />
+                    <p className="text-red-500 text-xs mt-1 h-4">
+                      {errors.date_naissance}
+                    </p>
                   </div>
                   <div>
                     <p className="mb-2 text-xs leading-normal text-gray-500">
@@ -119,6 +130,9 @@ export default function UserForm({
                         }));
                       }}
                     />
+                    <p className="text-red-500 text-xs mt-1 h-4">
+                      {errors.lieu_naissance}
+                    </p>
                   </div>
                   <div>
                     <p className="mb-2 text-xs leading-normal text-gray-500">
@@ -138,6 +152,9 @@ export default function UserForm({
                         }));
                       }}
                     />
+                    <p className="text-red-500 text-xs mt-1 h-4">
+                      {errors.adresse}
+                    </p>
                   </div>
                 </>
               )}
@@ -148,9 +165,9 @@ export default function UserForm({
             className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 lg:inline-flex lg:w-auto"
             onClick={handleSubmit}
           >
-            {
-              buttonLoading ? 
-              <LuLoaderCircle  className="text-xl animate-spin text-brand-500"/> :
+            {buttonLoading ? (
+              <LuLoaderCircle className="text-xl animate-spin text-brand-500" />
+            ) : (
               <>
                 <svg
                   className="fill-current"
@@ -169,7 +186,7 @@ export default function UserForm({
                 </svg>
                 Modifier
               </>
-            }
+            )}
           </button>
         </div>
       </div>

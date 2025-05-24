@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import UserMetaCard from "./assets/UserMetaCard";
 import { useAuth } from "../../../../assets/wrapper/AuthWrapper";
 import EditUser from "./userForm/EditUser";
+import ChangePassword from "./passwordForm/ChangePassword";
 
 export default function Profile() {
   const { auth } = useAuth();
@@ -21,6 +22,7 @@ export default function Profile() {
         <div className="space-y-6">
           <UserMetaCard user = {auth} />
           <EditUser />
+          <ChangePassword />
         </div>
       </div>
     </>

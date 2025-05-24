@@ -62,3 +62,37 @@ export const updateProfile = async (formData) => {
     return data;
   }
 }
+
+export const updatePassword = async (passwordData) => {
+  let data = {
+    success: true,
+    errors: {
+      current_password: "",
+      new_password: "",
+      new_password_confirmation: "",
+    },
+    server: "",
+  };
+
+  try {
+    const res = await axios.put(`update-password`, passwordData);
+    if (res) {
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      if (error.status == 422) {
+        data.errors = error.response.data.errors;
+        return data;
+      }
+      if (error.status == 400) {
+        data.server = error.response.data.error;
+        return data;
+      }
+      return data;
+    }
+    data.server = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
