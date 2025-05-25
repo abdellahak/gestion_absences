@@ -2,8 +2,11 @@ import { Table, TableCell, ThRow } from "../../../../../../assets/table/Table";
 import { LuLoaderCircle } from "react-icons/lu";
 import { FaDownload } from "react-icons/fa";
 import { useState } from "react";
+import { download, updateStatus } from "../../../../../../assets/api/surveillant/absences/absences";
+import { useToast } from "../../../../../../assets/toast/Toast";
 
 export default function AbsencesTable({ data }) {
+  const { toast } = useToast();
 
   const [downloadingId, setDownloadingId] = useState(null);
 
@@ -66,58 +69,43 @@ export default function AbsencesTable({ data }) {
                 </TableCell>
                 <TableCell>{item.justification ? item.justification.intitule : "-"}</TableCell>
                  <TableCell>
-                                 {downloadingId === item.id ? (
-                                   <div className="flex items-center justify-center h-10">
-                                     <LuLoaderCircle className="text-xl animate-spin text-brand-500" />
-                                   </div>
-                                 ) : (
-                                   <button
-                                     className="hover:text-gray-500 flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
-onClick={() => handleDownload(item.justification.id, item.justification.intitule)}
-                                   >
-                                     Télecharger
-                                     <FaDownload className="h-4 w-4" />
-                                   </button>
-                                 )}
-                               </TableCell>
-                               <TableCell>
-  <span
-    className={
-      statuses[item.id] === "en_attente"
-        ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
-        : statuses[item.id] === "refuse"
-        ? "px-2 py-1 rounded-full bg-red-100 text-red-700 font-semibold"
-        : statuses[item.id] === "valide"
-        ? "px-2 py-1 rounded-full bg-green-100 text-green-700 font-semibold"
-        : "px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold"
-    }
-  >
-    {statuses[item.id]}
-  </span>
-
-  <div className="mt-2 flex gap-2">
-    <button
-      className="px-2  bg-green-200 text-green-800 rounded hover:bg-green-300"
-      onClick={() => changeStatus(item.id, "valide")}
-    >
-      Valider
-    </button>
-    <button
-      className="px-2  bg-red-200 text-red-800 rounded hover:bg-red-300"
-      onClick={() => changeStatus(item.id, "refuse")}
-    >
-      Refuser
-    </button>
-    <button
-      className="px-2 bg-yellow-200 text-yellow-800 rounded hover:bg-yellow-300"
-      onClick={() => changeStatus(item.id, "en_attente")}
-    >
-      En attente
-    </button>
-  </div>
-</TableCell>
-
-                            </tr>
+                  {downloadingId === item.id ? (
+                    <div className="flex items-center justify-center h-10">
+                      <LuLoaderCircle className="text-xl animate-spin text-brand-500" />
+                    </div>
+                  ) : (
+                    <button
+                      className="hover:text-gray-500 flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
+                      onClick={() => handleDownload(item.id, item.intitule)}
+                    >
+                      Télecharger
+                      <FaDownload className="h-4 w-4" />
+                    </button>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <span
+                    className={
+                      statuses[item.id] === "en_attente"
+                        ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
+                        : statuses[item.id] === "refuse"
+                        ? "px-2 py-1 rounded-full bg-red-100 text-red-700 font-semibold"
+                        : statuses[item.id] === "valide"
+                        ? "px-2 py-1 rounded-full bg-green-100 text-green-700 font-semibold"
+                        : "px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold"
+                    }
+                  >
+                    
+                    <select name="" id=""onChange={
+                      (e)=>updateStatus(item.id, e.target.value).then(() => changeStatus(item.id, e.target.value))
+                    }>
+                      <option className="px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold" value="en_attente" selected={statuses[item.id] === "en_attente"} onChange={() => changeStatus(item.id, "en_attente")}>En attente</option>
+                      <option className="px-2 py-1 rounded-full bg-green-100 text-green-700 font-semibold" value="valide" selected={statuses[item.id] === "valide"} onChange={() => changeStatus(item.id, "valide")}>Validé</option>
+                      <option className="px-2 py-1 rounded-full bg-red-100 text-red-700 font-semibold" value="refuse" selected={statuses[item.id] === "refuse"} onChange={() => changeStatus(item.id, "refuse")}>Refusé</option>
+                    </select>
+                  </span>
+                </TableCell>
+          </tr>
             ))
           ) : (
             <tr>

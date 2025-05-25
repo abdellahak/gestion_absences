@@ -14,7 +14,6 @@ export default function SurveillantAbsencesList() {
     const fetchData = async () => {
       setLoading(true);
       const res = await getAbsences();
-      console.log(res);
       setLoading(false);
       if (res.success) {
         setData(res.data);

@@ -77,6 +77,8 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {
     Route::controller(SurveillantAbsencesController::class)->group(function () {
        Route::get('absences', 'index');
+        Route::get('justifications/download/{id}', 'download');
+        Route::put('justifications/{id}', 'update');
         
     });
     // Route::controller(SurveillantGroupController::class)->group(function () {
