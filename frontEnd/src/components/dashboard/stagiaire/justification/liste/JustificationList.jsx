@@ -8,6 +8,7 @@ export default function JustificationList() {
   const [justifications, setJustifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDelete, setShowDelete] = useState(null);
+  const [sortStatus, setSortStatus] = useState("valide"); 
   const { toast } = useToast();
 
   const fetchJustifications = async () => {
@@ -20,6 +21,12 @@ export default function JustificationList() {
   useEffect(() => {
     fetchJustifications();
   }, []);
+
+  const sortedJustifications = [...justifications].sort((a, b) => {
+    if (a.status === sortStatus && b.status !== sortStatus) return -1;
+    if (a.status !== sortStatus && b.status === sortStatus) return 1;
+    return 0;
+  });
 
   const handleDelete = async () => {
     if (!showDelete) return;
@@ -50,7 +57,12 @@ export default function JustificationList() {
                   </div>
                 </div>
               ) : (
-                <JustificationTable data={justifications} setShow={setShowDelete} />
+                <JustificationTable
+                  data={sortedJustifications}
+                  setShow={setShowDelete}
+                  sortStatus={sortStatus}
+                  setSortStatus={setSortStatus}
+                />
               )}
             </div>
             {showDelete && (
