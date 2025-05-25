@@ -1,5 +1,5 @@
-import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdListAlt, MdTableRows,MdCalendarToday } from "react-icons/md";
+import { FaChartPie, FaUserGraduate, FaUsers,FaClipboardCheck, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle} from "react-icons/fa";
+import { MdListAlt, MdTableRows,MdCalendarToday,MdPerson } from "react-icons/md";
 
 
 function prefixPath(role, path) {
@@ -58,16 +58,6 @@ export function getSidebarNavItems(role) {
           { name: "Liste des surveillants", path: "/admin/surveillants", pro: false },
           { name: "Ajouter surveillant", path: "/admin/surveillants/ajouter", pro: false },
         ],
-      },
-      {
-        name: "example page",
-        icon: <MdListAlt />,
-        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
-      },
-      {
-        name: "example page",
-        icon: <MdTableRows />,
-        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
       },
     ];
   }
@@ -189,17 +179,10 @@ export function getSidebarNavItems(role) {
       },
       {
         name: "Justifications",
-        icon: <FaFileAlt />,
+        icon: <FaClipboardCheck />,
         subItems: [
           { name: "Mes justifications", path: "/stagiaire/justifications" },
           { name: "Nouvelle justification", path: "/stagiaire/justifications/ajouter" },
-        ],
-      },
-      {
-        name: "Avertissements",
-        icon: <FaBell />,
-        subItems: [
-          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
         ],
       },
       {
@@ -208,6 +191,13 @@ export function getSidebarNavItems(role) {
         subItems: [
           { name: "Mes demandes", path: "/stagiaire/demandes" },
           { name: "Nouvelle demande", path: "/stagiaire/demandes/ajouter" },
+        ],
+      },
+      {
+        name: "Avertissements",
+        icon: <FaBell />,
+        subItems: [
+          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
         ],
       },
       {
