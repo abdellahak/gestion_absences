@@ -8,6 +8,7 @@ use App\Models\SurveillantGeneral;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -131,5 +132,30 @@ class ProfileController extends Controller
         return response()->json([
             'message' => 'Profile mis à jour avec succès.',
         ], 200);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+            'new_password_confirmation' => 'required',
+        ], [
+            'current_password.required' => 'Le mot de passe actuel est requis.',
+            'new_password.required' => 'Le nouveau mot de passe est requis.',
+            'new_password.min' => 'Le nouveau mot de passe doit comporter au moins 8 caractères.',
+            'new_password.confirmed' => 'La confirmation du nouveau mot de passe ne correspond pas.',
+            'new_password_confirmation.required' => 'La confirmation du nouveau mot de passe est requise.',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['errors' => 'Le mot de passe actuel est incorrect.'], 400);
+        }
+        $targetUser = User::find($user->id);
+        $targetUser->password = Hash::make($request->new_password);
+        $targetUser->save();
+
+        return response()->json(['message' => 'Mot de passe mis à jour avec succès.'], 200);
     }
 }

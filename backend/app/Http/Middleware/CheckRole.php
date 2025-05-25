@@ -15,8 +15,9 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
+        $allowedRoles = explode('|', $role);
         $user = $request->user();
-        if (!$user || $user->role !== $role) {
+        if (!$user || !in_array($user->role, $allowedRoles)) {
             return response()->json(['error' => 'Unauthorized.'], 401);
         }
         return $next($request);

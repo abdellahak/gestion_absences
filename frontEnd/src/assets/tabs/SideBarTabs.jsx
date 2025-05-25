@@ -1,5 +1,5 @@
 import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdListAlt, MdTableRows,MdCalendarToday } from "react-icons/md";
+import { MdListAlt, MdTableRows,MdCalendarToday,MdPerson } from "react-icons/md";
 
 
 function prefixPath(role, path) {
@@ -60,14 +60,9 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
-        name: "example page",
-        icon: <MdListAlt />,
-        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
-      },
-      {
-        name: "example page",
-        icon: <MdTableRows />,
-        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
+        name: "Profile",
+        icon: <FaUserCircle />,
+        path: "/admin/profile",
       },
     ];
   }
