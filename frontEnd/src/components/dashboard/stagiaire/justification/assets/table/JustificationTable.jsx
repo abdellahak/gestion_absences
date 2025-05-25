@@ -7,8 +7,9 @@ import { download } from "../../../../../../assets/api/stagiaires/justification/
 import { FaRegTrashCan } from "react-icons/fa6";
 import { GrEdit } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import { FaSort } from "react-icons/fa6";
 
-export default function JustificationTable({ data, setShow }) {
+export default function JustificationTable({ data, setShow, sortStatus, setSortStatus }) {
   const { toast } = useToast();
   const [downloadingId, setDownloadingId] = useState(null);
 
@@ -33,7 +34,20 @@ export default function JustificationTable({ data, setShow }) {
             <TableCell isHeader={true}>Surveillant Général</TableCell>
             <TableCell isHeader={true}>Intitulé</TableCell>
             <TableCell isHeader={true}>Document</TableCell>
-            <TableCell isHeader={true}>Statut</TableCell>
+            <TableCell isHeader={true}>
+              <div
+                className="flex items-center gap-2 cursor-pointer select-none"
+                onClick={() => setSortStatus(sortStatus === "valide" ? "en_attente" : "valide")}
+                title="Trier par statut"
+              >
+                Statut
+                <FaSort
+                  className={`text-gray-400 transition-transform ${
+                    sortStatus === "valide" ? "rotate-0" : "rotate-180"
+                  }`}
+                />
+              </div>
+            </TableCell>
             <TableCell isHeader={true}>Actions</TableCell>
           </ThRow>
         </thead>
@@ -63,20 +77,22 @@ export default function JustificationTable({ data, setShow }) {
                     </button>
                   )}
                 </TableCell>
-                <TableCell>
-                  <span
-                    className={
-                      item.status === "en_attente"
-                        ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
-                        : item.status === "refuse"
-                        ? "px-2 py-1 rounded-full bg-error-50 text-error-700 font-semibold"
-                        : item.status === "valide"
-                        ? "px-2 py-1 rounded-full bg-success-50 text-success-700 font-semibold"
-                        : "px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold"
-                    }
-                  >
-                    {item.status}
-                  </span>
+                <TableCell className="text-center align-middle">
+                  <div className="flex justify-center items-center h-full w-full">
+                    <span
+                      className={
+                        item.status === "en_attente"
+                          ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
+                          : item.status === "refuse"
+                          ? "px-2 py-1 rounded-full bg-error-50 text-error-700 font-semibold"
+                          : item.status === "valide"
+                          ? "px-2 py-1 rounded-full bg-success-50 text-success-700 font-semibold"
+                          : "px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold"
+                      }
+                    >
+                      {item.status}
+                    </span>
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex w-full items-center justify-center gap-2">
