@@ -35,8 +35,7 @@ export default function AbsencesTable({ data }) {
 
   return (
 <>
-    <input type="text"  />
-
+    
     <div className="overflow-x-auto shadow-sm">
       <Table>
         <thead>

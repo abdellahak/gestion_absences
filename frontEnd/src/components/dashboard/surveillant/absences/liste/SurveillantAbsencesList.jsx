@@ -4,6 +4,7 @@ import Loading from "../../../../../assets/loading/Loading";
 import AbsencesTable from "../assets/table/AbsencesTable";
 
 import { getAbsences } from "../../../../../assets/api/surveillant/absences/absences";
+import { getGroupes } from "../../../../../assets/api/admin/groupe/groupe";
 
 export default function SurveillantAbsencesList() {
   const { toast } = useToast();
@@ -23,6 +24,9 @@ export default function SurveillantAbsencesList() {
     };
     fetchData();
   }, []);
+ 
+
+  
 
   return (
     <>
@@ -39,8 +43,10 @@ export default function SurveillantAbsencesList() {
                   <div className="w-fit">
                     <Loading className="!p-5" />
                   </div>
+                  
                 </div>
               ) : (
+                
                 <AbsencesTable data={data} />
               )}
             </div>
