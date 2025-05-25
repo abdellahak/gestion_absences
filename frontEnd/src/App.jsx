@@ -32,6 +32,7 @@ import AjouterSurveillant from "./components/dashboard/admin/surveillant/ajouter
 import ModifierSurveillant from "./components/dashboard/admin/surveillant/modifier/ModifierSurveillant";
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 import SurveillantAbsencesList from "./components/dashboard/surveillant/absences/liste/SurveillantAbsencesList";
+import SurveillantAuthList from "./components/dashboard/surveillant/authorisation/list/SurveillantAuthList";
 
 function App() {
   return (
@@ -134,7 +135,9 @@ function App() {
               </Route>
                <Route path="absences">
                 <Route index element={<SurveillantAbsencesList />} />
-                
+              </Route>
+               <Route path="demandes">
+                <Route index element={<SurveillantAuthList />} />
               </Route>
 
               <Route path="profile" element={<Profile />} />
