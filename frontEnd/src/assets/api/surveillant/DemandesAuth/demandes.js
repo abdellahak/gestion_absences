@@ -34,3 +34,34 @@ export const updateStatus = async (id, status) => {
     return data;
   }
 }
+export const download = async (id, file_name) => {
+    let data = {
+        success: true,
+        error: "",
+    };
+    
+    try {
+        const res = await axios.get(`surveillant/demandes/download/${id}`, {
+        responseType: "blob",
+        });
+        if (res) {
+        const url = window.URL.createObjectURL(
+            new Blob([res.data], {
+            type: res.headers["content-type"] || "application/octet-stream",
+            })
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", file_name);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(link.href);
+        return data;
+        }
+    } catch (error) {
+        data.success = false;
+        data.error = "Une erreur s'est produite sur le serveur";
+        return data;
+    }
+    }

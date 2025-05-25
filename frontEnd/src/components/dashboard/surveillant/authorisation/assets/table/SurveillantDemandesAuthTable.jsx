@@ -6,11 +6,14 @@ import { useToast } from "../../../../../../assets/toast/Toast";
 import { useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import { LuLoaderCircle } from "react-icons/lu";
-import { download } from "../../../../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
+import { download, updateStatus } from "../../../../../../assets/api/surveillant/DemandesAuth/demandes";
 
-export default function SurveillantDemandesAuthTbale({ data, setShow }) {
+export default function SurveillantDemandesAuthTbale({ data  }) {
   const { toast } = useToast();
   const [downloadingId, setDownloadingId] = useState(null);
+  const [localStatuses, setLocalStatuses] = useState(
+  data.reduce((acc, item) => ({ ...acc, [item.id]: item.status }), {})
+    );
   const handleDownload = async (id, file_name) => {
     if (downloadingId === id) return;
     setDownloadingId(id);
@@ -22,6 +25,7 @@ export default function SurveillantDemandesAuthTbale({ data, setShow }) {
       toast("error", res.error);
     }
   };
+  
   return (
     <div className="overflow-x-auto shadow-sm">
       <Table>
@@ -51,20 +55,37 @@ export default function SurveillantDemandesAuthTbale({ data, setShow }) {
                 <TableCell>{item.heure_debut}</TableCell>
                 <TableCell>{item.heure_fin}</TableCell>
                 <TableCell>
-                  <span
-                    className={
-                      item.status === "en_attente"
-                        ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
-                        : item.status === "refuse"
-                        ? "px-2 py-1 rounded-full bg-error-50 text-error-700 font-semibold"
-                        : item.status === "valide"
-                        ? "px-2 py-1 rounded-full bg-success-50 text-success-700 font-semibold"
-                        : ""
-                    }
-                  >
-                    {item.status}
-                  </span>
-                </TableCell>
+                    <select
+                        value={localStatuses[item.id] || item.status}
+                        onChange={(e) => {
+                        const newStatus = e.target.value;
+                        setLocalStatuses(prev => ({ ...prev, [item.id]: newStatus }));
+                        updateStatus(item.id, newStatus)
+                        .then(() => {
+                          toast("success", "Statut mis à jour avec succès");
+                        })
+                            .catch(() => {
+                            // Revert if API call fails
+                            setLocalStatuses(prev => ({ ...prev, [item.id]: item.status }));
+                            });
+                        }}
+                        className={
+                        `px-2 py-1 rounded-full font-semibold focus:outline-none ${
+                            (localStatuses[item.id] || item.status) === "en_attente"
+                            ? "bg-yellow-50 text-yellow-700"
+                            : (localStatuses[item.id] || item.status) === "refuse"
+                            ? "bg-error-50 text-error-700"
+                            : (localStatuses[item.id] || item.status) === "valide"
+                            ? "bg-success-50 text-success-700"
+                            : ""
+                        }`
+                        }
+                    >
+                        <option value="en_attente">En attente</option>
+                        <option value="valide">Validé</option>
+                        <option value="refuse">Refusé</option>
+                    </select>
+                    </TableCell>
                 <TableCell>
                     {
                       downloadingId === item.id ? (

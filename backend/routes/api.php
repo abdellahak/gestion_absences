@@ -88,6 +88,7 @@ Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->
     Route::controller(SurveillantDemandeAuthController::class)->group(function () {
         Route::get('demandes', 'index');
         Route::put('demandes/{id}', 'update');
+        Route::get('demandes/download/{id}', 'download');
         
     });
 });

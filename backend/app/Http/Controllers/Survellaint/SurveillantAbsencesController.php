@@ -38,7 +38,7 @@ public function index()
         $justification->status = $validated['status'];
         $justification->save();
 
-        return response()->json(['message' => 'Statut de la justification mis à jour avec succès'], 200);
+        return response()->json(['message' => 'Statut de la justification et surveillant mis à jour avec succès'], 200);
     }
     public function download($id)
     {
