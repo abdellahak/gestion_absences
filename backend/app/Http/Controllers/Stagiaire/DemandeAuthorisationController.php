@@ -104,7 +104,13 @@ class DemandeAuthorisationController extends Controller
         }
         $demande->update($data);
 
-        return response()->json(['message' => 'Demande modifiée avec succès'], 200);
+        $result = $demande->toArray();
+        $result['document'] = $demande->document ? basename($demande->document) : null;
+
+        return response()->json([
+            'message' => 'Demande modifiée avec succès',
+            'demande' => $result,
+        ], 200);
     }
 
     // Supprimer une demande (seulement si en_attente)
