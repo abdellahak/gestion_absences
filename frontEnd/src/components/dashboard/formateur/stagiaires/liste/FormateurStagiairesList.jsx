@@ -10,7 +10,7 @@ export default function FormateurStagiairesList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [groupes, setGroupes] = useState([]);
-  const [selectedGroupe, setSelectedGroupe] = useState(""); // Default: show all
+  const [selectedGroupe, setSelectedGroupe] = useState("");
   const [stagiaires, setStagiaires] = useState([]);
 
   useEffect(() => {

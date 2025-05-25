@@ -1,11 +1,14 @@
 import { FaRegTrashCan } from "react-icons/fa6";
-import { GrEdit } from "react-icons/gr";
 import { Table, TableCell, ThRow } from "../../../../../../assets/table/Table";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
 
 export default function FormateurAbsencesTable({ data, setShow }) {
-  const {auth} = useAuth();
+  const { auth } = useAuth();
+  const isToday = (dateString) => {
+    const today = new Date();
+    const absenceDate = new Date(dateString);
+    return today.toDateString() === absenceDate.toDateString();
+  };
   return (
     <>
       <div className="overflow-x-auto shadow-sm">
@@ -26,27 +29,29 @@ export default function FormateurAbsencesTable({ data, setShow }) {
               data.map((item, index) => (
                 <tr key={index} className="border border-gray-200">
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell>{item.stagiaire?.user?.prenom + " " + item.stagiaire?.user?.nom || ""}</TableCell>
+                  <TableCell>
+                    {item.stagiaire?.user?.prenom +
+                      " " +
+                      item.stagiaire?.user?.nom || ""}
+                  </TableCell>
                   <TableCell>{item.date_absence}</TableCell>
                   <TableCell>{item?.heure_debut}</TableCell>
                   <TableCell>{item.heure_fin}</TableCell>
-                  <TableCell>
-                    {item.stagiaire?.groupe?.code || "-"}
-                  </TableCell>
+                  <TableCell>{item.stagiaire?.groupe?.code || "-"}</TableCell>
                   <TableCell>
                     <div className="flex w-full items-center justify-center gap-2">
-                      <button
-                        className="text-red-500 hover:text-red-800"
-                        onClick={setShow ? () => setShow(item.id) : null}
-                      >
-                        <FaRegTrashCan className="h-4 w-4" />
-                      </button>
-                      <Link
-                        to={`/${auth.role}/stagiaires/${item.id}/modifier`}
-                        className="text-green-500 hover:text-green-800"
-                      >
-                        <GrEdit className="h-4 w-4" />
-                      </Link>
+                      {isToday(item.date_absence) ? (
+                        <button
+                          className="text-red-500 hover:text-red-800"
+                          onClick={setShow ? () => setShow(item.id) : null}
+                        >
+                          <FaRegTrashCan className="h-4 w-4" />
+                        </button>
+                      ):(
+                        <span className="text-gray-400 cursor-not-allowed">
+                          <FaRegTrashCan className="h-4 w-4" />
+                        </span>
+                      )}
                     </div>
                   </TableCell>
                 </tr>

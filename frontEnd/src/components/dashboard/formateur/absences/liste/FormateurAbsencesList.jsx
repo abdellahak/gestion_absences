@@ -3,19 +3,23 @@ import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
 import FormateurAbsencesTable from "../assets/table/FormatuerAbsencesTable";
-import { getAbsences } from "../../../../../assets/api/formateur/absences/absences";
+import { getAbsences, supprimerAbsence } from "../../../../../assets/api/formateur/absences/absences";
+import TableOptions from "../assets/table/TableOptions";
+import { getFormateurGroupes } from "../../../../../assets/api/formateur/formateur groupes/formateurGroupes";
 
 export default function FormateurAbsencesList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [groupes, setGroupes] = useState([]);
+  const [selectedGroupe, setSelectedGroupe] = useState("");
   const [show, setShow] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await getAbsences();
+      const res = await getAbsences(selectedGroupe);
       setLoading(false);
       if (res.success) {
         setData(res.data);
@@ -24,7 +28,22 @@ export default function FormateurAbsencesList() {
       }
     };
     fetchData();
+  }, [selectedGroupe]);
+
+  useEffect(() => {
+    const fetchGroupes = async () => {
+      setLoading(true);
+      const res = await getFormateurGroupes();
+      setLoading(false);
+      if (res.success) {
+        setGroupes(res.data);
+      } else {
+        toast("error", res.error);
+      }
+    };
+    fetchGroupes();
   }, []);
+
 
   const handleDelete = async () => {
     if (deleting) return;
@@ -50,6 +69,11 @@ export default function FormateurAbsencesList() {
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
+              <TableOptions
+                groupes={groupes}
+                selectedGroupe={selectedGroupe}
+                setSelectedGroupe={setSelectedGroupe}
+              />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">
                   <div className="w-fit">

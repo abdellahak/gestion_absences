@@ -1,14 +1,17 @@
 import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
-export const getAbsences = async (id, programmeId) => {
+export const getAbsences = async (groupeId) => {
   let data = {
     success: true,
     data: null,
     error: "",
   };
   try {
-    const res = await axios.get(`formateur/absences`);
+    const url = groupeId
+      ? `formateur/absences/${groupeId}`
+      : `formateur/absences`;
+    const res = await axios.get(url);
     if (res) {
       data.data = res.data;
       return data;
@@ -53,6 +56,23 @@ export const ajouterAbsence = async (formData) => {
       }
       return data;
     }
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const supprimerAbsence = async (id) => {
+  let data = {
+    success: true,
+    error: "",
+  };
+  try {
+    const res = await axios.delete(`formateur/absences/${id}`);
+    if (res) {
+      return data;
+    }
+  } catch (error) {
+    data.succes = false;
     data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }

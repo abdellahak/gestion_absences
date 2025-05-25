@@ -15,7 +15,7 @@ class FormateurAbsenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($groupeId = null)
     {
         $user = Auth::user();
         $formateur = $user->formateur;
@@ -24,14 +24,36 @@ class FormateurAbsenceController extends Controller
             return response()->json(['error' => 'Formateur non trouvé'], 403);
         }
 
-        $absences = Absence::where('formateur_id', $formateur->id)
-            ->with([
-                'stagiaire:id,user_id,groupe_id',
-                'stagiaire.user:id,nom,prenom,email',
-                'stagiaire.groupe:id,intitule,code',
-            ])
+        $formateurGroupeIds = $formateur->groupes()->pluck('groupe_id')->toArray();
+
+        if (empty($formateurGroupeIds)) {
+            return response()->json([]);
+        }
+
+        $query = Absence::where('formateur_id', $formateur->id)
+            ->whereHas('stagiaire', function ($query) use ($formateurGroupeIds) {
+                $query->whereIn('groupe_id', $formateurGroupeIds);
+            });
+
+        if ($groupeId) {
+            $query->whereHas('stagiaire', function ($query) use ($groupeId) {
+                $query->where('groupe_id', $groupeId);
+            });
+        }
+
+        $absences = $query->with([
+            'stagiaire:id,user_id,groupe_id',
+            'stagiaire.user:id,nom,prenom,email',
+            'stagiaire.groupe:id,intitule,code',
+        ])
             ->orderBy('date_absence', 'desc')
             ->get();
+
+        $absences->transform(function ($absence) {
+            $absence->heure_debut = date('H:i', strtotime($absence->heure_debut));
+            $absence->heure_fin = date('H:i', strtotime($absence->heure_fin));
+            return $absence;
+        });
 
         return response()->json($absences);
     }
@@ -54,7 +76,7 @@ class FormateurAbsenceController extends Controller
             'heure_fin.date_format' => 'L\'heure de fin doit être au format HH:MM',
             'heure_fin.after' => 'L\'heure de fin doit être après l\'heure de début',
         ]);
-        
+
         $absencesWithSameDateAndTime = Absence::where('date_absence', $validated['date_absence'])
             ->where('heure_debut', $validated['heure_debut'])
             ->exists();
@@ -95,5 +117,29 @@ class FormateurAbsenceController extends Controller
         }
 
         return response()->json(['message' => 'Absences ajoutées avec succès'], 201);
+    }
+
+    public function destroy($id)
+    {
+        $absence = Absence::find($id);
+        if (!$absence) {
+            return response()->json(['error' => 'Absence non trouvée'], 404);
+        }
+
+        $user = Auth::user();
+        $formateur = $user->formateur;
+
+        if (!$formateur || $absence->formateur_id !== $formateur->id) {
+            return response()->json(['error' => 'Vous n\'êtes pas autorisé à supprimer cette absence'], 400);
+        }
+
+        $today = date('Y-m-d');
+        if ($absence->date_absence !== $today) {
+            return response()->json(['error' => 'Vous ne pouvez supprimer que les absences du jour même'], 400);
+        }
+
+        $absence->delete();
+
+        return response()->json(['message' => 'Absence supprimée avec succès'], 200);
     }
 }
