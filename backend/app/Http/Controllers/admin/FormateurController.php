@@ -26,7 +26,7 @@ class FormateurController extends Controller
                 'nom' => 'required|string|max:255',
                 'prenom' => 'required|string|max:255',
                 'identifiant' => 'required|string|unique:users,identifiant',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'nullable|email|unique:users,email',
                 'date_recrutement' => 'required|date',
 
             ],

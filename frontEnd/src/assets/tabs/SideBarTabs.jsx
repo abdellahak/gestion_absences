@@ -60,14 +60,9 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
-        name: "example page",
-        icon: <MdListAlt />,
-        subItems: [{ name: "page 1", path: "/admin/example_page1", pro: false }],
-      },
-      {
-        name: "example page",
-        icon: <MdTableRows />,
-        subItems: [{ name: "page 2", path: "/admin/example_page2", pro: false }],
+        name: "Profile",
+        icon: <FaUserCircle />,
+        path: "/admin/profile",
       },
     ];
   }
@@ -185,6 +180,14 @@ export function getSidebarNavItems(role) {
         icon: <FaCalendarCheck />,
         subItems: [
           { name: "Liste des absences", path: "/stagiaire/absences" },
+        ],
+      },
+      {
+        name: "Justifications",
+        icon: <FaFileAlt />,
+        subItems: [
+          { name: "Mes justifications", path: "/stagiaire/justifications" },
+          { name: "Nouvelle justification", path: "/stagiaire/justifications/ajouter" },
         ],
       },
       {

@@ -38,9 +38,7 @@ export const ajouterDemandeAutorisation = async (formData) => {
         fd.append(key, value);
       }
     });
-    const res = await axios.post("stagiaire/demandes", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await axios.post("stagiaire/demandes", fd);
     if (res) {
       return data;
     }
@@ -85,8 +83,7 @@ export const modifierDemandeAutorisation = async (formData, id) => {
     });
     const res = await axios.post(
       `stagiaire/demandes/${id}?_method=PUT`,
-      fd,
-      { headers: { "Content-Type": "multipart/form-data" } }
+      fd
     );
     if (res) return data;
   } catch (error) {
@@ -94,7 +91,6 @@ export const modifierDemandeAutorisation = async (formData, id) => {
     return data;
   }
 };
-
 
 
 export const download= async (id, file_name) => {

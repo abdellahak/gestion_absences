@@ -24,24 +24,35 @@ class SurveillantGeneralController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $data = $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email',
-            'identifiant' => 'required|string|unique:users,identifiant',
-            'date_recrutement' => 'required|date',
-            
-        ],[
-             'user_id.required' => 'L\'utilisateur est requis',
-            'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
-            'date_recrutement.required' => 'La date de recrutement est requise',
-            'date_recrutement.date' => 'La date de recrutement doit être une date valide',
-        ]
 
-    );
+        $data = $request->validate(
+            [
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'email' => 'nullable|email|unique:users,email',
+                'identifiant' => 'required|string|unique:users,identifiant',
+                'date_recrutement' => 'required|date',
 
-    $user = User::create([
+            ],
+            [
+                'user_id.required' => 'L\'utilisateur est requis',
+                'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
+                'date_recrutement.required' => 'La date de recrutement est requise',
+                'date_recrutement.date' => 'La date de recrutement doit être une date valide',
+                'identifiant.required' => 'L\'identifiant est requis',
+                'identifiant.string' => 'L\'identifiant doit être une chaîne de caractères',
+                'identifiant.unique' => 'L\'identifiant doit être unique',
+                'nom.required' => 'Le nom est requis',
+                'nom.string' => 'Le nom doit être une chaîne de caractères',
+                'prenom.required' => 'Le prénom est requis',
+                'prenom.string' => 'Le prénom doit être une chaîne de caractères',
+                'email.email' => 'Veuillez entrer un email valide',
+                'email.unique' => 'L\'email existe déjà',
+            ]
+
+        );
+
+        $user = User::create([
             'nom' => $data['nom'],
             'prenom' => $data['prenom'],
             'identifiant' => $data['identifiant'],
@@ -50,17 +61,18 @@ class SurveillantGeneralController extends Controller
             'role' => 'surveillant',
         ]);
 
-            SurveillantGeneral::create([
+        SurveillantGeneral::create([
             'user_id' => $user->id,
             'date_recrutement' => $data['date_recrutement'],
-            ]);
+        ]);
 
-       
-      
 
-  return response()->json([
-            'message' => 'Surveillant créé avec succès'], 201);
-        }
+
+
+        return response()->json([
+            'message' => 'Surveillant créé avec succès'
+        ], 201);
+    }
 
     /**
      * Display the specified resource.
@@ -84,43 +96,49 @@ class SurveillantGeneralController extends Controller
             return response()->json(['message' => 'Surveillant non trouvé'], 404);
         }
 
-        $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'identifiant' => 'required|string|unique:users,identifiant,' . $surveillant->user_id,
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $surveillant->user_id,
-            'date_recrutement' => 'required|date',
-        ],[
+        $data = $request->validate(
+            [
+                'user_id' => 'required|exists:users,id',
+                'identifiant' => 'required|string|unique:users,identifiant,' . $surveillant->user_id,
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'email' => 'nullable|email|unique:users,email,' . $surveillant->user_id,
+                'date_recrutement' => 'required|date',
+            ],
+            [
 
-            'user_id.required' => 'L\'utilisateur est requis',
-            'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
-            'date_recrutement.required' => 'La date de recrutement est requise',
-            'date_recrutement.date' => 'La date de recrutement doit être une date valide',
-            'identifiant.required' => 'L\'identifiant est requis',
-            'identifiant.string' => 'L\'identifiant doit être une chaîne de caractères',
-            'identifiant.unique' => 'L\'identifiant doit être unique',
-            'nom.required' => 'Le nom est requis',
-            'nom.string' => 'Le nom doit être une chaîne de caractères',
-            'prenom.required' => 'Le prénom est requis',
-            'prenom.string' => 'Le prénom doit être une chaîne de caractères',
-            'email.email' => 'Veuillez entrer un email valide',
-            'email.unique' => 'L\'email existe déjà',
-            'email.string' => 'L\'email doit être une chaîne de caractères',
-            'email.max' => 'L\'email ne doit pas dépasser 255 caractères',
-        ]
-    );
-          $surveillant->update([
+                'user_id.required' => 'L\'utilisateur est requis',
+                'user_id.exists' => 'L\'utilisateur sélectionné est invalide',
+                'date_recrutement.required' => 'La date de recrutement est requise',
+                'date_recrutement.date' => 'La date de recrutement doit être une date valide',
+                'identifiant.required' => 'L\'identifiant est requis',
+                'identifiant.string' => 'L\'identifiant doit être une chaîne de caractères',
+                'identifiant.unique' => 'L\'identifiant doit être unique',
+                'nom.required' => 'Le nom est requis',
+                'nom.string' => 'Le nom doit être une chaîne de caractères',
+                'prenom.required' => 'Le prénom est requis',
+                'prenom.string' => 'Le prénom doit être une chaîne de caractères',
+                'email.email' => 'Veuillez entrer un email valide',
+                'email.unique' => 'L\'email existe déjà',
+                'email.string' => 'L\'email doit être une chaîne de caractères',
+                'email.max' => 'L\'email ne doit pas dépasser 255 caractères',
+            ]
+        );
+        if ($surveillant->user->identifiant == $data['identifiant'] && $surveillant->user->email == $data['email'] && $surveillant->date_recrutement == $data['date_recrutement'] && $surveillant->user->nom == $data['nom'] && $surveillant->user->prenom == $data['prenom']) {
+            return response()->json(['error' => 'Aucune modification apportée'], 400);
+        }
+
+        $surveillant->update([
             'user_id' => $data['user_id'],
             'date_recrutement' => $data['date_recrutement'],
-          ]);
-           $surveillant->user->update([
+        ]);
+        $surveillant->user->update([
             'identifiant' => $data['identifiant'],
             'nom' => $data['nom'],
             'prenom' => $data['prenom'],
             'email' => $data['email'] ?? null,
-           ]);
-        
+        ]);
+
         return response()->json(['message' => 'Surveillant mis à jour avec succès'], 200);
     }
 

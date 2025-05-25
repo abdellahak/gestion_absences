@@ -10,16 +10,16 @@ class Justification extends Model
     use HasFactory;
 
     protected $fillable = [
-        'absence_id',
         'surveillant_general_id',
         'intitule',
         'document',
         'status',
+        'stagiaire_id'
     ];
 
-    public function absence()
+    public function absences() 
     {
-        return $this->belongsTo(Absence::class);
+        return $this->hasMany(Absence::class);
     }
 
     public function surveillantGeneral()
