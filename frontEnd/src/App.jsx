@@ -32,6 +32,7 @@ import AjouterSurveillant from "./components/dashboard/admin/surveillant/ajouter
 import ModifierSurveillant from "./components/dashboard/admin/surveillant/modifier/ModifierSurveillant";
 
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
+import FormateurAbsencesList from "./components/dashboard/formateur/absences/liste/FormateurAbsencesList";
 
 function App() {
   return (
@@ -100,7 +101,10 @@ function App() {
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
               <Route path="stagiaires" element={<FormateurStagiairesList />} />
-              <Route path="absences/ajouter" element={<AjouterAbsence />} />
+              <Route path="absences">
+                <Route index element={<FormateurAbsencesList />} />
+                <Route path="ajouter" element={<AjouterAbsence />} />
+              </Route>
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
