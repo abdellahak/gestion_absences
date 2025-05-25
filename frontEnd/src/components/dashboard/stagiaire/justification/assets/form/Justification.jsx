@@ -35,12 +35,25 @@ export default function Justification({
 
   const handleSubmit = async () => {
     if (loading) return;
+    if (!formData.absence_ids || formData.absence_ids.length === 0) {
+      setErrors((prev) => ({
+        ...prev,
+        absence_ids: "Veuillez sélectionner au moins une absence à justifier.",
+      }));
+      return;
+    }
     setLoading(true);
+    const fd = new FormData();
+    fd.append("intitule", formData.intitule);
+    formData.absence_ids.forEach(id => fd.append("absence_ids[]", id));
+    if (formData.document && typeof formData.document !== "string") {
+      fd.append("document", formData.document);
+    }
     let res;
     if (update) {
-      res = await modifierJustification(formData, justificationId);
+      res = await modifierJustification(fd, justificationId);
     } else {
-      res = await ajouterJustification(formData);
+      res = await ajouterJustification(fd);
     }
     if (res) setLoading(false);
     if (res.success) {

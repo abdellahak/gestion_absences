@@ -13,29 +13,27 @@ export default function JustificationForm({
 }) {
 
   const handleCheckboxChange = (id) => {
-    setFormData((prev) => {
-      const exists = prev.absence_ids.includes(id.toString());
-      return {
-        ...prev,
-        absence_ids: exists
-          ? prev.absence_ids.filter((aid) => aid !== id.toString())
-          : [...prev.absence_ids, id.toString()],
-      };
-    });
-  };
+  setFormData((prev) => {
+    const idNum = Number(id);
+    const exists = prev.absence_ids.map(Number).includes(idNum);
+    return {
+      ...prev,
+      absence_ids: exists
+        ? prev.absence_ids.filter((aid) => Number(aid) !== idNum)
+        : [...prev.absence_ids, idNum],
+    };
+  });
+};
 
-  // Filtrer les absences selon le mode
   const filteredAbsences = update
     ? absences.filter(
         (absence) =>
-          // Afficher si pas de justification, ou justification non valide, ou fait partie de la justification en cours
           !absence.justification ||
           absence.justification.status !== "valide" ||
           (formData.absence_ids && formData.absence_ids.includes(absence.id.toString()))
       )
     : absences.filter(
         (absence) =>
-          // En mode ajout, afficher seulement les absences non justifiées ou refusées
           !absence.justification || absence.justification.status === "refuse"
       );
 
@@ -100,7 +98,7 @@ export default function JustificationForm({
                       <label key={absence.id} className="flex items-center gap-2">
                         <input
                           type="checkbox"
-                          checked={formData.absence_ids.includes(absence.id.toString())}
+                          checked={formData.absence_ids.map(Number).includes(Number(absence.id))}
                           onChange={() => handleCheckboxChange(absence.id)}
                         />
                         <span>
@@ -131,6 +129,11 @@ export default function JustificationForm({
                 >
                   Document justificatif
                 </label>
+                {update && typeof formData.document === "string" && formData.document && (
+                  <div className="mb-2 text-sm text-gray-600">
+                    Document actuel: <span className="font-semibold">{formData.document}</span>
+                  </div>
+                )}
                 <input
                   className={`shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3 ${
                     errors.document ? "border-red-500" : ""

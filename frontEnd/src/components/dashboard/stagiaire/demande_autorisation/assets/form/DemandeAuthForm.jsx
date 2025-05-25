@@ -137,22 +137,32 @@ export default function DemandeAuthForm({
               </div>
               {/* Document */}
               <div className="mb-4">
-                <label htmlFor="document" className="mb-1.5 block text-sm font-medium text-gray-700">
+               <label
+                  htmlFor="document"
+                  className="mb-1.5 block text-sm font-medium text-gray-700"
+                >
                   Document
                 </label>
                 <input
-                  className="shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3"
+                  className={`shadow-sm focus:outline-0 border border-gray-300 focus:border-brand-600 focus:ring-brand-600 h-11 w-full rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:ring-3 ${
+                    errors.document ? "border-red-500" : ""
+                  }`}
                   type="file"
                   name="document"
                   id="document"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  onChange={e =>
-                    setFormData(prev => ({
+                  accept="application/pdf,image/*"
+                  onChange={(e) =>
+                    setFormData((prev) => ({
                       ...prev,
                       document: e.target.files[0],
                     }))
                   }
                 />
+                 {update && typeof formData.document === "string" && formData.document && (
+                  <div className="mb-2 text-sm text-gray-600">
+                  <span className="font-semibold">{formData.document}</span>
+                  </div>
+                )}
                 <p className="text-red-500 text-md break-words h-[20px]">
                   {errors.document}
                 </p>

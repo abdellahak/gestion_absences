@@ -77,7 +77,11 @@ export const modifierDemandeAutorisation = async (formData, id) => {
   try {
     const fd = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (key === "document") {
+        if (value && typeof value !== "string") {
+          fd.append("document", value);
+        }
+      } else if (value !== undefined && value !== null) {
         fd.append(key, value);
       }
     });
@@ -88,6 +92,11 @@ export const modifierDemandeAutorisation = async (formData, id) => {
     if (res) return data;
   } catch (error) {
     data.success = false;
+    if (isAxiosError(error) && error.response?.status === 422) {
+      data.errors = error.response.data.errors;
+      return data;
+    }
+    data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }
 };

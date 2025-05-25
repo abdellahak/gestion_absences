@@ -10,12 +10,12 @@ import { download } from "../../../../../../assets/api/stagiaires/demande_autori
 
 export default function DemandeAuthTable({ data, setShow }) {
   const { toast } = useToast();
-  const [downloading, setDownloading] = useState(false);
+  const [downloadingId, setDownloadingId] = useState(null);
   const handleDownload = async (id, file_name) => {
-    if (downloading) return;
-    setDownloading(true);
+    if (downloadingId === id) return;
+    setDownloadingId(id);
     const res = await download(id, file_name);
-    if (res) setDownloading(false);
+    setDownloadingId(null);
     if (res.success) {
       toast("success", "la document a été techargé avec succées");
     } else {
@@ -65,15 +65,19 @@ export default function DemandeAuthTable({ data, setShow }) {
                 </TableCell>
                 <TableCell>
                     {
-                      downloading ? 
-                      <LuLoaderCircle  className="text-xl animate-spin text-brand-500"/> : 
-                      <button
+                      downloadingId === item.id ? (
+                        <div className="flex items-center justify-center h-10">
+                           <LuLoaderCircle  className="text-xl animate-spin text-brand-500"/> 
+                        </div>
+                      ) :(
+                         <button
                               className=" hover:text-gray-500 flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
                               onClick={() => handleDownload(item.id, item.intitule)}
                               >
                               Télecharger
                               <FaDownload className="h-4 w-4" />
                       </button>
+                      ) 
                       }
                 </TableCell>
                 <TableCell>
