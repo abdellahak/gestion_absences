@@ -30,8 +30,8 @@ import ModifierJustification from "./components/dashboard/stagiaire/justificatio
 import SurveillantsList from "./components/dashboard/admin/surveillant/liste/SurveillantsList";
 import AjouterSurveillant from "./components/dashboard/admin/surveillant/ajouter/AjouterSurveillant";
 import ModifierSurveillant from "./components/dashboard/admin/surveillant/modifier/ModifierSurveillant";
-
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
+import SurveillantAbsencesList from "./components/dashboard/surveillant/absences/liste/SurveillantAbsencesList";
 
 function App() {
   return (
@@ -131,6 +131,10 @@ function App() {
                 <Route index element={<FormateurList />} />
                 <Route path="ajouter" element={<AjouterFormateur />} />
                 <Route path=":id/modifier" element={<ModifierFormateur />} />
+              </Route>
+               <Route path="absences">
+                <Route index element={<SurveillantAbsencesList />} />
+                
               </Route>
 
               <Route path="profile" element={<Profile />} />
