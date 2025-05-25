@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
 import AbsenceForm from "./AbsenceForm";
-import {ajouterAbsence} from "../../../../../..//assets/api/formateur/formateur absences/absences";
+import {ajouterAbsence} from "../../../../../..//assets/api/formateur/absences/absences";
 
 export default function Absence() {
   const [loading, setLoading] = useState(false);

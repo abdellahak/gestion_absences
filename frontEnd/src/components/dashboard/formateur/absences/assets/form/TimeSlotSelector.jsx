@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
 
 const TIME_SLOTS = [
-  { label: "08:30 - 10:30", value: "8:30-10:30" },
+  { label: "08:30 - 10:30", value: "08:30-10:30" },
   { label: "10:30 - 13:30", value: "10:30-13:30" },
   { label: "13:00 - 16:00", value: "13:00-16:00" },
   { label: "16:00 - 18:30", value: "16:00-18:30" },

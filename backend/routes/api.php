@@ -73,6 +73,9 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
     });
     Route::controller(FormateurAbsenceController::class)->group(function(){
         Route::post('absences', 'store');
+        Route::get('absences/{groupeId}', 'index');
+        Route::get('absences', 'index');
+        Route::delete('absences/{id}', 'destroy');
     });
 });
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {

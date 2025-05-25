@@ -59,7 +59,6 @@ export default function AbsenceForm({
         heure_fin: selectedTime.split("-")[1] || "",
       });
     }
-    // eslint-disable-next-line
   }, [selectedStagiaires, selectedTime, showOther, otherDebut, otherFin]);
 
   const handleStagiaireCheck = (id) => {
