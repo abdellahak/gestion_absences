@@ -1,5 +1,5 @@
 import { FaChartPie, FaUserGraduate, FaUsers, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle } from "react-icons/fa";
-import { MdListAlt, MdTableRows,MdCalendarToday } from "react-icons/md";
+import { MdListAlt, MdTableRows,MdCalendarToday,MdPerson } from "react-icons/md";
 
 
 function prefixPath(role, path) {
