@@ -13,6 +13,8 @@ use App\Http\Controllers\admin\FormateurController;
 use App\Http\Controllers\admin\StagiaireController;
 use App\Http\Controllers\Stagiaire\AvertissementController;
 use App\Http\Controllers\Stagiaire\JustificationController;
+use App\Http\Controllers\Survellaint\SurveillantController;
+use App\Http\Controllers\Survellaint\SurvellaintController;
 use App\Http\Controllers\admin\SurveillantGeneralController;
 use App\Http\Controllers\formateur\FormateurGroupeController;
 use App\Http\Controllers\formateur\FormateurAbsenceController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\formateur\FormateurStagiaireController;
 use App\Http\Controllers\surveillant\SurveillantGroupController;
 use App\Http\Controllers\Stagiaire\DemandeAuthorisationController;
 use App\Http\Controllers\surveillant\SurveillantFiliereController;
+use App\Http\Controllers\Survellaint\SurveillantAbsencesController;
 use App\Http\Controllers\surveillant\SurveillantStagiaireController;
 
 Route::middleware(AlreadyLoggedInMiddleware::class)->controller(AuthController::class)->group(function () {
@@ -75,6 +78,24 @@ Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->grou
     });
 });
 Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->group(function () {
+    Route::controller(SurveillantAbsencesController::class)->group(function () {
+       Route::get('absences', 'index');
+        Route::get('justifications/download/{id}', 'download');
+        Route::put('justifications/{id}', 'update');
+        
+    });
+    // Route::controller(SurveillantGroupController::class)->group(function () {
+    //     Route::get("groupes", "index");
+    //     Route::get("groupes/{id}", "show");
+    // });
+    // Route::controller(SurveillantFiliereController::class)->group(function () {
+    //     Route::get("filieres", "index");
+    //     Route::get("filieres/{id}", "show");
+    // });
+    // Route::controller(SurveillantStagiaireController::class)->group(function () {
+    //     Route::get("stagiaires", "index");
+    //     Route::get("stagiaires/{id}", "show");
+    // });
 
 });
 
@@ -86,15 +107,8 @@ Route::middleware(["auth:sanctum"])->group(function () {
     });
 });
 
-Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function () {
-    Route::controller(SurveillantGeneralController::class)->group(function(){
-        Route::get("surveillants", "index");
-        Route::get("surveillants/{id}", "show");
-        Route::put("surveillants/{id}", "update");
-        Route::delete("surveillants/{id}", "destroy");
-        Route::post("surveillants", "store");
-    });
-});
+
+
 
 
 Route::middleware("auth:sanctum")->controller(AuthController::class)->group(function(){
@@ -107,6 +121,7 @@ Route::middleware(['auth:sanctum', 'role:stagiaire'])->group(function () {
    
     Route::controller(StagiaireAbsenceController::class)->group(function () {
         Route::get('stagiaire/absences', 'index');
+        
     });
      Route::controller(DemandeAuthorisationController::class)->group(function () {
         Route::get('stagiaire/demandes', 'index');
