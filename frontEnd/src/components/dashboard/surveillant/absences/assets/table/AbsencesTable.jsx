@@ -75,7 +75,7 @@ export default function AbsencesTable({ data }) {
                   ) : (
                     <button
                       className="hover:text-gray-500 flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
-                      onClick={() => handleDownload(item.id, item.intitule)}
+                      onClick={() => handleDownload(item.justification.id, item.intitule)}
                     >
                       Télecharger
                       <FaDownload className="h-4 w-4" />

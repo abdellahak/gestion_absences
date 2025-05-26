@@ -131,7 +131,7 @@ export function getSidebarNavItems(role) {
         icon: <FaSchool />,
         subItems: [
           { name: "Liste des filieres", path: "/surveillant/filieres" },
-          
+          { name: "Ajouter filière", path: "/surveillant/filieres/ajouter" },
         ],
       },
       {

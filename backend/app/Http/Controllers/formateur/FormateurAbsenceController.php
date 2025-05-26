@@ -70,7 +70,7 @@ class FormateurAbsenceController extends Controller
             'stagiaires.required' => 'Veuillez sélectionner au moins un stagiaire',
             'date_absence.required' => 'La date d\'absence est requise',
             'date_absence.date' => 'La date d\'absence doit être une date valide',
-            'heure_debut.required' => 'L\'heure de début est requise',
+            'heure_debut.required' => 'L\'heure de début et fin sont requises',
             'heure_debut.date_format' => 'L\'heure de début doit être au format HH:MM',
             'heure_fin.required' => 'L\'heure de fin est requise',
             'heure_fin.date_format' => 'L\'heure de fin doit être au format HH:MM',

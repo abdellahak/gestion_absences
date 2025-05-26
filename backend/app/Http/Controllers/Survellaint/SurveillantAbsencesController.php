@@ -10,13 +10,28 @@ use Illuminate\Support\Facades\Storage;
 
 class SurveillantAbsencesController extends Controller
 {
-public function index()
-{
-    $absence = Absence::with(
-        'stagiaire.user',
-    'formateur.user', 'justification')->get();
+    public function index()
+    {
+        $absences = Absence::with(
+            'stagiaire.user',
+            'formateur.user',
+            'justification'
+        )->get();
 
-    return response()->json($absence, 200);}
+        $absences->transform(function ($absence) {
+        if ($absence->heure_debut) {
+            $absence->heure_debut = date('H:i', strtotime($absence->heure_debut));
+        }
+        if ($absence->heure_fin) {
+            $absence->heure_fin = date('H:i', strtotime($absence->heure_fin));
+        }
+        return $absence;
+    });
+
+        return response()->json($absences, 200);
+    }
+
+
     public function update(Request $request, $id)
     {
         $absence = Absence::find($id);
@@ -38,6 +53,8 @@ public function index()
 
         return response()->json(['message' => 'Statut de la justification mis à jour avec succès'], 200);
     }
+
+
     public function download($id)
     {
         $justification = Justification::find($id);
@@ -50,5 +67,4 @@ public function index()
         }
         return response()->download(storage_path('app/public/' . $filePath), basename($filePath));
     }
-
 }
