@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Survellaint\SurveillantDemandeAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -84,19 +85,12 @@ Route::middleware(["auth:sanctum", "role:surveillant"])->prefix("surveillant")->
         Route::put('justifications/{id}', 'update');
         
     });
-    // Route::controller(SurveillantGroupController::class)->group(function () {
-    //     Route::get("groupes", "index");
-    //     Route::get("groupes/{id}", "show");
-    // });
-    // Route::controller(SurveillantFiliereController::class)->group(function () {
-    //     Route::get("filieres", "index");
-    //     Route::get("filieres/{id}", "show");
-    // });
-    // Route::controller(SurveillantStagiaireController::class)->group(function () {
-    //     Route::get("stagiaires", "index");
-    //     Route::get("stagiaires/{id}", "show");
-    // });
-
+    Route::controller(SurveillantDemandeAuthController::class)->group(function () {
+        Route::get('demandes', 'index');
+        Route::put('demandes/{id}', 'update');
+        Route::get('demandes/download/{id}', 'download');
+        
+    });
 });
 
 Route::middleware(["auth:sanctum"])->group(function () {

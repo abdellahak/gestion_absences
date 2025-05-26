@@ -8,6 +8,7 @@ export default function DemandeAuthList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [sort, setSort] = useState({ key: "date", order: "desc" }); // key: "date" or "status"
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,23 @@ export default function DemandeAuthList() {
     };
     fetchData();
   }, []);
+
+  // Tri dynamique
+  const sortedData = [...data].sort((a, b) => {
+    if (sort.key === "status") {
+      const aChar = (a.status || "").toLowerCase().charAt(0);
+      const bChar = (b.status || "").toLowerCase().charAt(0);
+      if (aChar < bChar) return sort.order === "asc" ? -1 : 1;
+      if (aChar > bChar) return sort.order === "asc" ? 1 : -1;
+      return 0;
+    }
+    if (sort.key === "date") {
+      if (a.date < b.date) return sort.order === "asc" ? -1 : 1;
+      if (a.date > b.date) return sort.order === "asc" ? 1 : -1;
+      return 0;
+    }
+    return 0;
+  });
 
   return (
     <>
@@ -40,7 +58,11 @@ export default function DemandeAuthList() {
                   </div>
                 </div>
               ) : (
-                <DemandeAuthTable data={data} />
+                <DemandeAuthTable
+                  data={sortedData}
+                  setSort={setSort}
+                  sort={sort}
+                />
               )}
             </div>
           </div>

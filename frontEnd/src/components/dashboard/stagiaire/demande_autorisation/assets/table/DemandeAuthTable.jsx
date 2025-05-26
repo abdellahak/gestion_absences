@@ -6,11 +6,13 @@ import { useToast } from "../../../../../../assets/toast/Toast";
 import { useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import { LuLoaderCircle } from "react-icons/lu";
+import { FaSort } from "react-icons/fa6";
 import { download } from "../../../../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
 
-export default function DemandeAuthTable({ data, setShow }) {
+export default function DemandeAuthTable({ data, setShow, sort, setSort }) {
   const { toast } = useToast();
   const [downloadingId, setDownloadingId] = useState(null);
+
   const handleDownload = async (id, file_name) => {
     if (downloadingId === id) return;
     setDownloadingId(id);
@@ -22,6 +24,7 @@ export default function DemandeAuthTable({ data, setShow }) {
       toast("error", res.error);
     }
   };
+
   return (
     <div className="overflow-x-auto shadow-sm">
       <Table>
@@ -30,10 +33,54 @@ export default function DemandeAuthTable({ data, setShow }) {
             <TableCell isHeader={true}>N°</TableCell>
             <TableCell isHeader={true}>Objet</TableCell>
             <TableCell isHeader={true}>Description</TableCell>
-            <TableCell isHeader={true}>Date</TableCell>
+            <TableCell isHeader={true}>
+              <div
+                className="flex items-center gap-2 cursor-pointer select-none"
+                onClick={() =>
+                  setSort({
+                    key: "date",
+                    order: sort.key === "date" && sort.order === "asc" ? "desc" : "asc",
+                  })
+                }
+                title="Trier par date"
+              >
+                Date
+                <FaSort
+                  className={`text-gray-400 transition-transform ${
+                    sort.key === "date"
+                      ? sort.order === "asc"
+                        ? "rotate-0"
+                        : "rotate-180"
+                      : ""
+                  }`}
+                />
+              </div>
+            </TableCell>
             <TableCell isHeader={true}>Heure début</TableCell>
             <TableCell isHeader={true}>Heure fin</TableCell>
-            <TableCell isHeader={true}>Statut</TableCell>
+            <TableCell isHeader={true}>
+              <div
+                className="flex items-center gap-2 cursor-pointer select-none"
+                onClick={() =>
+                  setSort({
+                    key: "status",
+                    order: sort.key === "status" && sort.order === "asc" ? "desc" : "asc",
+                  })
+                }
+                title="Trier par statut"
+              >
+                Statut
+                <FaSort
+                  className={`text-gray-400 transition-transform ${
+                    sort.key === "status"
+                      ? sort.order === "asc"
+                        ? "rotate-0"
+                        : "rotate-180"
+                      : ""
+                  }`}
+                />
+              </div>
+            </TableCell>
             <TableCell isHeader={true}>Document</TableCell>
             <TableCell isHeader={true}>Actions</TableCell>
           </ThRow>
@@ -48,37 +95,37 @@ export default function DemandeAuthTable({ data, setShow }) {
                 <TableCell>{item.date}</TableCell>
                 <TableCell>{item.heure_debut}</TableCell>
                 <TableCell>{item.heure_fin}</TableCell>
-                <TableCell>
-                  <span
-                    className={
-                      item.status === "en_attente"
-                        ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
-                        : item.status === "refuse"
-                        ? "px-2 py-1 rounded-full bg-error-50 text-error-700 font-semibold"
-                        : item.status === "valide"
-                        ? "px-2 py-1 rounded-full bg-success-50 text-success-700 font-semibold"
-                        : ""
-                    }
-                  >
-                    {item.status}
-                  </span>
+                <TableCell className="text-center align-middle">
+                  <div className="flex justify-center items-center h-full w-full">
+                    <span
+                      className={
+                        item.status === "en_attente"
+                          ? "px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 font-semibold"
+                          : item.status === "refuse"
+                          ? "px-2 py-1 rounded-full bg-error-50 text-error-700 font-semibold"
+                          : item.status === "valide"
+                          ? "px-2 py-1 rounded-full bg-success-50 text-success-700 font-semibold"
+                          : ""
+                      }
+                    >
+                      {item.status}
+                    </span>
+                  </div>
                 </TableCell>
                 <TableCell>
-                    {
-                      downloadingId === item.id ? (
-                        <div className="flex items-center justify-center h-10">
-                           <LuLoaderCircle  className="text-xl animate-spin text-brand-500"/> 
-                        </div>
-                      ) :(
-                         <button
-                              className=" hover:text-gray-500 flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
-                              onClick={() => handleDownload(item.id, item.intitule)}
-                              >
-                              Télecharger
-                              <FaDownload className="h-4 w-4" />
+                  <div className="flex items-center justify-center h-full">
+                    {downloadingId === item.id ? (
+                      <LuLoaderCircle className="h-5 w-5 animate-spin text-brand-500" />
+                    ) : (
+                      <button
+                        className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring focus:ring-gray-200"
+                        onClick={() => handleDownload(item.id, item.intitule)}
+                      >
+                        Télecharger
+                        <FaDownload className="h-4 w-4" />
                       </button>
-                      ) 
-                      }
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex w-full items-center justify-center gap-2">

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Survellaint;
 
+use App\Models\Groupe;
 use App\Models\Absence;
 use Illuminate\Http\Request;
 use App\Models\Justification;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SurveillantAbsencesController extends Controller
@@ -51,7 +53,7 @@ class SurveillantAbsencesController extends Controller
         $justification->status = $validated['status'];
         $justification->save();
 
-        return response()->json(['message' => 'Statut de la justification mis à jour avec succès'], 200);
+        return response()->json(['message' => 'Statut de la justification et surveillant mis à jour avec succès'], 200);
     }
 
 
@@ -66,5 +68,37 @@ class SurveillantAbsencesController extends Controller
             return response()->json(['error' => 'Le fichier n\'existe pas'], 404);
         }
         return response()->download(storage_path('app/public/' . $filePath), basename($filePath));
+    }
+
+    public function absences($groupeId = null ){
+          $user = Auth::user();
+
+        if (is_null($groupeId)) {
+            $formateur = $user->formateur;
+            if (!$formateur) {
+                return response()->json(['error' => 'Formateur non trouvé'], 403);
+            }
+            $stagiaires = [];
+            foreach ($formateur->groupes as $groupe) {
+                $stagiaires = array_merge(
+                    $stagiaires,
+                    $groupe->stagiaires()->with('user')->get()->all()
+                );
+            }
+            return response()->json($stagiaires, 200);
+        }
+
+        $groupe = Groupe::where('id', $groupeId)
+            ->whereHas('formateurs', function ($q) use ($user) {
+                $q->where('formateur_id', $user->formateur->id);
+            })
+            ->first();
+
+        if (!$groupe) {
+            return response()->json(['error' => 'Groupe non trouvé ou accès refusé'], 403);
+        }
+
+        $stagiaires = $groupe->stagiaires()->with('user')->get();
+        return response()->json($stagiaires, 200);
     }
 }

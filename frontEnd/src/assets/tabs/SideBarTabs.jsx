@@ -52,17 +52,14 @@ export function getSidebarNavItems(role) {
         name: "Profile",
         icon: <FaUserCircle />,
         path: "/admin/profile",
+      },
+      {
         name: "Surveillants généraux",
         icon: <MdPerson />,
         subItems: [
           { name: "Liste des surveillants", path: "/admin/surveillants", pro: false },
           { name: "Ajouter surveillant", path: "/admin/surveillants/ajouter", pro: false },
         ],
-      },
-      {
-        name: "Profile",
-        icon: <FaUserCircle />,
-        path: "/admin/profile",
       },
     ];
   }
