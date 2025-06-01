@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { FaCalendarTimes, FaFileAlt, FaEnvelopeOpenText, FaExclamationTriangle } from "react-icons/fa";
+import { FaCalendarTimes, FaUsers, FaFileAlt, FaUserGraduate } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import Loading from "../../../assets/loading/Loading";
-import { getAbsences } from "../../../assets/api/stagiaires/absences/absences";
-import { getJustifications } from "../../../assets/api/stagiaires/justification/justification";
-import { getDemandesAutorisation } from "../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
-import { getAvertissements } from "../../../assets/api/stagiaires/avertissements/avertissements";
+import { getAbsences } from "../../../assets/api/formateur/absences/absences";
+import { getFormateurGroupes } from "../../../assets/api/formateur/formateur groupes/formateurGroupes";
+import { getDemandes } from "../../../assets/api/formateur/demandes/demandes";
+import { getFormateurStagiaires } from "../../../assets/api/formateur/formateur stagiaires/formateurStagiaires";
 import ApexChart from "react-apexcharts";
 
 const CARD_COLORS = {
@@ -15,13 +14,13 @@ const CARD_COLORS = {
   amber: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
 };
 
-export default function StagiaireDashboard() {
+export default function FormateurDashboard() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     absences: 0,
-    justifications: 0,
+    groupes: 0,
     demandes: 0,
-    avertissements: 0,
+    stagiaires: 0,
   });
 
   const statCards = [
@@ -33,25 +32,25 @@ export default function StagiaireDashboard() {
       label: "Absences",
     },
     {
-      to: "justifications",
-      color: "green",
-      icon: <FaFileAlt />,
-      value: stats.justifications,
-      label: "Justifications",
+      to: "groupes",
+      color: "purple",
+      icon: <FaUsers />,
+      value: stats.groupes,
+      label: "Groupes",
     },
     {
       to: "demandes",
-      color: "purple",
-      icon: <FaEnvelopeOpenText />,
+      color: "green",
+      icon: <FaFileAlt />,
       value: stats.demandes,
       label: "Demandes",
     },
     {
-      to: "avertissements",
+      to: "stagiaires",
       color: "amber",
-      icon: <FaExclamationTriangle />,
-      value: stats.avertissements,
-      label: "Avertissements",
+      icon: <FaUserGraduate />,
+      value: stats.stagiaires,
+      label: "Mes stagiaires",
     },
   ];
 
@@ -59,25 +58,41 @@ export default function StagiaireDashboard() {
     let mounted = true;
     async function fetchStats() {
       setLoading(true);
-      
-      const [abs, jus, dem, ave] = await Promise.allSettled([
-        getAbsences({ per_page: 100000 }),
-        getJustifications({ per_page: 100000 }),
-        getDemandesAutorisation({ per_page: 100000 }),
-        getAvertissements({ per_page: 100000 }),
+
+      const [abs, gr, dem, stag] = await Promise.allSettled([
+        getAbsences(undefined,{ per_page: 100000 }),
+        getFormateurGroupes(),
+        getDemandes(),
+        getFormateurStagiaires(undefined, { per_page: 100000 }),
       ]);
-      
-      
+
       if (!mounted) return;
-      
-      const newStats = {
-        absences: abs.status === 'fulfilled' && abs.value?.success ? abs.value.data.data.length : 0,
-        justifications: jus.status === 'fulfilled' && jus.value?.success ? jus.value.data.length : 0,
-        demandes: dem.status === 'fulfilled' && dem.value?.success ? dem.value.data.length : 0,
-        avertissements: ave.status === 'fulfilled' && ave.value?.success ? ave.value.data.length : 0,
-      };
-      
-      setStats(newStats);
+
+      console.log("getAbsences response:", abs);
+      console.log("getFormateurStagiaires response:", stag);
+
+      setStats({
+        absences: abs.status === 'fulfilled' && abs.value?.success
+          ? Array.isArray(abs.value.data)
+            ? abs.value.data.length
+            : abs.value.data?.data?.length || abs.value.data?.total || 0
+          : 0,
+        groupes: gr.status === 'fulfilled' && gr.value?.success
+          ? Array.isArray(gr.value.data)
+            ? gr.value.data.length
+            : gr.value.data?.length || gr.value.data?.total || 0
+          : 0,
+        demandes: dem.status === 'fulfilled' && dem.value?.success
+          ? Array.isArray(dem.value.data)
+            ? dem.value.data.length
+            : dem.value.data?.length || dem.value.data?.total || 0
+          : 0,
+        stagiaires: stag.status === 'fulfilled' && stag.value?.success
+          ? Array.isArray(stag.value.data)
+            ? stag.value.data.length
+            : stag.value.data?.data?.length || stag.value.data?.total || stag.value.data?.length || 0
+          : 0,
+      });
       setLoading(false);
     }
     fetchStats();
@@ -98,15 +113,13 @@ export default function StagiaireDashboard() {
       }
     }
   };
-  
-  const chartSeries = statCards.map((c) => c.value || 1); 
-  const hasData = chartSeries.some(val => val > 0);
-  
 
+  const chartSeries = statCards.map((c) => c.value || 1);
+  const hasData = chartSeries.some(val => val > 0);
 
   return (
     <>
-      <title>Tableau de bord Stagiaire</title>
+      <title>Tableau de bord Formateur</title>
       <div className="p-4 md:p-6 max-w-[1500px] xl:mx-auto">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Bienvenue sur votre tableau de bord</h2>
