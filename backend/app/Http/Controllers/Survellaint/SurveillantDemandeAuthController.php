@@ -10,9 +10,40 @@ use Illuminate\Support\Facades\Storage;
 
 class SurveillantDemandeAuthController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $demanderAuths = DemandeAutorisation::with('stagiaire.user', 'surveillantGeneral.user')->get();
+        $query = DemandeAutorisation::with('stagiaire.user', 'stagiaire.groupe', 'surveillantGeneral.user');
+
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('date', 'like', "%{$searchTerm}%")
+                  ->orWhere('objet', 'like', "%{$searchTerm}%")
+                  ->orWhere('description', 'like', "%{$searchTerm}%")
+                  ->orWhereHas('stagiaire.user', function ($userQuery) use ($searchTerm) {
+                      $userQuery->where('nom', 'like', "%{$searchTerm}%")
+                               ->orWhere('prenom', 'like', "%{$searchTerm}%");
+                  });
+            });
+        }
+
+        // Group filtering
+        if ($request->has('groupe_id') && !empty($request->groupe_id)) {
+            $query->whereHas('stagiaire', function ($q) use ($request) {
+                $q->where('groupe_id', $request->groupe_id);
+            });
+        }
+
+        // Status filtering
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        // Pagination
+        $perPage = $request->get('per_page', 10);
+        $demanderAuths = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        
         return response()->json($demanderAuths, 200);
     }
 

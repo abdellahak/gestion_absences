@@ -126,8 +126,8 @@ export default function SurveillantAbsencesList() {
             >
               <option value="">Tous les statuts</option>
               <option value="en_attente">En attente</option>
-              <option value="approuve">Approuvé</option>
-              <option value="rejete">Rejeté</option>
+              <option value="valide">Approuvé</option>
+              <option value="refuse">Rejeté</option>
             </select>
           </div>
         </div>
