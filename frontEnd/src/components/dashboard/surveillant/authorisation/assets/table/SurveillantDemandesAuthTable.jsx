@@ -33,7 +33,6 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
             <TableCell isHeader={true}>N°</TableCell>
             <TableCell isHeader={true}>Stagiaire Nom </TableCell>
             <TableCell isHeader={true}>Groupe</TableCell>
-            <TableCell isHeader={true}>Objet</TableCell>
             <TableCell isHeader={true}>Description</TableCell>
             <TableCell isHeader={true}>Date</TableCell>
             <TableCell isHeader={true}>Heure début</TableCell>
@@ -49,7 +48,6 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{`${item.stagiaire.user.nom} ${item.stagiaire.user.prenom}`}</TableCell>
                 <TableCell>{item.stagiaire.groupe?.intitule || 'N/A'}</TableCell>
-                <TableCell>{item.objet}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>{item.date}</TableCell>
                 <TableCell>{item.heure_debut}</TableCell>
