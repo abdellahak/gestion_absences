@@ -25,10 +25,10 @@ export default function SurveillantAuthList() {
 
   return (
     <>
-      <title>Mes demandes d'autorisation</title>
+      <title>List demandes d'autorisation</title>
       <div className="p-4 md:p-6  xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Mes demandes d'autorisation
+          List demandes d'autorisation
         </h2>
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
