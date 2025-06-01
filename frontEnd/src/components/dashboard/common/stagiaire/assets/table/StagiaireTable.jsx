@@ -6,7 +6,6 @@ import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
 
 export default function StagiaireTable({ data, setShow }) {
   const {auth} = useAuth()
-  console.log(auth);
   return (
     <>
       <div className="overflow-x-auto shadow-sm">
