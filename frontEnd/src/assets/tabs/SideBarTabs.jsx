@@ -71,11 +71,6 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
-        name: "Profile",
-        icon: <FaUserCircle />,
-        path: "/admin/profile",
-      },
-      {
         name: "Surveillants généraux",
         icon: <MdPerson />,
         subItems: [
@@ -91,6 +86,11 @@ export function getSidebarNavItems(role) {
           },
         ],
       },
+      {
+        name: "Profile",
+        icon: <FaUserCircle />,
+        path: "/admin/profile",
+      },
     ];
   }
 
@@ -104,14 +104,12 @@ export function getSidebarNavItems(role) {
       {
         name: "Mes groupes",
         icon: <FaUsers />,
-        subItems: [{ name: "Liste des groupes", path: "/formateur/groupes" }],
+        path: "/formateur/groupes"
       },
       {
         name: "Mes stagiaires",
         icon: <FaUserGraduate />,
-        subItems: [
-          { name: "Liste des stagiaires", path: "/formateur/stagiaires" },
-        ],
+        path: "/formateur/stagiaires"
       },
       {
         name: "Gestion des absences",

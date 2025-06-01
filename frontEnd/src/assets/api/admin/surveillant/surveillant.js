@@ -8,7 +8,7 @@ export const getSurveillants = async () => {
         error: "",
     };
     try {
-        const res = await axios.get("surveillants");
+        const res = await axios.get("admin/surveillants");
         if (res) {
             data.data = res.data;
             return data;
@@ -33,7 +33,7 @@ export const supprimerSurveillant= async (id) => {
     error: "",
   };
   try {
-    const res = await axios.delete(`surveillants/${id}`);
+    const res = await axios.delete(`admin/surveillants/${id}`);
     if (res) {
       return data;
     }
@@ -56,9 +56,8 @@ export const ajouterSurveillant = async (formData) => {
       identifiant: "",
     },
     error: "",
-  };
-  try {
-    const res = await axios.post("surveillants", formData);
+  };  try {
+    const res = await axios.post("admin/surveillants", formData);
     if (res) {
       return data;
     }
@@ -80,9 +79,8 @@ export const getSurveillant = async (id) => {
     success: true,
     error: "",
   };
-
   try {
-    const res = await axios.get(`surveillants/${id}`);
+    const res = await axios.get(`admin/surveillants/${id}`);
     if (res) {
       data.data = res.data;
       return data;
@@ -111,9 +109,8 @@ export const modifierSurveillant = async (formData, id) => {
     },
     server: "",
   };
-
   try {
-    const res = await axios.put(`surveillants/${id}`, formData);
+    const res = await axios.put(`admin/surveillants/${id}`, formData);
     if (res) {
       return data;
     }
