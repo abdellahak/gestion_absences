@@ -28,7 +28,7 @@ export default function AbsencesTable({ data }) {
                     : "-"}
                 </TableCell>
                 <TableCell>
-                  {item.justification?.intitule}
+                  {item.justification?.status === "valide" ?item.justification?.intitule:"Non justifiée"}
                 </TableCell>
               </tr>
             ))
