@@ -33,11 +33,10 @@ export default function AbsenceForm({
     };
     fetchGroupes();
   }, []);
-
   useEffect(() => {
     const fetchStagiaires = async () => {
       const res = await getFormateurStagiaires(selectedGroupe);
-      if (res.success) setStagiaires(res.data);
+      if (res.success) setStagiaires(res.data.data || []);
       else setStagiaires([]);
     };
     if (selectedGroupe) fetchStagiaires();

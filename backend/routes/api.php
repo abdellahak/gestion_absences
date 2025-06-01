@@ -118,6 +118,7 @@ Route::middleware(['auth:sanctum', 'role:stagiaire'])->group(function () {
 
     Route::controller(StagiaireAbsenceController::class)->group(function () {
         Route::get('stagiaire/absences', 'index');
+        Route::get('stagiaire/absences/for-justification', 'forJustification');
     });
     Route::controller(DemandeAuthorisationController::class)->group(function () {
         Route::get('stagiaire/demandes', 'index');

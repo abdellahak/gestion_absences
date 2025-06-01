@@ -49,6 +49,26 @@ class StagiaireAbsenceController extends Controller
     }
 
     /**
+     * Get all absences for justification form (not paginated)
+     */
+    public function forJustification()
+    {
+        $user = Auth::user();
+        $stagiaire = $user->stagiaire;
+
+        if (!$stagiaire) {
+            return response()->json(['message' => 'Stagiaire non trouvé'], 404);
+        }
+
+        $absences = Absence::with(['formateur.user', 'justification'])
+            ->where('stagiaire_id', $stagiaire->id)
+            ->orderBy('date_absence', 'desc')
+            ->get();
+
+        return response()->json($absences, 200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()

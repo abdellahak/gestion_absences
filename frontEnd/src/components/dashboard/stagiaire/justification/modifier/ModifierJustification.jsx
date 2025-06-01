@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Justification from "../assets/form/Justification";
 import { getJustification } from "../../../../../assets/api/stagiaires/justification/justification";
-import { getAbsences } from "../../../../../assets/api/stagiaires/absences/absences";
+import { getAbsencesForJustification } from "../../../../../assets/api/stagiaires/absences/absences";
 import Loading from "../../../../../assets/loading/Loading";
 
 export default function ModifierJustification() {
@@ -11,14 +11,13 @@ export default function ModifierJustification() {
   const [absences, setAbsences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [absencesLoading, setAbsencesLoading] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const res1 = await getJustification(id);
-      const res2 = await getAbsences();
+      const res2 = await getAbsencesForJustification();
       if (res1.success) setData(res1.data);
-      if (res2.success) setAbsences(res2.data);
+      if (res2.success) setAbsences(res2.data || []);
       setLoading(false);
     };
     fetchData();

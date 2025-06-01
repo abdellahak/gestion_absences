@@ -143,18 +143,12 @@ export function getSidebarNavItems(role) {
       {
         name: "Gestion des absences",
         icon: <FaCalendarCheck />,
-        subItems: [
-          { name: "Liste des absences", path: "/surveillant/absences" },
-          { name: "Rapport d'absences", path: "/surveillant/absences/rapport" },
-        ],
+        path: "/surveillant/absences"
       },
       {
         name: "Demandes d'autorisation",
         icon: <FaFileAlt />,
-        subItems: [
-          { name: "Liste des demandes", path: "/surveillant/demandes" },
-          { name: "Traiter les demandes", path: "/surveillant/demandes/traiter" },
-        ],
+        path: "/surveillant/demandes"
       },
       {
         name: "Profile",
@@ -174,10 +168,8 @@ export function getSidebarNavItems(role) {
       },
       {
         name: "Mes absences",
-        icon: <FaCalendarCheck />,
-        subItems: [
-          { name: "Liste des absences", path: "/stagiaire/absences" },
-        ],
+        icon: <FaCalendarCheck />,    
+        path: "/stagiaire/absences"
       },
       {
         name: "Justifications",
