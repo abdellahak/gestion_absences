@@ -2,9 +2,11 @@ import { FaSort, FaRegTrashCan } from "react-icons/fa6";
 import { GrEdit } from "react-icons/gr";
 import { Table, TableCell, ThRow } from "../../../../../../assets/table/Table";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../../../../assets/wrapper/AuthWrapper";
 
 
 export default function FiliereTable({ data, setShow }) {
+  const {auth} = useAuth()
   return (
     <>
       {/* table */}
@@ -58,7 +60,7 @@ export default function FiliereTable({ data, setShow }) {
                           <FaRegTrashCan className="h-4 w-4" />
                         </button>
                         <Link
-                          to={`/admin/filieres/${item.id}/modifier`}
+                          to={`/${auth.role}/filieres/${item.id}/modifier`}
                           className="text-green-500 hover:text-green-800"
                         >
                           <GrEdit className="h-4 w-4" />

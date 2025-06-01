@@ -2,32 +2,31 @@ import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
 export const getSurveillants = async () => {
-    let data = {
-        success: true,
-        data: null,
-        error: "",
-    };
-    try {
-        const res = await axios.get("admin/surveillants");
-        if (res) {
-            data.data = res.data;
-            return data;
-        }
+  let data = {
+    success: true,
+    data: null,
+    error: "",
+  };
+  try {
+    const res = await axios.get("admin/surveillants");
+    if (res) {
+      data.data = res.data;
+      return data;
     }
-    catch (error) {
-        data.success = false;
-           if (isAxiosError(error)) {
-             const errorV = error.response?.data?.error;
-             data.error = errorV || "Erreur lors de la récupération des surveillants généraux";
-             return data;
-           }
-           data.error = "Une erreur s'est produite sur le serveur";
-           return data;
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      const errorV = error.response?.data?.error;
+      data.error =
+        errorV || "Erreur lors de la récupération des surveillants généraux";
+      return data;
     }
-    };
+    data.error = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
 
-
-export const supprimerSurveillant= async (id) => {
+export const supprimerSurveillant = async (id) => {
   let data = {
     success: true,
     error: "",
@@ -48,7 +47,6 @@ export const ajouterSurveillant = async (formData) => {
   let data = {
     success: true,
     errors: {
-      
       nom: "",
       prenom: "",
       date_recrutement: "",
@@ -56,7 +54,8 @@ export const ajouterSurveillant = async (formData) => {
       identifiant: "",
     },
     error: "",
-  };  try {
+  };
+  try {
     const res = await axios.post("admin/surveillants", formData);
     if (res) {
       return data;
@@ -89,7 +88,8 @@ export const getSurveillant = async (id) => {
     data.success = false;
     if (isAxiosError(error)) {
       const errorV = error.response?.data?.error;
-      data.error = errorV || "Erreur lors de la récupération du surveillant général";
+      data.error =
+        errorV || "Erreur lors de la récupération du surveillant général";
       return data;
     }
     data.error = "Une erreur s'est produite sur le serveur";
@@ -116,7 +116,7 @@ export const modifierSurveillant = async (formData, id) => {
     }
   } catch (error) {
     data.success = false;
-    console.error(error)
+    console.error(error);
     if (isAxiosError(error)) {
       if (error.response?.status === 422) {
         data.errors = error.response.data.errors;
@@ -132,4 +132,3 @@ export const modifierSurveillant = async (formData, id) => {
     return data;
   }
 };
-
