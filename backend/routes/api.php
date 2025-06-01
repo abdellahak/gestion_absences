@@ -62,6 +62,13 @@ Route::middleware(["auth:sanctum", "role:admin|surveillant"])->prefix("admin")->
         Route::delete("formateurs/{id}", "destroy");
         Route::post("formateurs", "store");
     });
+    Route::controller(SurveillantGeneralController::class)->group(function () {
+        Route::get("surveillants", "index");
+        Route::get("surveillants/{id}", "show");
+        Route::put("surveillants/{id}", "update");
+        Route::delete("surveillants/{id}", "destroy");
+        Route::post("surveillants", "store");
+    });
 });
 
 Route::middleware(["auth:sanctum", "role:formateur"])->prefix("formateur")->group(function () {
