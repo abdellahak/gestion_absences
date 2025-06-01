@@ -1,6 +1,21 @@
-import { FaChartPie, FaUserGraduate, FaUsers,FaClipboardCheck, FaUserTie,FaBell, FaCalendarCheck, FaFileAlt, FaSchool, FaUserCircle} from "react-icons/fa";
-import { MdListAlt, MdTableRows,MdCalendarToday,MdPerson } from "react-icons/md";
-
+import {
+  FaChartPie,
+  FaUserGraduate,
+  FaUsers,
+  FaClipboardCheck,
+  FaUserTie,
+  FaBell,
+  FaCalendarCheck,
+  FaFileAlt,
+  FaSchool,
+  FaUserCircle,
+} from "react-icons/fa";
+import {
+  MdListAlt,
+  MdTableRows,
+  MdCalendarToday,
+  MdPerson,
+} from "react-icons/md";
 
 function prefixPath(role, path) {
   if (path.startsWith("/")) path = path.slice(1);
@@ -8,7 +23,6 @@ function prefixPath(role, path) {
 }
 
 export function getSidebarNavItems(role) {
-
   if (role === "admin") {
     return [
       {
@@ -20,8 +34,16 @@ export function getSidebarNavItems(role) {
         name: "Formateurs",
         icon: <MdListAlt />,
         subItems: [
-          { name: "Liste des Formateurs", path: "/admin/formateurs", pro: false },
-          { name: "Ajouter formateur", path: "/admin/formateurs/ajouter", pro: false },
+          {
+            name: "Liste des Formateurs",
+            path: "/admin/formateurs",
+            pro: false,
+          },
+          {
+            name: "Ajouter formateur",
+            path: "/admin/formateurs/ajouter",
+            pro: false,
+          },
         ],
       },
       {
@@ -57,8 +79,16 @@ export function getSidebarNavItems(role) {
         name: "Surveillants généraux",
         icon: <MdPerson />,
         subItems: [
-          { name: "Liste des surveillants", path: "/admin/surveillants", pro: false },
-          { name: "Ajouter surveillant", path: "/admin/surveillants/ajouter", pro: false },
+          {
+            name: "Liste des surveillants",
+            path: "/admin/surveillants",
+            pro: false,
+          },
+          {
+            name: "Ajouter surveillant",
+            path: "/admin/surveillants/ajouter",
+            pro: false,
+          },
         ],
       },
     ];
@@ -74,9 +104,7 @@ export function getSidebarNavItems(role) {
       {
         name: "Mes groupes",
         icon: <FaUsers />,
-        subItems: [
-          { name: "Liste des groupes", path: "/formateur/groupes" },
-        ],
+        subItems: [{ name: "Liste des groupes", path: "/formateur/groupes" }],
       },
       {
         name: "Mes stagiaires",
@@ -96,9 +124,7 @@ export function getSidebarNavItems(role) {
       {
         name: "Demandes d'autorisation",
         icon: <FaFileAlt />,
-        subItems: [
-          { name: "Liste des demandes", path: "/formateur/demandes" },
-        ],
+        path: "/formateur/demandes",
       },
       {
         name: "Profile",
@@ -136,19 +162,21 @@ export function getSidebarNavItems(role) {
         icon: <FaUserGraduate />,
         subItems: [
           { name: "Liste des stagiaires", path: "/surveillant/stagiaires" },
-          { name: "Ajouter stagiaire", path: "/surveillant/stagiaires/ajouter" },
-          
+          {
+            name: "Ajouter stagiaire",
+            path: "/surveillant/stagiaires/ajouter",
+          },
         ],
       },
       {
         name: "Gestion des absences",
         icon: <FaCalendarCheck />,
-        path: "/surveillant/absences"
+        path: "/surveillant/absences",
       },
       {
         name: "Demandes d'autorisation",
         icon: <FaFileAlt />,
-        path: "/surveillant/demandes"
+        path: "/surveillant/demandes",
       },
       {
         name: "Profile",
@@ -158,7 +186,6 @@ export function getSidebarNavItems(role) {
     ];
   }
 
-  
   if (role === "stagiaire") {
     return [
       {
@@ -168,15 +195,18 @@ export function getSidebarNavItems(role) {
       },
       {
         name: "Mes absences",
-        icon: <FaCalendarCheck />,    
-        path: "/stagiaire/absences"
+        icon: <FaCalendarCheck />,
+        path: "/stagiaire/absences",
       },
       {
         name: "Justifications",
         icon: <FaClipboardCheck />,
         subItems: [
           { name: "Mes justifications", path: "/stagiaire/justifications" },
-          { name: "Nouvelle justification", path: "/stagiaire/justifications/ajouter" },
+          {
+            name: "Nouvelle justification",
+            path: "/stagiaire/justifications/ajouter",
+          },
         ],
       },
       {
