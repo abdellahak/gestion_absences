@@ -40,7 +40,7 @@ export default function SurveillantDashboard() {
       color: "purple",
       icon: <FaEnvelopeOpenText />,
       value: stats.demandes,
-      label: "Demandes d'autorisation",
+      label: "Demandes",
     },
     {
       to: "groupes",
