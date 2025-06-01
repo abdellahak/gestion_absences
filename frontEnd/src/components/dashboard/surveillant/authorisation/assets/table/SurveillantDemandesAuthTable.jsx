@@ -29,10 +29,10 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
   return (
     <div className="overflow-x-auto shadow-sm">
       <Table>
-        <thead>
-          <ThRow>
+        <thead>          <ThRow>
             <TableCell isHeader={true}>N°</TableCell>
             <TableCell isHeader={true}>Stagiaire Nom </TableCell>
+            <TableCell isHeader={true}>Groupe</TableCell>
             <TableCell isHeader={true}>Objet</TableCell>
             <TableCell isHeader={true}>Description</TableCell>
             <TableCell isHeader={true}>Date</TableCell>
@@ -45,11 +45,11 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
         </thead>
         <tbody>
           {data.length > 0 ? (
-            data.map((item, index) => (
-              <tr key={item.id} className="border border-gray-200">
+            data.map((item, index) => (              <tr key={item.id} className="border border-gray-200">
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{`${item.stagiaire.user.nom} ${item.stagiaire.user.prenom}`}</TableCell>
-                <TableCell>{item.intitule}</TableCell>
+                <TableCell>{item.stagiaire.groupe?.intitule || 'N/A'}</TableCell>
+                <TableCell>{item.objet}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>{item.date}</TableCell>
                 <TableCell>{item.heure_debut}</TableCell>
@@ -107,8 +107,7 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
               </tr>
             ))
           ) : (
-            <tr>
-              <td colSpan={15} className="text-center p-12 text-lg ">
+            <tr>              <td colSpan={10} className="text-center p-12 text-lg ">
                 <div className="flex flex-col items-center justify-center">
                   <p className="text-gray-500">Aucun résultat trouvé</p>
                 </div>

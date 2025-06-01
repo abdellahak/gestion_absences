@@ -1,10 +1,22 @@
 import { axios } from "../../axios";
 import { isAxiosError } from "axios";
 
-export const getDemandes = async () => {
+export const getDemandes = async (params = {}) => {
   let data = { success: true, data: null, error: "" };
   try {
-    const res = await axios.get("surveillant/demandes");
+    const queryParams = new URLSearchParams();
+    
+    // Add parameters if they exist
+    Object.keys(params).forEach(key => {
+      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+        queryParams.append(key, params[key]);
+      }
+    });
+    
+    const queryString = queryParams.toString();
+    const url = queryString ? `surveillant/demandes?${queryString}` : "surveillant/demandes";
+    
+    const res = await axios.get(url);
     if (res) {
       data.data = res.data;
       return data;
@@ -12,6 +24,22 @@ export const getDemandes = async () => {
   } catch (error) {
     data.success = false;
     data.error = "Erreur lors de la récupération des demandes";
+    return data;
+  }
+}
+
+// Add getGroupes function for group filtering
+export const getGroupes = async () => {
+  let data = { success: true, data: null, error: "" };
+  try {
+    const res = await axios.get("admin/groupes");
+    if (res) {
+      data.data = res.data;
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    data.error = "Erreur lors de la récupération des groupes";
     return data;
   }
 }
