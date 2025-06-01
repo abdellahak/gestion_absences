@@ -21,6 +21,13 @@ class DemandeAuthorisationController extends Controller
         $demandes = DemandeAutorisation::where('stagiaire_id', $stagiaire->id)
             ->orderByDesc('created_at')
             ->get();
+
+        $demandes->transform(function ($demande) {
+            $demande->heure_debut = date('H:i', strtotime($demande->heure_debut));
+            $demande->heure_fin = date('H:i', strtotime($demande->heure_fin));
+            return $demande;
+        });
+
         return response()->json($demandes, 200);
     }
 
@@ -47,7 +54,7 @@ class DemandeAuthorisationController extends Controller
             'heure_debut.required' => "L'heure de début est requise",
             'heure_fin.required' => "L'heure de fin est requise",
         ]);
-         $documentPath = null;
+        $documentPath = null;
         if ($request->hasFile('document')) {
             $documentPath = $request->file('document')->store('documents', 'public');
         }
@@ -83,7 +90,7 @@ class DemandeAuthorisationController extends Controller
             return response()->json(['message' => 'Modification non autorisée'], 403);
         }
 
-       $data = $request->validate([
+        $data = $request->validate([
             'intitule' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',

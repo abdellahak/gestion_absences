@@ -8,7 +8,7 @@ import { FaDownload } from "react-icons/fa";
 import { LuLoaderCircle } from "react-icons/lu";
 import { download, updateStatus } from "../../../../../../assets/api/surveillant/DemandesAuth/demandes";
 
-export default function SurveillantDemandesAuthTbale({ data  }) {
+export default function SurveillantDemandesAuthTable({ data  }) {
   const { toast } = useToast();
   const [downloadingId, setDownloadingId] = useState(null);
   const [localStatuses, setLocalStatuses] = useState(
@@ -29,7 +29,8 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
   return (
     <div className="overflow-x-auto shadow-sm">
       <Table>
-        <thead>          <ThRow>
+        <thead>          
+          <ThRow>
             <TableCell isHeader={true}>N°</TableCell>
             <TableCell isHeader={true}>Stagiaire Nom </TableCell>
             <TableCell isHeader={true}>Groupe</TableCell>
@@ -44,7 +45,8 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
         </thead>
         <tbody>
           {data.length > 0 ? (
-            data.map((item, index) => (              <tr key={item.id} className="border border-gray-200">
+            data.map((item, index) => (              
+            <tr key={item.id} className="border border-gray-200">
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{`${item.stagiaire.user.nom} ${item.stagiaire.user.prenom}`}</TableCell>
                 <TableCell>{item.stagiaire.groupe?.intitule || 'N/A'}</TableCell>
@@ -68,7 +70,7 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
                             });
                         }}
                         className={
-                        `px-2 py-1 rounded-full font-semibold focus:outline-none ${
+                        `px-4 py-1 text-sm w-28 rounded-full font-semibold focus:outline-none ${
                             (localStatuses[item.id] || item.status) === "en_attente"
                             ? "bg-yellow-50 text-yellow-700"
                             : (localStatuses[item.id] || item.status) === "refuse"
@@ -101,7 +103,6 @@ export default function SurveillantDemandesAuthTbale({ data  }) {
                       ) 
                       }
                 </TableCell>
-                
               </tr>
             ))
           ) : (

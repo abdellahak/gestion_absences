@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import FormateurStagiairesTable from "../assets/table/FormateurStagiairesTable";
-import TableOptions from "../assets/table/TableOptions";
+import TableOptions from "../../../../common/TableOptions";
 import Pagination from "../../../../common/Pagination";
 import { getFormateurGroupes } from "../../../../../assets/api/formateur/formateur groupes/formateurGroupes";
 import { getFormateurStagiaires } from "../../../../../assets/api/formateur/formateur stagiaires/formateurStagiaires";
@@ -61,10 +61,14 @@ export default function FormateurStagiairesList() {
   useEffect(() => {
     fetchStagiaires();
   }, [selectedGroupe]);
-
   const handleSearch = (value) => {
     setSearchTerm(value);
+    // Trigger search immediately as user types
     fetchStagiaires(1, pagination.per_page, value);
+  };
+
+  const handleSearchSubmit = () => {
+    fetchStagiaires(1, pagination.per_page, searchTerm);
   };
 
   const handlePageChange = (page) => {
@@ -82,17 +86,6 @@ export default function FormateurStagiairesList() {
           Mes stagiaires
         </h2>
 
-        {/* Search Bar */}
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Rechercher par nom, prénom ou numéro d'inscription..."
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
@@ -100,6 +93,12 @@ export default function FormateurStagiairesList() {
                 groupes={groupes}
                 selectedGroupe={selectedGroupe}
                 setSelectedGroupe={setSelectedGroupe}
+                search={searchTerm}
+                setSearch={handleSearch}
+                onSearchSubmit={handleSearchSubmit}
+                searchPlaceholder="Rechercher par nom, prénom ou numéro d'inscription..."
+                showStatus={false}
+                showDateRange={false}
               />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">

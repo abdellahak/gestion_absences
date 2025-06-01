@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import FormateurDemandesTable from "../assets/table/FormateurDemandesTable";
-import DemandesTableOptions from "../assets/table/DemandesTableOptions";
+import TableOptions from "../../../../common/TableOptions";
 import { getDemandes } from "../../../../../assets/api/formateur/demandes/demandes";
 import { getFormateurGroupes } from "../../../../../assets/api/formateur/formateur groupes/formateurGroupes";
 
@@ -50,7 +50,6 @@ export default function FormateurDemandesList() {
     };
     fetchDemandes();
   }, [selectedGroupe, searchTerm, status, dateFrom, dateTo]);
-
   const handleSearchSubmit = () => {
     setSearchTerm(search);
   };
@@ -61,10 +60,15 @@ export default function FormateurDemandesList() {
 
   const handleSearchChange = (searchValue) => {
     setSearch(searchValue);
-    if (searchValue === "") {
-      setSearchTerm("");
-    }
+    // Trigger immediate search when typing
+    setSearchTerm(searchValue);
   };
+
+  const statusOptions = [
+    { value: "en_attente", label: "En attente" },
+    { value: "approuvee", label: "Approuvée" },
+    { value: "refusee", label: "Refusée" },
+  ];
 
   return (
     <>
@@ -77,24 +81,25 @@ export default function FormateurDemandesList() {
           <p className="text-gray-600 text-sm">
             Consultez les demandes d'autorisation de vos stagiaires
           </p>
-        </div>
-
+        </div>{" "}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="p-6">
-            {" "}
-            <DemandesTableOptions
+            <TableOptions
               groupes={groupes}
               selectedGroupe={selectedGroupe}
               setSelectedGroupe={handleGroupeChange}
               search={search}
               setSearch={handleSearchChange}
               onSearchSubmit={handleSearchSubmit}
+              searchPlaceholder="Rechercher par intitulé, description ou nom du stagiaire..."
               status={status}
               setStatus={setStatus}
+              statusOptions={statusOptions}
               dateFrom={dateFrom}
               setDateFrom={setDateFrom}
               dateTo={dateTo}
               setDateTo={setDateTo}
+              showDateRange={true}
             />
             {loading ? (
               <div className="flex justify-center items-center py-12">

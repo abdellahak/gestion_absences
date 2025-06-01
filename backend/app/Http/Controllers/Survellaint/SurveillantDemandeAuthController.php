@@ -19,12 +19,12 @@ class SurveillantDemandeAuthController extends Controller
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('date', 'like', "%{$searchTerm}%")
-                  ->orWhere('objet', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%")
-                  ->orWhereHas('stagiaire.user', function ($userQuery) use ($searchTerm) {
-                      $userQuery->where('nom', 'like', "%{$searchTerm}%")
-                               ->orWhere('prenom', 'like', "%{$searchTerm}%");
-                  });
+                    ->orWhere('intitule', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('stagiaire.user', function ($userQuery) use ($searchTerm) {
+                        $userQuery->where('nom', 'like', "%{$searchTerm}%")
+                            ->orWhere('prenom', 'like', "%{$searchTerm}%");
+                    });
             });
         }
 
@@ -43,11 +43,18 @@ class SurveillantDemandeAuthController extends Controller
         // Pagination
         $perPage = $request->get('per_page', 10);
         $demanderAuths = $query->orderBy('created_at', 'desc')->paginate($perPage);
-        
+
+        // Format time fields to show only hours and minutes
+        $demanderAuths->getCollection()->transform(function ($demande) {
+            $demande->heure_debut = date('H:i', strtotime($demande->heure_debut));
+            $demande->heure_fin = date('H:i', strtotime($demande->heure_fin));
+            return $demande;
+        });
+
         return response()->json($demanderAuths, 200);
     }
 
-    
+
 
     public function update(Request $request, $id)
     {
@@ -55,20 +62,20 @@ class SurveillantDemandeAuthController extends Controller
         if (!$demandeAuth) {
             return response()->json(['error' => 'Demande d\'autorisation non trouvée'], 404);
         }
-        
-        
-        
+
+
+
 
 
         $validated = $request->validate([
             'status' => 'required|string',
         ]);
-        
-        
-        
+
+
+
 
         $demandeAuth->status = $validated['status'];
-       
+
         $demandeAuth->save();
 
         return response()->json(['message' => 'Statut de la demande d\'autorisation mis à jour avec succès'], 200);
@@ -85,6 +92,4 @@ class SurveillantDemandeAuthController extends Controller
         }
         return response()->download(storage_path('app/public/' . $filePath), basename($filePath));
     }
-
-
 }

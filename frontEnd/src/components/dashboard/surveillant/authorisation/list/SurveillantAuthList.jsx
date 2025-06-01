@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
-import { getDemandes, getGroupes } from "../../../../../assets/api/surveillant/DemandesAuth/demandes";
-import SurveillantDemandesAuthTbale from "../assets/table/SurveillantDemandesAuthTable";
+import {
+  getDemandes,
+  getGroupes,
+} from "../../../../../assets/api/surveillant/DemandesAuth/demandes";
+import SurveillantDemandesAuthTable from "../assets/table/SurveillantDemandesAuthTable";
 import Pagination from "../../../../common/Pagination";
-import TableOptions from "../../absences/assets/table/tableoptions";
+import TableOptions from "../../../../common/TableOptions";
 
 export default function SurveillantAuthList() {
   const { toast } = useToast();
@@ -71,7 +74,18 @@ export default function SurveillantAuthList() {
 
   const handleSearch = (value) => {
     setSearchTerm(value);
+    // Trigger search immediately as user types
     fetchData(1, pagination.per_page, value, selectedGroupe, selectedStatus);
+  };
+
+  const handleSearchSubmit = () => {
+    fetchData(
+      1,
+      pagination.per_page,
+      searchTerm,
+      selectedGroupe,
+      selectedStatus
+    );
   };
 
   const handleGroupeChange = (groupeId) => {
@@ -93,10 +107,16 @@ export default function SurveillantAuthList() {
       selectedStatus
     );
   };
-
   const handlePerPageChange = (perPage) => {
     fetchData(1, perPage, searchTerm, selectedGroupe, selectedStatus);
   };
+
+  const statusOptions = [
+    { value: "en_attente", label: "En attente" },
+    { value: "valide", label: "Approuvé" },
+    { value: "refuse", label: "Rejeté" },
+  ];
+
   return (
     <>
       <title>List demandes d'autorisation</title>
@@ -104,38 +124,21 @@ export default function SurveillantAuthList() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           List demandes d'autorisation
         </h2>
-
-        {/* Search and Filters */}
-        <div className="mb-4 space-y-4">
-          <input
-            type="text"
-            placeholder="Rechercher par date, objet, description ou nom du stagiaire..."
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <div className="flex space-x-4">
-            <select
-              value={selectedStatus}
-              onChange={(e) => handleStatusChange(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Tous les statuts</option>
-              <option value="en_attente">En attente</option>
-              <option value="valide">Approuvé</option>
-              <option value="refuse">Rejeté</option>
-            </select>
-          </div>
-        </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
               <TableOptions
                 groupes={groupes}
                 selectedGroupe={selectedGroupe}
-                setSelectedGroupe={(value) => handleGroupeChange(value)}
+                setSelectedGroupe={handleGroupeChange}
+                search={searchTerm}
+                setSearch={handleSearch}
+                onSearchSubmit={handleSearchSubmit}
+                searchPlaceholder="Rechercher par date, description ou nom du stagiaire..."
+                status={selectedStatus}
+                setStatus={handleStatusChange}
+                statusOptions={statusOptions}
+                showDateRange={false}
               />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">
@@ -145,7 +148,7 @@ export default function SurveillantAuthList() {
                 </div>
               ) : (
                 <>
-                  <SurveillantDemandesAuthTbale data={data} />
+                  <SurveillantDemandesAuthTable data={data} />
                   {data.length > 0 && (
                     <Pagination
                       currentPage={pagination.current_page}

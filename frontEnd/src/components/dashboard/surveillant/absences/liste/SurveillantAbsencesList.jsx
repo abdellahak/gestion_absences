@@ -5,7 +5,7 @@ import AbsencesTable from "../assets/table/AbsencesTable";
 import Pagination from "../../../../common/Pagination";
 import { getAbsences } from "../../../../../assets/api/surveillant/absences/absences";
 import { getGroupes } from "../../../../../assets/api/admin/groupe/groupe";
-import TableOptions from "../assets/table/tableoptions";
+import TableOptions from "../../../../common/TableOptions";
 
 export default function SurveillantAbsencesList() {
   const { toast } = useToast();
@@ -70,10 +70,21 @@ export default function SurveillantAbsencesList() {
     };
     fetchGroupes();
   }, []);
-
   const handleSearch = (value) => {
     setSearchTerm(value);
+    // Trigger search immediately as user types
     fetchData(1, pagination.per_page, value, selectedGroupe, selectedStatus);
+  };
+
+  const handleSearchSubmit = () => {
+    // This ensures search works on form submit too
+    fetchData(
+      1,
+      pagination.per_page,
+      searchTerm,
+      selectedGroupe,
+      selectedStatus
+    );
   };
 
   const handleGroupeChange = (groupeId) => {
@@ -99,6 +110,11 @@ export default function SurveillantAbsencesList() {
   const handlePerPageChange = (perPage) => {
     fetchData(1, perPage, searchTerm, selectedGroupe, selectedStatus);
   };
+  const statusOptions = [
+    { value: "en_attente", label: "En attente" },
+    { value: "valide", label: "Approuvé" },
+    { value: "refuse", label: "Rejeté" },
+  ];
 
   return (
     <>
@@ -108,37 +124,21 @@ export default function SurveillantAbsencesList() {
           Les absences
         </h2>
 
-        {/* Search and Filters */}
-        <div className="mb-4 space-y-4">
-          <input
-            type="text"
-            placeholder="Rechercher par date, nom du stagiaire ou formateur..."
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <div className="flex space-x-4">
-            <select
-              value={selectedStatus}
-              onChange={(e) => handleStatusChange(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Tous les statuts</option>
-              <option value="en_attente">En attente</option>
-              <option value="valide">Approuvé</option>
-              <option value="refuse">Rejeté</option>
-            </select>
-          </div>
-        </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
               <TableOptions
                 groupes={groupes}
                 selectedGroupe={selectedGroupe}
-                setSelectedGroupe={(value) => handleGroupeChange(value)}
+                setSelectedGroupe={handleGroupeChange}
+                search={searchTerm}
+                setSearch={handleSearch}
+                onSearchSubmit={handleSearchSubmit}
+                searchPlaceholder="Rechercher par date, nom du stagiaire ou formateur..."
+                status={selectedStatus}
+                setStatus={handleStatusChange}
+                statusOptions={statusOptions}
+                showDateRange={false}
               />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">

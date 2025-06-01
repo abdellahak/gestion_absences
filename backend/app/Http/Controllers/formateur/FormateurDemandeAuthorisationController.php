@@ -76,6 +76,13 @@ class FormateurDemandeAuthorisationController extends Controller
       ->orderBy('date', 'desc')
       ->get();
 
+    // Format time fields to show only hours and minutes
+    $demandes->transform(function ($demande) {
+      $demande->heure_debut = date('H:i', strtotime($demande->heure_debut));
+      $demande->heure_fin = date('H:i', strtotime($demande->heure_fin));
+      return $demande;
+    });
+
     return response()->json($demandes, 200);
   }
 

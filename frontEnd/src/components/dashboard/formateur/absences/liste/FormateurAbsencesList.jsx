@@ -8,7 +8,7 @@ import {
   getAbsences,
   supprimerAbsence,
 } from "../../../../../assets/api/formateur/absences/absences";
-import TableOptions from "../assets/table/TableOptions";
+import TableOptions from "../../../../common/TableOptions";
 import { getFormateurGroupes } from "../../../../../assets/api/formateur/formateur groupes/formateurGroupes";
 
 export default function FormateurAbsencesList() {
@@ -67,10 +67,14 @@ export default function FormateurAbsencesList() {
     };
     fetchGroupes();
   }, []);
-
   const handleSearch = (value) => {
     setSearchTerm(value);
+    // Trigger search immediately as user types
     fetchData(1, pagination.per_page, value);
+  };
+
+  const handleSearchSubmit = () => {
+    fetchData(1, pagination.per_page, searchTerm);
   };
 
   const handlePageChange = (page) => {
@@ -93,7 +97,6 @@ export default function FormateurAbsencesList() {
       toast("error", res.error);
     }
   };
-
   return (
     <>
       <title>Liste des absences</title>
@@ -102,17 +105,6 @@ export default function FormateurAbsencesList() {
           Liste des absences
         </h2>
 
-        {/* Search Bar */}
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Rechercher par date ou nom du stagiaire..."
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
@@ -120,6 +112,12 @@ export default function FormateurAbsencesList() {
                 groupes={groupes}
                 selectedGroupe={selectedGroupe}
                 setSelectedGroupe={setSelectedGroupe}
+                search={searchTerm}
+                setSearch={handleSearch}
+                onSearchSubmit={handleSearchSubmit}
+                searchPlaceholder="Rechercher par date ou nom du stagiaire..."
+                showStatus={false}
+                showDateRange={false}
               />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">
