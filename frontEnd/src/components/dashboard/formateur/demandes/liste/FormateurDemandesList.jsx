@@ -14,6 +14,9 @@ export default function FormateurDemandesList() {
   const [selectedGroupe, setSelectedGroupe] = useState("");
   const [search, setSearch] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [status, setStatus] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   useEffect(() => {
     const fetchGroupes = async () => {
@@ -28,11 +31,16 @@ export default function FormateurDemandesList() {
     };
     fetchGroupes();
   }, []);
-
   useEffect(() => {
     const fetchDemandes = async () => {
       setLoading(true);
-      const res = await getDemandes(selectedGroupe, searchTerm);
+      const res = await getDemandes(
+        selectedGroupe,
+        searchTerm,
+        status,
+        dateFrom,
+        dateTo
+      );
       setLoading(false);
       if (res.success) {
         setData(res.data);
@@ -41,7 +49,7 @@ export default function FormateurDemandesList() {
       }
     };
     fetchDemandes();
-  }, [selectedGroupe, searchTerm]);
+  }, [selectedGroupe, searchTerm, status, dateFrom, dateTo]);
 
   const handleSearchSubmit = () => {
     setSearchTerm(search);
@@ -73,6 +81,7 @@ export default function FormateurDemandesList() {
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="p-6">
+            {" "}
             <DemandesTableOptions
               groupes={groupes}
               selectedGroupe={selectedGroupe}
@@ -80,8 +89,13 @@ export default function FormateurDemandesList() {
               search={search}
               setSearch={handleSearchChange}
               onSearchSubmit={handleSearchSubmit}
+              status={status}
+              setStatus={setStatus}
+              dateFrom={dateFrom}
+              setDateFrom={setDateFrom}
+              dateTo={dateTo}
+              setDateTo={setDateTo}
             />
-
             {loading ? (
               <div className="flex justify-center items-center py-12">
                 <Loading />

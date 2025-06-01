@@ -40,9 +40,7 @@ class FormateurDemandeAuthorisationController extends Controller
       $query->whereHas('stagiaire', function ($query) use ($request) {
         $query->where('groupe_id', $request->groupe_id);
       });
-    }
-
-    // Search functionality
+    }        // Search functionality
     if ($request->has('search') && $request->search) {
       $search = $request->search;
       $query->where(function ($query) use ($search) {
@@ -55,6 +53,19 @@ class FormateurDemandeAuthorisationController extends Controller
       });
     }
 
+    // Filter by status if specified
+    if ($request->has('status') && $request->status) {
+      $query->where('status', $request->status);
+    }
+
+    // Filter by date range
+    if ($request->has('date_from') && $request->date_from) {
+      $query->where('date', '>=', $request->date_from);
+    }
+
+    if ($request->has('date_to') && $request->date_to) {
+      $query->where('date', '<=', $request->date_to);
+    }
     $demandes = $query->with([
       'stagiaire:id,user_id,groupe_id',
       'stagiaire.user:id,nom,prenom,email',
@@ -62,7 +73,7 @@ class FormateurDemandeAuthorisationController extends Controller
       'surveillantGeneral:id,user_id',
       'surveillantGeneral.user:id,nom,prenom'
     ])
-      ->orderBy('created_at', 'desc')
+      ->orderBy('date', 'desc')
       ->get();
 
     return response()->json($demandes, 200);
