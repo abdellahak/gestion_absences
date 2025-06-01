@@ -36,6 +36,7 @@ class SurveillantAbsencesController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user= Auth::user();
         $absence = Absence::find($id);
         if (!$absence) {
             return response()->json(['error' => 'Absence non trouvée'], 404);
@@ -51,6 +52,7 @@ class SurveillantAbsencesController extends Controller
         ]);
 
         $justification->status = $validated['status'];
+        $justification->surveillant_general_id = $user->surveillant->id;
         $justification->save();
 
         return response()->json(['message' => 'Statut de la justification et surveillant mis à jour avec succès'], 200);

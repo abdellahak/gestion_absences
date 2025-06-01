@@ -34,8 +34,8 @@ import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/Aj
 import FormateurAbsencesList from "./components/dashboard/formateur/absences/liste/FormateurAbsencesList";
 import SurveillantAbsencesList from "./components/dashboard/surveillant/absences/liste/SurveillantAbsencesList";
 import SurveillantAuthList from "./components/dashboard/surveillant/authorisation/list/SurveillantAuthList";
-
 import Dashboard from "./components/dashboard/stagiaire/Dashboard";
+import SurveillantDashboard from "./components/dashboard/surveillant/SurveillantDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -117,7 +117,7 @@ function App() {
               path="/surveillant"
               element={<DashboardLayout role="surveillant" />}
             >
-              <Route index element={<h1>Tableau de Bord Surveillant</h1>} />
+              <Route index element={<SurveillantDashboard />} />
               <Route path="filieres">
                 <Route index element={<FilieresList />} />
                 <Route path="ajouter" element={<AjouterFiliere />} />
