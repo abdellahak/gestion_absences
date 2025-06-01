@@ -15,10 +15,12 @@ class FormateurAbsenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($groupeId = null)
+    public function index(Request $request, $groupeId = null)
     {
         $user = Auth::user();
         $formateur = $user->formateur;
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
 
         if (!$formateur) {
             return response()->json(['error' => 'Formateur non trouvé'], 403);
@@ -27,7 +29,13 @@ class FormateurAbsenceController extends Controller
         $formateurGroupeIds = $formateur->groupes()->pluck('groupe_id')->toArray();
 
         if (empty($formateurGroupeIds)) {
-            return response()->json([]);
+            return response()->json([
+                'data' => [],
+                'current_page' => 1,
+                'last_page' => 1,
+                'total' => 0,
+                'per_page' => $perPage
+            ]);
         }
 
         $query = Absence::where('formateur_id', $formateur->id)
@@ -41,15 +49,26 @@ class FormateurAbsenceController extends Controller
             });
         }
 
+        // Add search functionality
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('date_absence', 'like', "%{$search}%")
+                    ->orWhereHas('stagiaire.user', function ($q) use ($search) {
+                        $q->where('nom', 'like', "%{$search}%")
+                            ->orWhere('prenom', 'like', "%{$search}%");
+                    });
+            });
+        }
+
         $absences = $query->with([
             'stagiaire:id,user_id,groupe_id',
             'stagiaire.user:id,nom,prenom,email',
             'stagiaire.groupe:id,intitule,code',
         ])
             ->orderBy('date_absence', 'desc')
-            ->get();
+            ->paginate($perPage);
 
-        $absences->transform(function ($absence) {
+        $absences->getCollection()->transform(function ($absence) {
             $absence->heure_debut = date('H:i', strtotime($absence->heure_debut));
             $absence->heure_fin = date('H:i', strtotime($absence->heure_fin));
             return $absence;

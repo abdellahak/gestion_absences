@@ -3,7 +3,11 @@ import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
 import FormateurAbsencesTable from "../assets/table/FormatuerAbsencesTable";
-import { getAbsences, supprimerAbsence } from "../../../../../assets/api/formateur/absences/absences";
+import Pagination from "../../../../common/Pagination";
+import {
+  getAbsences,
+  supprimerAbsence,
+} from "../../../../../assets/api/formateur/absences/absences";
 import TableOptions from "../assets/table/TableOptions";
 import { getFormateurGroupes } from "../../../../../assets/api/formateur/formateur groupes/formateurGroupes";
 
@@ -11,22 +15,42 @@ export default function FormateurAbsencesList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    last_page: 1,
+    total: 0,
+    per_page: 10,
+  });
   const [groupes, setGroupes] = useState([]);
   const [selectedGroupe, setSelectedGroupe] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [show, setShow] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const res = await getAbsences(selectedGroupe);
-      setLoading(false);
-      if (res.success) {
-        setData(res.data);
-      } else {
-        toast("error", res.error);
-      }
+  const fetchData = async (page = 1, perPage = 10, search = "") => {
+    setLoading(true);
+    const params = {
+      page,
+      per_page: perPage,
+      ...(search && { search }),
     };
+
+    const res = await getAbsences(selectedGroupe, params);
+    setLoading(false);
+    if (res.success) {
+      setData(res.data.data || []);
+      setPagination({
+        current_page: res.data.current_page,
+        last_page: res.data.last_page,
+        total: res.data.total,
+        per_page: res.data.per_page,
+      });
+    } else {
+      toast("error", res.error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, [selectedGroupe]);
 
@@ -44,7 +68,18 @@ export default function FormateurAbsencesList() {
     fetchGroupes();
   }, []);
 
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    fetchData(1, pagination.per_page, value);
+  };
 
+  const handlePageChange = (page) => {
+    fetchData(page, pagination.per_page, searchTerm);
+  };
+
+  const handlePerPageChange = (perPage) => {
+    fetchData(1, perPage, searchTerm);
+  };
   const handleDelete = async () => {
     if (deleting) return;
     setDeleting(true);
@@ -52,7 +87,7 @@ export default function FormateurAbsencesList() {
     setDeleting(false);
     if (res.success) {
       toast("success", "L'absence a été supprimée avec succès");
-      setData((prev) => prev.filter((item) => item.id !== show));
+      fetchData(pagination.current_page, pagination.per_page, searchTerm);
       setShow(null);
     } else {
       toast("error", res.error);
@@ -66,6 +101,18 @@ export default function FormateurAbsencesList() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Liste des absences
         </h2>
+
+        {/* Search Bar */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Rechercher par date ou nom du stagiaire..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
@@ -81,7 +128,20 @@ export default function FormateurAbsencesList() {
                   </div>
                 </div>
               ) : (
-                <FormateurAbsencesTable data={data} setShow={setShow} />
+                <>
+                  <FormateurAbsencesTable data={data} setShow={setShow} />
+                  {data.length > 0 && (
+                    <Pagination
+                      currentPage={pagination.current_page}
+                      lastPage={pagination.last_page}
+                      total={pagination.total}
+                      perPage={pagination.per_page}
+                      onPageChange={handlePageChange}
+                      onPerPageChange={handlePerPageChange}
+                      loading={loading}
+                    />
+                  )}
+                </>
               )}
             </div>
             {show && (

@@ -12,16 +12,39 @@ class StagiaireAbsenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $stagiaire = $user->stagiaire;
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
+
         if (!$stagiaire) {
             return response()->json(['message' => 'Stagiaire non trouvé'], 404);
         }
-        $absences = Absence::with(['formateur.user', 'justification'])
-            ->where('stagiaire_id', $stagiaire->id)
-            ->get();
+
+        $query = Absence::with(['formateur.user', 'justification'])
+            ->where('stagiaire_id', $stagiaire->id);
+
+        // Add search functionality
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('date_absence', 'like', "%{$search}%")
+                    ->orWhereHas('formateur.user', function ($q) use ($search) {
+                        $q->where('nom', 'like', "%{$search}%")
+                            ->orWhere('prenom', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        // Filter by status if specified
+        if ($request->has('status') && $request->status) {
+            $query->whereHas('justification', function ($q) use ($request) {
+                $q->where('status', $request->status);
+            });
+        }
+
+        $absences = $query->orderBy('date_absence', 'desc')->paginate($perPage);
         return response()->json($absences, 200);
     }
 

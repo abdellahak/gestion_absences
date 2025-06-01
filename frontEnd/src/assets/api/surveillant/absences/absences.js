@@ -1,9 +1,20 @@
 import { axios } from "../../axios";
-export const getAbsences = async () => {
+export const getAbsences = async (params = {}) => {
   let data = { success: true, data: null, error: "" };
   try {
-    const res = await axios.get("surveillant/absences");
-    
+    const queryParams = new URLSearchParams();
+
+    if (params.page) queryParams.append("page", params.page);
+    if (params.per_page) queryParams.append("per_page", params.per_page);
+    if (params.search) queryParams.append("search", params.search);
+    if (params.groupe_id) queryParams.append("groupe_id", params.groupe_id);
+    if (params.status) queryParams.append("status", params.status);
+
+    const url = queryParams.toString()
+      ? `surveillant/absences?${queryParams}`
+      : "surveillant/absences";
+    const res = await axios.get(url);
+
     if (res) {
       data.data = res.data;
       return data;
@@ -14,7 +25,7 @@ export const getAbsences = async () => {
     return data;
   }
 };
-export const download= async (id, file_name) => {
+export const download = async (id, file_name) => {
   let data = {
     success: true,
     error: "",

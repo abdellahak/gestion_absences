@@ -9,22 +9,41 @@ use Illuminate\Support\Facades\Auth;
 
 class FormateurStagiaireController extends Controller
 {
-    public function stagiaires($groupeId = null)
+    public function stagiaires(Request $request, $groupeId = null)
     {
         $user = Auth::user();
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
 
         if (is_null($groupeId)) {
             $formateur = $user->formateur;
             if (!$formateur) {
                 return response()->json(['error' => 'Formateur non trouvé'], 403);
             }
-            $stagiaires = [];
-            foreach ($formateur->groupes as $groupe) {
-                $stagiaires = array_merge(
-                    $stagiaires,
-                    $groupe->stagiaires()->with('user')->get()->all()
-                );
+
+            $formateurGroupeIds = $formateur->groupes()->pluck('groupe_id')->toArray();
+
+            if (empty($formateurGroupeIds)) {
+                return response()->json([
+                    'data' => [],
+                    'current_page' => 1,
+                    'last_page' => 1,
+                    'total' => 0,
+                    'per_page' => $perPage
+                ]);
             }
+
+            $query = \App\Models\Stagiaire::with(['user', 'groupe'])
+                ->whereIn('groupe_id', $formateurGroupeIds);
+
+            if ($search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('nom', 'like', "%{$search}%")
+                        ->orWhere('prenom', 'like', "%{$search}%");
+                })->orWhere('numero_inscription', 'like', "%{$search}%");
+            }
+
+            $stagiaires = $query->paginate($perPage);
             return response()->json($stagiaires, 200);
         }
 
@@ -38,7 +57,16 @@ class FormateurStagiaireController extends Controller
             return response()->json(['error' => 'Groupe non trouvé ou accès refusé'], 403);
         }
 
-        $stagiaires = $groupe->stagiaires()->with('user')->get();
+        $query = $groupe->stagiaires()->with('user');
+
+        if ($search) {
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('nom', 'like', "%{$search}%")
+                    ->orWhere('prenom', 'like', "%{$search}%");
+            })->orWhere('numero_inscription', 'like', "%{$search}%");
+        }
+
+        $stagiaires = $query->paginate($perPage);
         return response()->json($stagiaires, 200);
     }
 }

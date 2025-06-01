@@ -13,9 +13,27 @@ class StagiaireController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $stagiaires = Stagiaire::with(['user', 'groupe'])->get();
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
+
+        $query = Stagiaire::with(['user', 'groupe']);
+
+        // Add search functionality
+        if ($search) {
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('nom', 'like', "%{$search}%")
+                    ->orWhere('prenom', 'like', "%{$search}%");
+            })->orWhere('numero_inscription', 'like', "%{$search}%");
+        }
+
+        // Filter by groupe if specified
+        if ($request->has('groupe_id') && $request->groupe_id) {
+            $query->where('groupe_id', $request->groupe_id);
+        }
+
+        $stagiaires = $query->paginate($perPage);
         return response()->json($stagiaires, 200);
     }
 
@@ -24,23 +42,25 @@ class StagiaireController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'groupe_id' => 'required|exists:groupes,id',
-            'numero_inscription' => 'required|string|unique:stagiaires,numero_inscription',
-            'email' => 'nullable|email|unique:users,email',
-        ],[
-            'nom.required' => 'Le nom est requis',
-            'prenom.required' => 'Le prénom est requis',
-            'groupe_id.required' => 'Le groupe est requis',
-            'groupe_id.exists' => 'Le groupe sélectionné est invalide',
-            'numero_inscription.required' => 'Le numéro d\'inscription est requis',
-            'numero_inscription.unique' => 'Le numéro d\'inscription doit être unique',
-            'email.email' => 'Veuillez entrer un email valide',
-            'email.unique' => 'L\'email existe déjà',
-        ]
-    );
+        $validated = $request->validate(
+            [
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'groupe_id' => 'required|exists:groupes,id',
+                'numero_inscription' => 'required|string|unique:stagiaires,numero_inscription',
+                'email' => 'nullable|email|unique:users,email',
+            ],
+            [
+                'nom.required' => 'Le nom est requis',
+                'prenom.required' => 'Le prénom est requis',
+                'groupe_id.required' => 'Le groupe est requis',
+                'groupe_id.exists' => 'Le groupe sélectionné est invalide',
+                'numero_inscription.required' => 'Le numéro d\'inscription est requis',
+                'numero_inscription.unique' => 'Le numéro d\'inscription doit être unique',
+                'email.email' => 'Veuillez entrer un email valide',
+                'email.unique' => 'L\'email existe déjà',
+            ]
+        );
 
         $user = User::create([
             'nom' => $validated['nom'],
@@ -59,7 +79,7 @@ class StagiaireController extends Controller
 
         return response()->json([
             'message' => 'Stagiaire créé avec succès',
-           
+
         ], 201);
     }
 
@@ -110,7 +130,7 @@ class StagiaireController extends Controller
             'email.unique' => 'L\'email existe déjà',
         ]);
 
-        if($data['groupe_id'] == $stagiaire->groupe_id && $data['numero_inscription'] == $stagiaire->numero_inscription){
+        if ($data['groupe_id'] == $stagiaire->groupe_id && $data['numero_inscription'] == $stagiaire->numero_inscription) {
             return response()->json(['error' => 'Aucune modification apportée'], 400);
         }
 
@@ -140,7 +160,7 @@ class StagiaireController extends Controller
             ]
         ], 200);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

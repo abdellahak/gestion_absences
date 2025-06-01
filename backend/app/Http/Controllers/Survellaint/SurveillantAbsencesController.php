@@ -12,23 +12,57 @@ use Illuminate\Support\Facades\Storage;
 
 class SurveillantAbsencesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $absences = Absence::with(
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
+
+        $query = Absence::with(
             'stagiaire.user',
             'formateur.user',
             'justification'
-        )->get();
+        );
 
-        $absences->transform(function ($absence) {
-        if ($absence->heure_debut) {
-            $absence->heure_debut = date('H:i', strtotime($absence->heure_debut));
+        // Add search functionality
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('date_absence', 'like', "%{$search}%")
+                    ->orWhereHas('stagiaire.user', function ($q) use ($search) {
+                        $q->where('nom', 'like', "%{$search}%")
+                            ->orWhere('prenom', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('formateur.user', function ($q) use ($search) {
+                        $q->where('nom', 'like', "%{$search}%")
+                            ->orWhere('prenom', 'like', "%{$search}%");
+                    });
+            });
         }
-        if ($absence->heure_fin) {
-            $absence->heure_fin = date('H:i', strtotime($absence->heure_fin));
+
+        // Filter by groupe if specified
+        if ($request->has('groupe_id') && $request->groupe_id) {
+            $query->whereHas('stagiaire', function ($q) use ($request) {
+                $q->where('groupe_id', $request->groupe_id);
+            });
         }
-        return $absence;
-    });
+
+        // Filter by status if specified
+        if ($request->has('status') && $request->status) {
+            $query->whereHas('justification', function ($q) use ($request) {
+                $q->where('status', $request->status);
+            });
+        }
+
+        $absences = $query->orderBy('date_absence', 'desc')->paginate($perPage);
+
+        $absences->getCollection()->transform(function ($absence) {
+            if ($absence->heure_debut) {
+                $absence->heure_debut = date('H:i', strtotime($absence->heure_debut));
+            }
+            if ($absence->heure_fin) {
+                $absence->heure_fin = date('H:i', strtotime($absence->heure_fin));
+            }
+            return $absence;
+        });
 
         return response()->json($absences, 200);
     }
@@ -36,7 +70,7 @@ class SurveillantAbsencesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user= Auth::user();
+        $user = Auth::user();
         $absence = Absence::find($id);
         if (!$absence) {
             return response()->json(['error' => 'Absence non trouvée'], 404);
@@ -72,8 +106,9 @@ class SurveillantAbsencesController extends Controller
         return response()->download(storage_path('app/public/' . $filePath), basename($filePath));
     }
 
-    public function absences($groupeId = null ){
-          $user = Auth::user();
+    public function absences($groupeId = null)
+    {
+        $user = Auth::user();
 
         if (is_null($groupeId)) {
             $formateur = $user->formateur;
