@@ -78,10 +78,10 @@ export default function SurveillantDashboard() {
       ]);
       if (!mounted) return;
       setStats({
-        absences: abs.value?.success ? abs.value.data.length : 0,
+        absences: abs.value?.success ? abs.value.data.data.length : 0,
         demandes: dem.value?.success ? dem.value.data.length : 0,
         groupes: gr.value?.success ? gr.value.data.length : 0,
-        stagiaires: st.value?.success ? st.value.data.length : 0,
+        stagiaires: st.value?.success ? st.value.data.data.length : 0,
         filieres: fil.value?.success ? fil.value.data.length : 0,
       });
       setLoading(false);
@@ -90,7 +90,6 @@ export default function SurveillantDashboard() {
     return () => { mounted = false; };
   }, []);
 
-  // ApexCharts config
   const chartOptions = {
     chart: { type: "donut" },
     labels: statCards.map((c) => c.label),
@@ -98,7 +97,8 @@ export default function SurveillantDashboard() {
     legend: { position: "bottom" },
     dataLabels: { enabled: true },
   };
-  const chartSeries = statCards.map((c) => c.value);
+    const chartSeries = statCards.map((c) => c.value || 1); 
+  const hasData = chartSeries.some(val => val > 0);
 
   return (
     <>
@@ -158,13 +158,23 @@ export default function SurveillantDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow mb-8 flex flex-col items-center">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Répartition des activités</h3>
           <div className="w-full flex justify-center">
-            <ApexChart
-              options={chartOptions}
-              series={chartSeries}
-              type="donut"
-              width={420}
-            />
-          </div>
+            {loading ? (
+              <div className="w-[380px] h-[380px] flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-brand-500"></div>
+              </div>
+            ) : hasData ? (
+              <ApexChart
+                 options={chartOptions}
+                 series={chartSeries}
+                 type="donut"
+                 width={380}
+               />
+            ) : (
+              <div className="w-[380px] h-[380px] flex items-center justify-center text-gray-500">
+                <p>Aucune donnée disponible</p>
+              </div>
+              )}
+            </div>
         </div>
       </div>
     </>
