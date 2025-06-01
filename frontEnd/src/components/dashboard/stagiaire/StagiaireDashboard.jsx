@@ -61,17 +61,12 @@ export default function StagiaireDashboard() {
       setLoading(true);
       
       const [abs, jus, dem, ave] = await Promise.allSettled([
-        getAbsences(),
-        getJustifications(),
-        getDemandesAutorisation(),
-        getAvertissements(),
+        getAbsences({ per_page: 100000 }),
+        getJustifications({ per_page: 100000 }),
+        getDemandesAutorisation({ per_page: 100000 }),
+        getAvertissements({ per_page: 100000 }),
       ]);
       
-      console.log("Raw abs result:", abs);
-      console.log("abs.status:", abs.status);
-      console.log("abs.value:", abs.value);
-      console.log("abs.value?.success:", abs.value?.success);
-      console.log("abs.value?.data:", abs.value?.data);
       
       if (!mounted) return;
       
@@ -82,7 +77,6 @@ export default function StagiaireDashboard() {
         avertissements: ave.status === 'fulfilled' && ave.value?.success ? ave.value.data.length : 0,
       };
       
-      console.log("Final newStats:", newStats);
       setStats(newStats);
       setLoading(false);
     }

@@ -70,16 +70,16 @@ export default function SurveillantDashboard() {
     async function fetchStats() {
       setLoading(true);
       const [abs, dem, gr, st, fil] = await Promise.allSettled([
-        getAbsences(),
-        getDemandes(),
-        getGroupes(),
-        getStagiaires(),
-        getFilieres(),
+        getAbsences({ per_page: 100000 }),
+        getDemandes({ per_page: 100000 }),
+        getGroupes({ per_page: 100000 }),
+        getStagiaires({ per_page: 100000 }),
+        getFilieres({ per_page: 100000 }),
       ]);
       if (!mounted) return;
       setStats({
         absences: abs.value?.success ? abs.value.data.data.length : 0,
-        demandes: dem.value?.success ? dem.value.data.length : 0,
+        demandes: dem.value?.success ? dem.value.data.data.length : 0,
         groupes: gr.value?.success ? gr.value.data.length : 0,
         stagiaires: st.value?.success ? st.value.data.data.length : 0,
         filieres: fil.value?.success ? fil.value.data.length : 0,

@@ -59,21 +59,39 @@ export default function FormateurDashboard() {
     async function fetchStats() {
       setLoading(true);
 
-      // Fetch absences, groupes, demandes, stagiaires
       const [abs, gr, dem, stag] = await Promise.allSettled([
-        getAbsences(),
+        getAbsences(undefined,{ per_page: 100000 }),
         getFormateurGroupes(),
         getDemandes(),
-        getFormateurStagiaires(),
+        getFormateurStagiaires(undefined, { per_page: 100000 }),
       ]);
 
       if (!mounted) return;
 
+      console.log("getAbsences response:", abs);
+      console.log("getFormateurStagiaires response:", stag);
+
       setStats({
-        absences: abs.status === 'fulfilled' && abs.value?.success ? abs.value.data.data.length : 0,
-        groupes: gr.status === 'fulfilled' && gr.value?.success ? gr.value.data.length : 0,
-        demandes: dem.status === 'fulfilled' && dem.value?.success ? dem.value.data.length : 0,
-        stagiaires: stag.status === 'fulfilled' && stag.value?.success ? stag.value.data.total || stag.value.data.length || 0 : 0,
+        absences: abs.status === 'fulfilled' && abs.value?.success
+          ? Array.isArray(abs.value.data)
+            ? abs.value.data.length
+            : abs.value.data?.data?.length || abs.value.data?.total || 0
+          : 0,
+        groupes: gr.status === 'fulfilled' && gr.value?.success
+          ? Array.isArray(gr.value.data)
+            ? gr.value.data.length
+            : gr.value.data?.length || gr.value.data?.total || 0
+          : 0,
+        demandes: dem.status === 'fulfilled' && dem.value?.success
+          ? Array.isArray(dem.value.data)
+            ? dem.value.data.length
+            : dem.value.data?.length || dem.value.data?.total || 0
+          : 0,
+        stagiaires: stag.status === 'fulfilled' && stag.value?.success
+          ? Array.isArray(stag.value.data)
+            ? stag.value.data.length
+            : stag.value.data?.data?.length || stag.value.data?.total || stag.value.data?.length || 0
+          : 0,
       });
       setLoading(false);
     }

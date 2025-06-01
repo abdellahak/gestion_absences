@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { FaCalendarTimes, FaEnvelopeOpenText, FaUsers, FaUserGraduate, FaLayerGroup } from "react-icons/fa";
+import { FaUsers, FaUserGraduate, FaLayerGroup, FaUserShield } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Loading from "../../../assets/loading/Loading";
 import { getGroupes } from "../../../assets/api/admin/groupe/groupe";
 import { getStagiaires } from "../../../assets/api/admin/stagiaire/stagiaire";
 import { getFormateurs } from "../../../assets/api/admin/formateur/fomateur";
 import { getFilieres } from "../../../assets/api/admin/filiere/filiere";
+import { getSurveillants } from "../../../assets/api/admin/surveillant/surveillant";
 import ApexChart from "react-apexcharts";
 
 const CARD_COLORS = {
@@ -14,6 +15,7 @@ const CARD_COLORS = {
   green: { bg: "bg-green-50", text: "text-green-600", border: "border-green-200" },
   amber: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
   cyan: { bg: "bg-cyan-50", text: "text-cyan-600", border: "border-cyan-200" },
+  indigo: { bg: "bg-indigo-50", text: "text-indigo-600", border: "border-indigo-200" },
 };
 
 export default function AdminDashboard() {
@@ -23,6 +25,7 @@ export default function AdminDashboard() {
     stagiaires: 0,
     formateurs: 0,
     filieres: 0,
+    surveillants: 0,
   });
 
   const statCards = [
@@ -54,17 +57,25 @@ export default function AdminDashboard() {
       value: stats.filieres,
       label: "Filières",
     },
+    {
+      to: "surveillants",
+      color: "indigo",
+      icon: <FaUserShield />,
+      value: stats.surveillants,
+      label: "Surveillants généraux",
+    },
   ];
 
   useEffect(() => {
     let mounted = true;
     async function fetchStats() {
       setLoading(true);
-      const [ gr, st, form, fil] = await Promise.allSettled([
-        getGroupes?.(),
-        getStagiaires?.(),
-        getFormateurs?.(),
-        getFilieres?.(),
+      const [gr, st, form, fil, surv] = await Promise.allSettled([
+        getGroupes({ per_page: 100000 }),
+        getStagiaires({ per_page: 100000 }),
+        getFormateurs({ per_page: 100000 }),
+        getFilieres({ per_page: 100000 }),
+        getSurveillants(),
       ]);
       if (!mounted) return;
       setStats({
@@ -72,6 +83,7 @@ export default function AdminDashboard() {
         stagiaires: st.value?.success ? st.value.data.data.length : 0,
         formateurs: form.value?.success ? form.value.data.length : 0,
         filieres: fil.value?.success ? fil.value.data.length : 0,
+        surveillants: surv.value?.success ? surv.value.data.length : 0,
       });
       setLoading(false);
     }
@@ -82,7 +94,7 @@ export default function AdminDashboard() {
   const chartOptions = {
     chart: { type: "donut" },
     labels: statCards.map((c) => c.label),
-    colors: ["#2563eb", "#a21caf", "#22c55e", "#f59e42", "#06b6d4", "#2563eb"],
+    colors: ["#22c55e", "#f59e42", "#06b6d4", "#2563eb", "#6366f1"],
     legend: { position: "bottom" },
     dataLabels: { enabled: true },
   };
@@ -95,11 +107,11 @@ export default function AdminDashboard() {
       <div className="p-4 md:p-6 max-w-[1500px] xl:mx-auto">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Bienvenue sur votre tableau de bord</h2>
-          <p className="text-gray-500 mt-2 text-lg">Gérez les groupes, stagiaires, formateurs et filières</p>
+          <p className="text-gray-500 mt-2 text-lg">Gérez les groupes, stagiaires, formateurs, filières et surveillants généraux</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-7 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-7 mb-12">
           {loading
-            ? Array(6)
+            ? Array(5)
                 .fill(0)
                 .map((_, i) => (
                   <div
