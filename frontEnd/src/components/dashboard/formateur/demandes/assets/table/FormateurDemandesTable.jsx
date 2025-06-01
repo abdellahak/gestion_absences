@@ -48,7 +48,7 @@ export default function FormateurDemandesTable({ data }) {
               <TableCell isHeader={true}>Stagiaire</TableCell>
               <TableCell isHeader={true}>Intitulé</TableCell>
               <TableCell isHeader={true}>Date</TableCell>
-              <TableCell isHeader={true}>Horaire</TableCell>{" "}
+              <TableCell isHeader={true}>Horaire</TableCell>
               <TableCell isHeader={true}>Groupe</TableCell>
               <TableCell isHeader={true}>Statut</TableCell>
             </ThRow>
@@ -81,7 +81,7 @@ export default function FormateurDemandesTable({ data }) {
                     {`${formatTime(item.heure_debut)} - ${formatTime(
                       item.heure_fin
                     )}`}
-                  </TableCell>{" "}
+                  </TableCell>
                   <TableCell>{item.stagiaire?.groupe?.code || "-"}</TableCell>
                   <TableCell>{getStatusBadge(item.status)}</TableCell>
                 </tr>

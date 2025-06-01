@@ -215,13 +215,11 @@ export function getSidebarNavItems(role) {
           { name: "Nouvelle demande", path: "/stagiaire/demandes/ajouter" },
         ],
       },
-      {
-        name: "Avertissements",
-        icon: <FaBell />,
-        subItems: [
-          { name: "Mes avertissements", path: "/stagiaire/avertissements" },
-        ],
-      },
+      // {
+      //   name: "Mes avertissements",
+      //   icon: <FaBell />,
+      //   path: "/stagiaire/avertissements"
+      // },
       {
         name: "Profile",
         icon: <FaUserCircle />,

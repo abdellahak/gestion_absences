@@ -81,7 +81,7 @@ export default function FormateurDemandesList() {
           <p className="text-gray-600 text-sm">
             Consultez les demandes d'autorisation de vos stagiaires
           </p>
-        </div>{" "}
+        </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="p-6">
             <TableOptions

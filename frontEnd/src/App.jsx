@@ -115,7 +115,7 @@ function App() {
               <Route
                 path="stagiaires"
                 element={<FormateurStagiairesList />}
-              />{" "}
+              />
               <Route path="absences">
                 <Route index element={<FormateurAbsencesList />} />
                 <Route path="ajouter" element={<AjouterAbsence />} />
