@@ -32,6 +32,7 @@ import AjouterSurveillant from "./components/dashboard/admin/surveillant/ajouter
 import ModifierSurveillant from "./components/dashboard/admin/surveillant/modifier/ModifierSurveillant";
 import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/AjouterAbsence";
 import FormateurAbsencesList from "./components/dashboard/formateur/absences/liste/FormateurAbsencesList";
+import FormateurDemandesList from "./components/dashboard/formateur/demandes/liste/FormateurDemandesList";
 import SurveillantAbsencesList from "./components/dashboard/surveillant/absences/liste/SurveillantAbsencesList";
 import SurveillantAuthList from "./components/dashboard/surveillant/authorisation/list/SurveillantAuthList";
 import StagiaireDashboard from "./components/dashboard/stagiaire/StagiaireDashboard";
@@ -67,10 +68,10 @@ function App() {
                 <Route path=":id/modifier" element={<ModifierFormateur />} />
               </Route>
               <Route path="profile" element={<Profile />} />
-              <Route path="surveillants" >
-                <Route index element={<SurveillantsList/>} />
-                <Route path="ajouter" element={<AjouterSurveillant/>} />
-                <Route path=":id/modifier" element={<ModifierSurveillant/>} />
+              <Route path="surveillants">
+                <Route index element={<SurveillantsList />} />
+                <Route path="ajouter" element={<AjouterSurveillant />} />
+                <Route path=":id/modifier" element={<ModifierSurveillant />} />
               </Route>
               <Route path="*" element={<Not_found />} />
             </Route>
@@ -81,15 +82,24 @@ function App() {
               path="/stagiaire"
               element={<DashboardLayout role="stagiaire" />}
             >
-              <Route index element={<StagiaireDashboard/>} />
+              <Route index element={<StagiaireDashboard />} />
               <Route path="absences" element={<AbsencesList />} />
               <Route path="demandes" element={<DemandeAuthList />} />
               <Route path="avertissements" element={<AvertissementsList />} />
               <Route path="demandes/ajouter" element={<AjouterDemandeAuth />} />
-              <Route path="demandes/:id/modifier" element={<ModifierDemande />} />
+              <Route
+                path="demandes/:id/modifier"
+                element={<ModifierDemande />}
+              />
               <Route path="justifications" element={<JustificationList />} />
-              <Route path="justifications/ajouter" element={<AjouterJustification />} />
-              <Route path="justifications/:id/modifier" element={<ModifierJustification />} />
+              <Route
+                path="justifications/ajouter"
+                element={<AjouterJustification />}
+              />
+              <Route
+                path="justifications/:id/modifier"
+                element={<ModifierJustification />}
+              />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
@@ -102,11 +112,15 @@ function App() {
             >
               <Route index element={<h1>Tableau de Bord Formateur</h1>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
-              <Route path="stagiaires" element={<FormateurStagiairesList />} />
+              <Route
+                path="stagiaires"
+                element={<FormateurStagiairesList />}
+              />{" "}
               <Route path="absences">
                 <Route index element={<FormateurAbsencesList />} />
                 <Route path="ajouter" element={<AjouterAbsence />} />
               </Route>
+              <Route path="demandes" element={<FormateurDemandesList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="*" element={<Not_found />} />
             </Route>
@@ -138,10 +152,10 @@ function App() {
                 <Route path="ajouter" element={<AjouterFormateur />} />
                 <Route path=":id/modifier" element={<ModifierFormateur />} />
               </Route>
-               <Route path="absences">
+              <Route path="absences">
                 <Route index element={<SurveillantAbsencesList />} />
               </Route>
-               <Route path="demandes">
+              <Route path="demandes">
                 <Route index element={<SurveillantAuthList />} />
               </Route>
 
