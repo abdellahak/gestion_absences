@@ -34,7 +34,7 @@ import AjouterAbsence from "./components/dashboard/formateur/absences/ajouter/Aj
 import FormateurAbsencesList from "./components/dashboard/formateur/absences/liste/FormateurAbsencesList";
 import SurveillantAbsencesList from "./components/dashboard/surveillant/absences/liste/SurveillantAbsencesList";
 import SurveillantAuthList from "./components/dashboard/surveillant/authorisation/list/SurveillantAuthList";
-import Dashboard from "./components/dashboard/stagiaire/Dashboard";
+import StagiaireDashboard from "./components/dashboard/stagiaire/StagiaireDashboard";
 import SurveillantDashboard from "./components/dashboard/surveillant/SurveillantDashboard";
 function App() {
   return (
@@ -81,7 +81,7 @@ function App() {
               path="/stagiaire"
               element={<DashboardLayout role="stagiaire" />}
             >
-              <Route index element={<Dashboard/>} />
+              <Route index element={<StagiaireDashboard/>} />
               <Route path="absences" element={<AbsencesList />} />
               <Route path="demandes" element={<DemandeAuthList />} />
               <Route path="avertissements" element={<AvertissementsList />} />

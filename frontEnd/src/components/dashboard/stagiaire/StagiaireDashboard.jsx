@@ -15,7 +15,7 @@ const CARD_COLORS = {
   amber: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
 };
 
-export default function Dashboard() {
+export default function StagiaireDashboard() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     absences: 0,
@@ -44,7 +44,7 @@ export default function Dashboard() {
       color: "purple",
       icon: <FaEnvelopeOpenText />,
       value: stats.demandes,
-      label: "Demandes d'autorisation",
+      label: "Demandes",
     },
     {
       to: "avertissements",
