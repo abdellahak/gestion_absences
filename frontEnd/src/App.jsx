@@ -37,6 +37,8 @@ import SurveillantAbsencesList from "./components/dashboard/surveillant/absences
 import SurveillantAuthList from "./components/dashboard/surveillant/authorisation/list/SurveillantAuthList";
 import StagiaireDashboard from "./components/dashboard/stagiaire/StagiaireDashboard";
 import SurveillantDashboard from "./components/dashboard/surveillant/SurveillantDashboard";
+import FormateurDashboard from "./components/dashboard/formateur/FormateurDashboard";
+import AdminDashboard from "./components/dashboard/admin/AdminDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -46,7 +48,7 @@ function App() {
 
           <Route path="" element={<RoleWrapper role="admin" />}>
             <Route path="/admin" element={<DashboardLayout role="admin" />}>
-              <Route index element={<h1>Tableau de Bord Admin</h1>} />
+              <Route index element={<AdminDashboard/>} />
               <Route path="filieres">
                 <Route index element={<FilieresList />} />
                 <Route path="ajouter" element={<AjouterFiliere />} />
@@ -110,7 +112,7 @@ function App() {
               path="/formateur"
               element={<DashboardLayout role="formateur" />}
             >
-              <Route index element={<h1>Tableau de Bord Formateur</h1>} />
+              <Route index element={<FormateurDashboard/>} />
               <Route path="groupes" element={<FormateurGroupesList />} />
               <Route
                 path="stagiaires"
