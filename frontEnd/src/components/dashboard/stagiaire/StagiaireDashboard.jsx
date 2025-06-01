@@ -59,34 +59,56 @@ export default function StagiaireDashboard() {
     let mounted = true;
     async function fetchStats() {
       setLoading(true);
+      
       const [abs, jus, dem, ave] = await Promise.allSettled([
         getAbsences(),
         getJustifications(),
         getDemandesAutorisation(),
         getAvertissements(),
       ]);
+      
+      console.log("Raw abs result:", abs);
+      console.log("abs.status:", abs.status);
+      console.log("abs.value:", abs.value);
+      console.log("abs.value?.success:", abs.value?.success);
+      console.log("abs.value?.data:", abs.value?.data);
+      
       if (!mounted) return;
-      setStats({
-        absences: abs.value?.success ? abs.value.data.length : 0,
-        justifications: jus.value?.success ? jus.value.data.length : 0,
-        demandes: dem.value?.success ? dem.value.data.length : 0,
-        avertissements: ave.value?.success ? ave.value.data.length : 0,
-      });
+      
+      const newStats = {
+        absences: abs.status === 'fulfilled' && abs.value?.success ? abs.value.data.data.length : 0,
+        justifications: jus.status === 'fulfilled' && jus.value?.success ? jus.value.data.length : 0,
+        demandes: dem.status === 'fulfilled' && dem.value?.success ? dem.value.data.length : 0,
+        avertissements: ave.status === 'fulfilled' && ave.value?.success ? ave.value.data.length : 0,
+      };
+      
+      console.log("Final newStats:", newStats);
+      setStats(newStats);
       setLoading(false);
     }
     fetchStats();
     return () => { mounted = false; };
   }, []);
 
-  // ApexCharts config
   const chartOptions = {
     chart: { type: "donut" },
     labels: statCards.map((c) => c.label),
     colors: ["#2563eb", "#22c55e", "#a21caf", "#f59e42"],
     legend: { position: "bottom" },
     dataLabels: { enabled: true },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '60%'
+        }
+      }
+    }
   };
-  const chartSeries = statCards.map((c) => c.value);
+  
+  const chartSeries = statCards.map((c) => c.value || 1); 
+  const hasData = chartSeries.some(val => val > 0);
+  
+
 
   return (
     <>
@@ -146,12 +168,22 @@ export default function StagiaireDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow mb-8 flex flex-col items-center">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Répartition de vos activités</h3>
           <div className="w-full flex justify-center">
-            <ApexChart
-              options={chartOptions}
-              series={chartSeries}
-              type="donut"
-              width={380}
-            />
+            {loading ? (
+              <div className="w-[380px] h-[380px] flex items-center justify-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-brand-500"></div>
+              </div>
+            ) : hasData ? (
+              <ApexChart
+                options={chartOptions}
+                series={chartSeries}
+                type="donut"
+                width={380}
+              />
+            ) : (
+              <div className="w-[380px] h-[380px] flex items-center justify-center text-gray-500">
+                <p>Aucune donnée disponible</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
