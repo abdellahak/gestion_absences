@@ -6,6 +6,7 @@ import { getAbsences } from "../../../assets/api/surveillant/absences/absences";
 import { getDemandes } from "../../../assets/api/surveillant/DemandesAuth/demandes";
 import { getGroupes } from "../../../assets/api/admin/groupe/groupe";
 import { getStagiaires } from "../../../assets/api/admin/stagiaire/stagiaire";
+import { getFormateurs } from "../../../assets/api/admin/formateur/fomateur";
 import { getFilieres } from "../../../assets/api/admin/filiere/filiere";
 import ApexChart from "react-apexcharts";
 
@@ -15,6 +16,7 @@ const CARD_COLORS = {
   green: { bg: "bg-green-50", text: "text-green-600", border: "border-green-200" },
   amber: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
   cyan: { bg: "bg-cyan-50", text: "text-cyan-600", border: "border-cyan-200" },
+  pink: { bg: "bg-pink-50", text: "text-pink-600", border: "border-pink-200" },
 };
 
 export default function SurveillantDashboard() {
@@ -50,6 +52,13 @@ export default function SurveillantDashboard() {
       label: "Groupes",
     },
     {
+      to: "formateurs",
+      color: "pink",
+      icon: <FaUserGraduate />,
+      value: stats.formateurs,
+      label: "Formateurs",
+    },
+    {
       to: "stagiaires",
       color: "amber",
       icon: <FaUserGraduate />,
@@ -69,11 +78,12 @@ export default function SurveillantDashboard() {
     let mounted = true;
     async function fetchStats() {
       setLoading(true);
-      const [abs, dem, gr, st, fil] = await Promise.allSettled([
+      const [abs, dem, gr, st, fil , form] = await Promise.allSettled([
         getAbsences({ per_page: 100000 }),
         getDemandes({ per_page: 100000 }),
         getGroupes({ per_page: 100000 }),
         getStagiaires({ per_page: 100000 }),
+        getFormateurs({ per_page: 100000 }),
         getFilieres({ per_page: 100000 }),
       ]);
       if (!mounted) return;
@@ -82,6 +92,7 @@ export default function SurveillantDashboard() {
         demandes: dem.value?.success ? dem.value.data.data.length : 0,
         groupes: gr.value?.success ? gr.value.data.length : 0,
         stagiaires: st.value?.success ? st.value.data.data.length : 0,
+        formateurs: form.value?.success ? form.value.data.length : 0,
         filieres: fil.value?.success ? fil.value.data.length : 0,
       });
       setLoading(false);
@@ -108,7 +119,7 @@ export default function SurveillantDashboard() {
           <h2 className="text-3xl font-bold text-gray-900">Bienvenue sur votre tableau de bord</h2>
           <p className="text-gray-500 mt-2 text-lg">Gérez les absences, demandes, groupes, stagiaires et filières</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-7 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-7 mb-12">
           {loading
             ? Array(5)
                 .fill(0)

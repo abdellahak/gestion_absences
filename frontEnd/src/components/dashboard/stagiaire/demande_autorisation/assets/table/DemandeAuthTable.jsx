@@ -82,7 +82,9 @@ export default function DemandeAuthTable({ data, setShow, sort, setSort }) {
               </div>
             </TableCell>
             <TableCell isHeader={true}>Document</TableCell>
-            <TableCell isHeader={true}>Actions</TableCell>
+            {data.some(item => item.status === "en_attente") && (
+              <TableCell isHeader={true}>Actions</TableCell>
+              )}
           </ThRow>
         </thead>
         <tbody>
@@ -127,7 +129,8 @@ export default function DemandeAuthTable({ data, setShow, sort, setSort }) {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>
+                {item.status === "en_attente" && ( 
+                  <TableCell>
                   <div className="flex w-full items-center justify-center gap-2">
                     {item.status === "en_attente" && (
                       <>
@@ -147,6 +150,8 @@ export default function DemandeAuthTable({ data, setShow, sort, setSort }) {
                     )}
                   </div>
                 </TableCell>
+                  
+                )}
               </tr>
             ))
           ) : (

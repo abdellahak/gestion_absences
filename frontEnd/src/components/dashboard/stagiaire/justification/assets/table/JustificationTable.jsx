@@ -48,7 +48,9 @@ export default function JustificationTable({ data, setShow, sortStatus, setSortS
                 />
               </div>
             </TableCell>
-            <TableCell isHeader={true}>Actions</TableCell>
+            {data.some(item => item.status === "en_attente") && (
+              <TableCell isHeader={true}>Actions</TableCell>
+            )}
           </ThRow>
         </thead>
         <tbody>
@@ -94,7 +96,8 @@ export default function JustificationTable({ data, setShow, sortStatus, setSortS
                     </span>
                   </div>
                 </TableCell>
-                <TableCell>
+                {item.status === "en_attente" && ( 
+                  <TableCell>
                   <div className="flex w-full items-center justify-center gap-2">
                     {item.status === "en_attente" && (
                       <>
@@ -105,7 +108,7 @@ export default function JustificationTable({ data, setShow, sortStatus, setSortS
                           <FaRegTrashCan className="h-4 w-4" />
                         </button>
                         <Link
-                          to={`/stagiaire/justifications/${item.id}/modifier`}
+                          to={`/stagiaire/demandes/${item.id}/modifier`}
                           className="text-green-500 hover:text-green-800"
                         >
                           <GrEdit className="h-4 w-4" />
@@ -114,6 +117,8 @@ export default function JustificationTable({ data, setShow, sortStatus, setSortS
                     )}
                   </div>
                 </TableCell>
+                  
+                )}
               </tr>
             ))
           ) : (
