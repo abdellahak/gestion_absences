@@ -7,6 +7,9 @@ use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StagiairesImport;
+use App\Exports\StagiairesTemplateExport;
 
 class StagiaireController extends Controller
 {
@@ -177,5 +180,59 @@ class StagiaireController extends Controller
         }
         $stagiaire->delete();
         return response()->json(['message' => 'Stagiaire supprimé avec succès'], 200);
+    }
+
+    /**
+     * Import stagiaires from Excel file
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ], [
+            'file.required' => 'Le fichier est requis',
+            'file.mimes' => 'Le fichier doit être au format Excel (xlsx, xls) ou CSV',
+            'file.max' => 'Le fichier ne doit pas dépasser 2MB'
+        ]);
+
+        try {
+            $import = new StagiairesImport();
+            Excel::import($import, $request->file('file'));
+
+            $errors = $import->getErrors();
+
+            if (!empty($errors)) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $errors,
+                    'message' => 'Importation terminée avec des erreurs'
+                ], 422);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Stagiaires importés avec succès'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de l\'importation: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Download Excel template for importing stagiaires
+     */
+    public function downloadTemplate()
+    {
+        try {
+            return Excel::download(new StagiairesTemplateExport(), 'template_stagiaires.xlsx');
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du téléchargement du template: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

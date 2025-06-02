@@ -95,7 +95,6 @@ export default function SurveillantAbsencesList() {
     <>
       <title>Les absences</title>
       <div className="p-4 md:p-6  xl:mx-auto">
-        {" "}
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Les absences
         </h2>

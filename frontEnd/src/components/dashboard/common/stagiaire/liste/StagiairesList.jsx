@@ -69,7 +69,6 @@ export default function StagiairesList() {
   const handlePerPageChange = (perPage) => {
     fetchData(1, perPage, searchTerm, selectedGroupe);
   };
-
   const handleDelete = async () => {
     if (deleting) return;
     setDeleting(true);
@@ -95,7 +94,6 @@ export default function StagiairesList() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Liste des stagiaires
         </h2>
-
         {/* Search Bar */}
         <div className="mb-4">
           <input
@@ -106,7 +104,6 @@ export default function StagiairesList() {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">

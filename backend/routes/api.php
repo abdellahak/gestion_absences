@@ -50,6 +50,8 @@ Route::middleware(["auth:sanctum", "role:admin|surveillant"])->prefix("admin")->
     });
     Route::controller(StagiaireController::class)->group(function () {
         Route::get("stagiaires", "index");
+        Route::get("stagiaires/template", "downloadTemplate");
+        Route::post("stagiaires/import", "import");
         Route::get("stagiaires/{id}", "show");
         Route::put("stagiaires/{id}", "update");
         Route::delete("stagiaires/{id}", "destroy");
