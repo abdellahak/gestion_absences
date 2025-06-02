@@ -120,11 +120,6 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
-        name: "Demandes d'autorisation",
-        icon: <FaFileAlt />,
-        path: "/formateur/demandes",
-      },
-      {
         name: "Profile",
         icon: <FaUserCircle />,
         path: "/formateur/profile",

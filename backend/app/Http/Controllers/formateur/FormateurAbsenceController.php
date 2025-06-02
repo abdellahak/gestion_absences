@@ -64,6 +64,7 @@ class FormateurAbsenceController extends Controller
             'stagiaire:id,user_id,groupe_id',
             'stagiaire.user:id,nom,prenom,email',
             'stagiaire.groupe:id,intitule,code',
+            'justification:id,status',
         ])
             ->orderBy('date_absence', 'desc')
             ->paginate($perPage);
