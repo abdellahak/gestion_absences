@@ -3,6 +3,7 @@ import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import AbsencesTable from "../assets/table/AbsencesTable";
 import Pagination from "../../../../common/Pagination";
+import TableOptions from "../../../../common/TableOptions";
 import { getAbsences } from "../../../../../assets/api/stagiaires/absences/absences";
 
 export default function AbsencesList() {
@@ -64,10 +65,20 @@ export default function AbsencesList() {
   const handlePageChange = (page) => {
     fetchData(page, pagination.per_page, searchTerm, selectedStatus);
   };
-
   const handlePerPageChange = (perPage) => {
     fetchData(1, perPage, searchTerm, selectedStatus);
   };
+
+  const handleSearchSubmit = () => {
+    fetchData(1, pagination.per_page, searchTerm, selectedStatus);
+  };
+
+  const statusOptions = [
+    { value: "en_attente", label: "En attente" },
+    { value: "valide", label: "Validé" },
+    { value: "refuse", label: "Refusé" },
+    { value: "non_justifiee", label: "Non justifiée" },
+  ];
 
   return (
     <>
@@ -75,22 +86,21 @@ export default function AbsencesList() {
       <div className="p-4 md:p-6  xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Mes absences
-        </h2>
-
-        {/* Search and Filters */}
-        <div className="mb-4 space-y-4">
-          <input
-            type="text"
-            placeholder="Rechercher par date ou nom du formateur..."
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />  
-        </div>
-
+        </h2>{" "}
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
+              <TableOptions
+                search={searchTerm}
+                setSearch={handleSearch}
+                onSearchSubmit={handleSearchSubmit}
+                searchPlaceholder="Rechercher par date ou nom du formateur..."
+                status={selectedStatus}
+                setStatus={handleStatusChange}
+                statusOptions={statusOptions}
+                showGroupes={false}
+                showDateRange={false}
+              />
               {loading ? (
                 <div className="size-full flex justify-center items-center py-12">
                   <div className="w-fit">

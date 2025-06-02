@@ -39,9 +39,15 @@ class StagiaireAbsenceController extends Controller
 
         // Filter by status if specified
         if ($request->has('status') && $request->status) {
-            $query->whereHas('justification', function ($q) use ($request) {
-                $q->where('status', $request->status);
-            });
+            if ($request->status === 'non_justifiee') {
+                // Filter for absences without justifications
+                $query->whereNull('justification_id');
+            } else {
+                // Filter for absences with specific justification status
+                $query->whereHas('justification', function ($q) use ($request) {
+                    $q->where('status', $request->status);
+                });
+            }
         }
 
         $absences = $query->orderBy('date_absence', 'desc')->paginate($perPage);

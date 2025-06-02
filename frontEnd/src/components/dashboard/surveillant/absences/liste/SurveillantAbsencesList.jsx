@@ -20,12 +20,14 @@ export default function SurveillantAbsencesList() {
   const [groupes, setGroupes] = useState([]);
   const [selectedGroupe, setSelectedGroupe] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const fetchData = async (
     page = 1,
     perPage = 10,
     search = "",
-    groupeId = ""
+    groupeId = "",
+    status = ""
   ) => {
     setLoading(true);
     const params = {
@@ -33,6 +35,7 @@ export default function SurveillantAbsencesList() {
       per_page: perPage,
       ...(search && { search }),
       ...(groupeId && { groupe_id: groupeId }),
+      ...(status && { status }),
     };
 
     const res = await getAbsences(params);
@@ -67,33 +70,55 @@ export default function SurveillantAbsencesList() {
     };
     fetchGroupes();
   }, []);
-
   const handleSearch = (value) => {
     setSearchTerm(value);
     // Trigger search immediately as user types
-    fetchData(1, pagination.per_page, value, selectedGroupe);
+    fetchData(1, pagination.per_page, value, selectedGroupe, selectedStatus);
   };
 
   const handleSearchSubmit = () => {
     // This ensures search works on form submit too
-    fetchData(1, pagination.per_page, searchTerm, selectedGroupe);
+    fetchData(
+      1,
+      pagination.per_page,
+      searchTerm,
+      selectedGroupe,
+      selectedStatus
+    );
   };
 
   const handleGroupeChange = (groupeId) => {
     setSelectedGroupe(groupeId);
-    fetchData(1, pagination.per_page, searchTerm, groupeId);
+    fetchData(1, pagination.per_page, searchTerm, groupeId, selectedStatus);
   };
 
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+    fetchData(1, pagination.per_page, searchTerm, selectedGroupe, status);
+  };
   const handlePageChange = (page) => {
-    fetchData(page, pagination.per_page, searchTerm, selectedGroupe);
+    fetchData(
+      page,
+      pagination.per_page,
+      searchTerm,
+      selectedGroupe,
+      selectedStatus
+    );
   };
+
   const handlePerPageChange = (perPage) => {
-    fetchData(1, perPage, searchTerm, selectedGroupe);
+    fetchData(1, perPage, searchTerm, selectedGroupe, selectedStatus);
   };
+  const statusOptions = [
+    { value: "en_attente", label: "En attente" },
+    { value: "valide", label: "Validé" },
+    { value: "refuse", label: "Refusé" },
+    { value: "non_justifiee", label: "Non justifiée" },
+  ];
 
   return (
     <>
-      <title>Les absences</title>
+      <title>Les absences</title>{" "}
       <div className="p-4 md:p-6  xl:mx-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Les absences
@@ -109,6 +134,9 @@ export default function SurveillantAbsencesList() {
                 setSearch={handleSearch}
                 onSearchSubmit={handleSearchSubmit}
                 searchPlaceholder="Rechercher par date, nom du stagiaire ou formateur..."
+                status={selectedStatus}
+                setStatus={handleStatusChange}
+                statusOptions={statusOptions}
                 showDateRange={false}
               />
               {loading ? (
