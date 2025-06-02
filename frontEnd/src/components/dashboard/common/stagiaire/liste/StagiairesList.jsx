@@ -18,8 +18,7 @@ export default function StagiairesList() {
     last_page: 1,
     total: 0,
     per_page: 10,
-  });
-  const [show, setShow] = useState(false);
+  });  const [show, setShow] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGroupe, setSelectedGroupe] = useState("");
@@ -69,7 +68,6 @@ export default function StagiairesList() {
   const handlePerPageChange = (perPage) => {
     fetchData(1, perPage, searchTerm, selectedGroupe);
   };
-
   const handleDelete = async () => {
     if (deleting) return;
     setDeleting(true);
@@ -83,8 +81,7 @@ export default function StagiairesList() {
         searchTerm,
         selectedGroupe
       );
-      setShow(null);
-    } else {
+      setShow(null);    } else {
       toast("error", res.error);
     }
   };
@@ -92,10 +89,9 @@ export default function StagiairesList() {
     <>
       <title>Liste des stagiaires</title>
       <div className="p-4 md:p-6  xl:mx-auto">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        {" "}        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Liste des stagiaires
         </h2>
-
         {/* Search Bar */}
         <div className="mb-4">
           <input
@@ -106,7 +102,6 @@ export default function StagiairesList() {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-
         <div className="space-y-6 mb-6">
           <div className="rounded border border-gray-200 bg-white">
             <div className="border-t border-gray-100 p-5 sm:p-6">
@@ -132,7 +127,7 @@ export default function StagiairesList() {
                   )}
                 </>
               )}
-            </div>
+            </div>{" "}
             {show && (
               <DeleteConfirmation
                 show={show}
@@ -140,8 +135,7 @@ export default function StagiairesList() {
                 text={"ce stagiaire"}
                 action={null}
                 handleDelete={handleDelete}
-              />
-            )}
+              />            )}
           </div>
         </div>
       </div>

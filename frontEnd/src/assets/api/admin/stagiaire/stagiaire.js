@@ -138,3 +138,66 @@ export const modifierStagiaire = async (formData, id) => {
     return data;
   }
 };
+
+export const importStagiaires = async (file) => {
+  let data = {
+    success: true,
+    errors: [],
+    message: "",
+  };
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await axios.post("admin/stagiaires/import", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (res) {
+      data.message = res.data.message;
+      return data;
+    }
+  } catch (error) {
+    data.success = false;
+    if (isAxiosError(error)) {
+      if (error.response?.status === 422) {
+        data.errors = error.response.data.errors || [];
+        data.message = error.response.data.message || "Erreur de validation";
+        return data;
+      }
+      data.message =
+        error.response?.data?.message || "Erreur lors de l'importation";
+      return data;
+    }
+    data.message = "Une erreur s'est produite sur le serveur";
+    return data;
+  }
+};
+
+export const downloadTemplate = async () => {
+  try {
+    const res = await axios.get("admin/stagiaires/template", {
+      responseType: "blob",
+    });
+
+    // Create blob link to download
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "template_stagiaires.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Erreur lors du téléchargement du template",
+    };
+  }
+};
