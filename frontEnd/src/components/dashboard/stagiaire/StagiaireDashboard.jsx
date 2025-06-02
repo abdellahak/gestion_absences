@@ -5,7 +5,6 @@ import Loading from "../../../assets/loading/Loading";
 import { getAbsences } from "../../../assets/api/stagiaires/absences/absences";
 import { getJustifications } from "../../../assets/api/stagiaires/justification/justification";
 import { getDemandesAutorisation } from "../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
-import { getAvertissements } from "../../../assets/api/stagiaires/avertissements/avertissements";
 import ApexChart from "react-apexcharts";
 
 const CARD_COLORS = {
@@ -46,13 +45,6 @@ export default function StagiaireDashboard() {
       value: stats.demandes,
       label: "Demandes",
     },
-    {
-      to: "avertissements",
-      color: "amber",
-      icon: <FaExclamationTriangle />,
-      value: stats.avertissements,
-      label: "Avertissements",
-    },
   ];
 
   useEffect(() => {
@@ -60,11 +52,10 @@ export default function StagiaireDashboard() {
     async function fetchStats() {
       setLoading(true);
       
-      const [abs, jus, dem, ave] = await Promise.allSettled([
+      const [abs, jus, dem] = await Promise.allSettled([
         getAbsences({ per_page: 100000 }),
         getJustifications({ per_page: 100000 }),
         getDemandesAutorisation({ per_page: 100000 }),
-        getAvertissements({ per_page: 100000 }),
       ]);
       
       
@@ -74,7 +65,6 @@ export default function StagiaireDashboard() {
         absences: abs.status === 'fulfilled' && abs.value?.success ? abs.value.data.data.length : 0,
         justifications: jus.status === 'fulfilled' && jus.value?.success ? jus.value.data.length : 0,
         demandes: dem.status === 'fulfilled' && dem.value?.success ? dem.value.data.length : 0,
-        avertissements: ave.status === 'fulfilled' && ave.value?.success ? ave.value.data.length : 0,
       };
       
       setStats(newStats);
@@ -112,7 +102,7 @@ export default function StagiaireDashboard() {
           <h2 className="text-3xl font-bold text-gray-900">Bienvenue sur votre tableau de bord</h2>
           <p className="text-gray-500 mt-2 text-lg">Gérez vos activités et consultez vos statistiques</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mb-12">
           {loading
             ? Array(4)
                 .fill(0)
