@@ -144,6 +144,11 @@ function App() {
                 <Route path="ajouter" element={<AjouterGroupe />} />
                 <Route path=":id/modifier" element={<ModifierGroupe />} />
               </Route>
+              <Route path="formateurs">
+                <Route index element={<FormateurList />} />
+                <Route path="ajouter" element={<AjouterFormateur />} />
+                <Route path=":id/modifier" element={<ModifierFormateur />} />
+              </Route>
               <Route path="stagiaires">
                 <Route index element={<StagiairesList />} />
                 <Route path="ajouter" element={<AjouterStagiaire />} />

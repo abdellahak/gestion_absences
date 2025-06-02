@@ -85,20 +85,7 @@ export default function AbsencesList() {
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <div className="flex space-x-4">
-            <select
-              value={selectedStatus}
-              onChange={(e) => handleStatusChange(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Tous les statuts</option>
-              <option value="en_attente">En attente</option>
-              <option value="approuve">Approuvé</option>
-              <option value="rejete">Rejeté</option>
-            </select>
-          </div>
+          />  
         </div>
 
         <div className="space-y-6 mb-6">

@@ -151,6 +151,22 @@ export function getSidebarNavItems(role) {
         ],
       },
       {
+        name: "Formateurs",
+        icon: <MdListAlt />,
+        subItems: [
+          {
+            name: "Liste des Formateurs",
+            path: "/surveillant/formateurs",
+            pro: false,
+          },
+          {
+            name: "Ajouter formateur",
+            path: "/surveillant/formateurs/ajouter",
+            pro: false,
+          },
+        ],
+      },
+      {
         name: "Stagiaires",
         icon: <FaUserGraduate />,
         subItems: [
