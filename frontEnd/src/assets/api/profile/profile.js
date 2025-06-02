@@ -87,7 +87,7 @@ export const updatePassword = async (passwordData) => {
         return data;
       }
       if (error.status == 400) {
-        data.server = error.response.data.error;
+        data.server = error.response.data.errors;
         return data;
       }
       return data;

@@ -2,29 +2,49 @@ import { useEffect, useState } from "react";
 import { useToast } from "../../../../../assets/toast/Toast";
 import Loading from "../../../../../assets/loading/Loading";
 import DemandeAuthTable from "../assets/table/DemandeAuthTable";
-import { getDemandesAutorisation } from "../../../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
+import {
+  getDemandesAutorisation,
+  supprimerDemandeAutorisation,
+} from "../../../../../assets/api/stagiaires/demande_autorisation/demande_autorisation";
+import DeleteConfirmation from "../../../../../assets/shared/DeleteConfirmation";
 
 export default function DemandeAuthList() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [sort, setSort] = useState({ key: "date", order: "desc" }); // key: "date" or "status"
+  const [sort, setSort] = useState({ key: "date", order: "desc" }); 
+  const [showDeleteModal, setShowDeleteModal] = useState(null); 
+
+  const fetchData = async () => {
+    setLoading(true);
+    const res = await getDemandesAutorisation();
+    setLoading(false);
+    if (res.success) {
+      setData(res.data);
+    } else {
+      toast("error", res.error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const res = await getDemandesAutorisation();
-      setLoading(false);
-      if (res.success) {
-        setData(res.data);
-      } else {
-        toast("error", res.error);
-      }
-    };
     fetchData();
   }, []);
 
-  // Tri dynamique
+  const handleDelete = async () => {
+    if (!showDeleteModal) return;
+
+    const res = await supprimerDemandeAutorisation(showDeleteModal);
+    if (res.success) {
+      toast("success", "Demande supprimée avec succès");
+      setData((prevData) =>
+        prevData.filter((item) => item.id !== showDeleteModal)
+      );
+      setShowDeleteModal(null);
+    } else {
+      toast("error", res.error);
+    }
+  };
+
   const sortedData = [...data].sort((a, b) => {
     if (sort.key === "status") {
       const aChar = (a.status || "").toLowerCase().charAt(0);
@@ -62,12 +82,21 @@ export default function DemandeAuthList() {
                   data={sortedData}
                   setSort={setSort}
                   sort={sort}
+                  setShow={setShowDeleteModal}
                 />
               )}
             </div>
           </div>
         </div>
       </div>
+      {showDeleteModal && (
+        <DeleteConfirmation
+          setShow={setShowDeleteModal}
+          action={null}
+          handleDelete={handleDelete}
+          text="cette demande d'autorisation"
+        />
+      )}
     </>
   );
 }

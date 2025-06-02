@@ -67,6 +67,12 @@ export const supprimerDemandeAutorisation = async (id) => {
     }
   } catch (error) {
     data.success = false;
+    if (isAxiosError(error)) {
+      const errorV =
+        error.response?.data?.message || error.response?.data?.error;
+      data.error = errorV || "Erreur lors de la suppression de la demande";
+      return data;
+    }
     data.error = "Une erreur s'est produite sur le serveur";
     return data;
   }
@@ -85,10 +91,7 @@ export const modifierDemandeAutorisation = async (formData, id) => {
         fd.append(key, value);
       }
     });
-    const res = await axios.post(
-      `stagiaire/demandes/${id}?_method=PUT`,
-      fd
-    );
+    const res = await axios.post(`stagiaire/demandes/${id}?_method=PUT`, fd);
     if (res) return data;
   } catch (error) {
     data.success = false;
@@ -101,8 +104,7 @@ export const modifierDemandeAutorisation = async (formData, id) => {
   }
 };
 
-
-export const download= async (id, file_name) => {
+export const download = async (id, file_name) => {
   let data = {
     success: true,
     error: "",

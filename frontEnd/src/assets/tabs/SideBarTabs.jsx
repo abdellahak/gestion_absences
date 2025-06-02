@@ -32,7 +32,7 @@ export function getSidebarNavItems(role) {
       },
       {
         name: "Formateurs",
-        icon: <MdListAlt />,
+        icon: <FaUserTie />,
         subItems: [
           {
             name: "Liste des Formateurs",
@@ -104,12 +104,12 @@ export function getSidebarNavItems(role) {
       {
         name: "Mes groupes",
         icon: <FaUsers />,
-        path: "/formateur/groupes"
+        path: "/formateur/groupes",
       },
       {
         name: "Mes stagiaires",
         icon: <FaUserGraduate />,
-        path: "/formateur/stagiaires"
+        path: "/formateur/stagiaires",
       },
       {
         name: "Gestion des absences",
@@ -152,7 +152,7 @@ export function getSidebarNavItems(role) {
       },
       {
         name: "Formateurs",
-        icon: <MdListAlt />,
+        icon: <FaUserTie />,
         subItems: [
           {
             name: "Liste des Formateurs",
