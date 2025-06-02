@@ -18,7 +18,8 @@ export default function StagiairesList() {
     last_page: 1,
     total: 0,
     per_page: 10,
-  });  const [show, setShow] = useState(false);
+  });
+  const [show, setShow] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGroupe, setSelectedGroupe] = useState("");
@@ -81,7 +82,8 @@ export default function StagiairesList() {
         searchTerm,
         selectedGroupe
       );
-      setShow(null);    } else {
+      setShow(null);
+    } else {
       toast("error", res.error);
     }
   };
@@ -89,7 +91,7 @@ export default function StagiairesList() {
     <>
       <title>Liste des stagiaires</title>
       <div className="p-4 md:p-6  xl:mx-auto">
-        {" "}        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Liste des stagiaires
         </h2>
         {/* Search Bar */}
@@ -127,7 +129,7 @@ export default function StagiairesList() {
                   )}
                 </>
               )}
-            </div>{" "}
+            </div>
             {show && (
               <DeleteConfirmation
                 show={show}
@@ -135,7 +137,8 @@ export default function StagiairesList() {
                 text={"ce stagiaire"}
                 action={null}
                 handleDelete={handleDelete}
-              />            )}
+              />
+            )}
           </div>
         </div>
       </div>

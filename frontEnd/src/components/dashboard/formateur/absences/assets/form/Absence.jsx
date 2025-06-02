@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast } from "../../../../../../assets/toast/Toast";
 import AbsenceForm from "./AbsenceForm";
-import {ajouterAbsence} from "../../../../../..//assets/api/formateur/absences/absences";
+import { ajouterAbsence } from "../../../../../..//assets/api/formateur/absences/absences";
 
 export default function Absence() {
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,12 @@ export default function Absence() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({
+      stagiaires: "",
+      date_absence: "",
+      heure_debut: "",
+      heure_fin: "",
+    });
     if (loading) return;
 
     setLoading(true);
@@ -29,12 +35,7 @@ export default function Absence() {
 
     if (res.success) {
       toast("success", "L'absence a été ajoutée avec succès");
-      setFormData({
-        stagiaires: [],
-        date_absence: new Date().toISOString().split("T")[0],
-        heure_debut: "",
-        heure_fin: "",
-      });
+      
       setErrors({
         stagiaires: "",
         date_absence: "",

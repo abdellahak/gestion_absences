@@ -38,7 +38,7 @@ export default function AjouterStagiaire() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Ajouter des stagiaires
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
           {/* Individual Addition Card */}
           <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
@@ -71,7 +71,8 @@ export default function AjouterStagiaire() {
                 Importer depuis Excel
               </h3>
               <p className="text-gray-600 mb-6">
-                Importez plusieurs stagiaires en une fois à partir d'un fichier Excel
+                Importez plusieurs stagiaires en une fois à partir d'un fichier
+                Excel
               </p>
               <button
                 onClick={() => setShowImport(true)}
@@ -85,10 +86,14 @@ export default function AjouterStagiaire() {
 
         {/* Features List */}
         <div className="mt-8 bg-gray-50 rounded-lg p-6 max-w-4xl">
-          <h4 className="font-semibold text-gray-800 mb-4">Fonctionnalités disponibles :</h4>
+          <h4 className="font-semibold text-gray-800 mb-4">
+            Fonctionnalités disponibles :
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h5 className="font-medium text-gray-700 mb-2">Ajout individuel :</h5>
+              <h5 className="font-medium text-gray-700 mb-2">
+                Ajout individuel :
+              </h5>
               <ul className="text-sm text-gray-600 space-y-1">
                 <li>• Formulaire guidé étape par étape</li>
                 <li>• Validation en temps réel</li>

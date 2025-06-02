@@ -108,7 +108,7 @@
 }
 
 .apexcharts-text {
-  @apply !fill-gray-700;
+  @apply !fill-gray-100;
 }
 
 .apexcharts-tooltip.apexcharts-theme-light {

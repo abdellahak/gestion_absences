@@ -47,7 +47,6 @@ export default function FormateurAbsencesTable({ data, setShow }) {
       <div className="overflow-x-auto shadow-sm">
         <Table>
           <thead>
-            {" "}
             <ThRow>
               <TableCell isHeader={true}>N°</TableCell>
               <TableCell isHeader={true}>Stagiaire</TableCell>
@@ -57,7 +56,7 @@ export default function FormateurAbsencesTable({ data, setShow }) {
               <TableCell isHeader={true}>Groupe</TableCell>
               <TableCell isHeader={true}>Statut</TableCell>
               <TableCell isHeader={true}>Actions</TableCell>
-            </ThRow>{" "}
+            </ThRow>
           </thead>
           <tbody>
             {data.length > 0 ? (
