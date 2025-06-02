@@ -130,8 +130,11 @@ class StagiaireController extends Controller
             'email.unique' => 'L\'email existe déjà',
         ]);
 
-        if ($data['groupe_id'] == $stagiaire->groupe_id && $data['numero_inscription'] == $stagiaire->numero_inscription &&
-            $data['nom'] == $stagiaire->user->nom && $data['prenom'] == $stagiaire->user->prenom ) {
+        if (
+            $data['groupe_id'] == $stagiaire->groupe_id && $data['numero_inscription'] == $stagiaire->numero_inscription &&
+            $data['nom'] == $stagiaire->user->nom && $data['prenom'] == $stagiaire->user->prenom &&
+            ($data['email'] ?? $stagiaire->user->email) == $stagiaire->user->email
+        ) {
             return response()->json(['error' => 'Aucune modification apportée'], 400);
         }
 

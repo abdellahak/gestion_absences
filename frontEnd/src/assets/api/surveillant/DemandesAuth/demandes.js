@@ -89,7 +89,7 @@ export const download = async (id, file_name) => {
         }
     } catch (error) {
         data.success = false;
-        data.error = "Une erreur s'est produite sur le serveur";
+        data.error = "Ce document n'existe pas";
         return data;
     }
     }
