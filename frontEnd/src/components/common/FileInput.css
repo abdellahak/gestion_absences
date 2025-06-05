@@ -1,0 +1,113 @@
+/* File Input Animations */
+@keyframes file-upload-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes file-upload-bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes file-upload-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.file-upload-hover {
+  animation: file-upload-glow 2s infinite ease-in-out;
+}
+
+.file-upload-drag {
+  animation: file-upload-pulse 1s infinite ease-in-out;
+}
+
+.file-upload-icon {
+  animation: file-upload-bounce 1s infinite ease-in-out;
+}
+
+/* File type specific colors */
+.file-pdf {
+  color: #ef4444; /* red-500 */
+}
+
+.file-image {
+  color: #3b82f6; /* blue-500 */
+}
+
+.file-doc {
+  color: #10b981; /* green-500 */
+}
+
+.file-default {
+  color: #6b7280; /* gray-500 */
+}
+
+/* Modern glassmorphism effect */
+.file-upload-glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Smooth transitions */
+.file-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Preview modal animations */
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-backdrop {
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-content {
+  animation: modal-scale-in 0.3s ease-out;
+}
